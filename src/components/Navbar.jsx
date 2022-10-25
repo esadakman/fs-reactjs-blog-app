@@ -61,7 +61,7 @@ const Navbar = () => {
                             "px-3 py-2 rounded-md text-sm font-medium"
                           )}
                           aria-current={item.current ? "page" : undefined}
-                          onClick={item.name = !item.name}
+                          // onClick={item.name = true}
                         >
                           {item.name}
                         </Link>
