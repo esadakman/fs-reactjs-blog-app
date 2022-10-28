@@ -1,3 +1,4 @@
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React from "react";
@@ -6,6 +7,7 @@ import store from "./app/store";
 import { Provider } from "react-redux";
 
 const App = () => {
+  
   return (
     <>
       <Provider store={store}>
