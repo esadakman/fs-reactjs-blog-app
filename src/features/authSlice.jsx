@@ -1,28 +1,60 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"; 
+import authService from "./authService";
 
-//? createSlice, Redux state lojiğini kisa yoldan tanimlamak icin kullanilan bir metotdur.
-//? slice : ismi, state'lerin baslangic degerleri ve reducer'lari key-value yapisi seklinde tanimlar.
-//? reducer, state'i degistiren fonksiyonlarin yaninda otomatik olarak action type'larin tanimlanmasini da saglar.
-// const url = "http://127.0.0.1:8000/";
+const user = JSON.parse(localStorage.getItem("user"));
 
 const initialState = {
-  user: false,
+  user: user ? user : null,
+  isError: false,
+  isLoading: false,
+  isSuccess: false,
+  message: "",
 };
 
-const authSlice = createSlice({
-  name: "auth",
-  // initialState: initialState,
+export const register = createAsyncThunk(
+	"auth/register",
+	async (user, thunkAPI) => {
+		try {
+			return await authService.register(user);
+		} catch (error) {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			return thunkAPI.rejectWithValue(message);
+		}
+	}
+);
+
+const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
-    setUser: (state, action) => {
-      state.user = action.payload;
+    resetRegistered: (state) => {
+      state.registered = false;
     },
-    clearUser: (state) => {
-      state.user = "";
-    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(register.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      });
   },
 });
 
-export const {setUser,clearUser} = authSlice.actions;
-
-export default authSlice.reducer;
+export const { resetRegistered } = userSlice.actions;
+export default userSlice.reducer;

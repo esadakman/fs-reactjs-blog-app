@@ -1,10 +1,8 @@
-import React from 'react'
-import NewBlog from './NewBlog'
+import React from 'react' 
 
 const Home = () => {
   return (
-    <div>Home
-      <NewBlog/>
+    <div>Home 
 
     </div>
   )

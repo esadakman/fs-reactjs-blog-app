@@ -4,7 +4,7 @@ import "./pagesStyling/newBlog.scss";
 const NewBlog = () => {
   return (
     <div>
-      <div className="newBlog">
+      <div className="newBlog ">
         <div className="contactForm">
           <h2 className="text-3xl"> Create a Post</h2>
           <div>
@@ -25,7 +25,7 @@ const NewBlog = () => {
                 id="image"
                 label="ImageUrl"
                 placeholder="Image URL"
-                required 
+                required
                 name="image"
                 className="form-control"
                 // value={imageUrl}

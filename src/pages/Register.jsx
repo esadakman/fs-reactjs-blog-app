@@ -1,15 +1,36 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom"; 
-const Register = () => {
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { register } from "../features/authSlice";
 
-  const handleRegister = () => {
-    console.table(name, surname, email, password, password2); 
+const Register = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+
+  const { username, first_name, last_name, email, password, password2 } =
+    formData;
+  // const { user, isLoading, isError, isSuccess, message } = useSelector(
+  //   (state) => state.user
+  // );
+  const dispatch = useDispatch();
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    // console.log(formData);
+    dispatch(
+      register(formData)
+    );
+  };
+
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -24,7 +45,29 @@ const Register = () => {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white ">
                 Create and account
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
+              <form
+                className="space-y-4 md:space-y-6"
+                action="#"
+                onSubmit={handleRegister}
+              >
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block   mb-1 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    User Name
+                  </label>
+                  <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all"
+                    placeholder="User Name"
+                    required=""
+                    value={username}
+                    onChange={onChange}
+                  />
+                </div>
                 <div className="flex">
                   <div className="w-1/2">
                     <label
@@ -35,7 +78,7 @@ const Register = () => {
                     </label>
                     <input
                       type="Name"
-                      name="Name"
+                      name="first_name"
                       id="Name"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
                       block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
@@ -44,8 +87,8 @@ const Register = () => {
                       "
                       placeholder="Name"
                       required=""
-                      value={name }
-                      onChange={(e)=>setName(e.target.value)}
+                      value={first_name}
+                      onChange={onChange}
                     />
                   </div>
                   <div className="w-1/2">
@@ -57,15 +100,13 @@ const Register = () => {
                     </label>
                     <input
                       type="Surname"
-                      name="Surname"
+                      name="last_name"
                       id="Surname"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all"
                       placeholder="Surname"
                       required=""
-                      value={surname }
-                      onChange={(e)=>setSurname(e.target.value)}
-
-
+                      value={last_name}
+                      onChange={onChange}
                     />
                   </div>
                 </div>
@@ -83,10 +124,8 @@ const Register = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all"
                     placeholder="name@company.com"
                     required=""
-                    value={email }
-                    onChange={(e)=>setEmail(e.target.value)}
-
-
+                    value={email}
+                    onChange={onChange}
                   />
                 </div>
                 <div>
@@ -103,9 +142,8 @@ const Register = () => {
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all"
                     required=""
-                    value={password }
-                    onChange={(e)=>setPassword(e.target.value)}
-
+                    value={password}
+                    onChange={onChange}
                   />
                 </div>
                 <div>
@@ -116,15 +154,14 @@ const Register = () => {
                     Confirm password
                   </label>
                   <input
-                    type="confirm-password"
-                    name="confirm-password"
-                    id="confirm-password"
+                    type="password"
+                    name="password2"
+                    id="password2"
                     placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all"
                     required=""
-                    value={password2 }
-                    onChange={(e)=>setPassword2(e.target.value)}
-
+                    value={password2}
+                    onChange={onChange}
                   />
                 </div>
                 <button

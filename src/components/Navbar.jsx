@@ -5,26 +5,31 @@ import profilePP from "../assets/images/default.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const navigation = [
-  { name: "Home", to: "/", current: true },
+const authLinks = [
+  { name: "Home", to: "/", current: false },
+  { name: "New Post", to: "/newblog", current: false },
+  { name: "Profile", to: "/login", current: false },
+];
+const guestLinks = [
+  // { name: "Home", to: "/", current: true },
   { name: "Register", to: "/register", current: false },
   { name: "Login", to: "/login", current: false },
+  { name: "New Post", to: "/newblog", current: false },  
 ];
 
 const Navbar = () => {
-  const navigate = useNavigate()
-  // const user = useSelector((state) => state.auth.user);
-  const { user } = useSelector((state) => state.auth);
-  console.log(user);
+  const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  // const user = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state );
+  // console.log(user);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-
   const handleLogout = () => {
-    navigate('/login')
-    // console.log('logged out')
-  }
+    navigate("/login");
+  };
 
   return (
     <>
@@ -33,7 +38,7 @@ const Navbar = () => {
           <>
             <div className="mx-auto max-w-10xl px-2 sm:px-6 lg:px-8 ">
               <div className="relative flex h-16 items-center justify-between ">
-                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                <div className="absolute inset-y-0 left-0 flex items-center sm:hidden ">
                   {/* Mobile menu button*/}
                   <Disclosure.Button className="transition-all inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only ">Open main menu</span>
@@ -61,7 +66,7 @@ const Navbar = () => {
                   </div>
                   <div className="hidden sm:ml-6 sm:block ">
                     <div className="flex space-x-4 ">
-                      {navigation.map((item) => (
+                      {guestLinks.map((item) => (
                         <Link
                           key={item.name}
                           to={item.to}
@@ -85,7 +90,7 @@ const Navbar = () => {
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <button
                       type="button"
-                      className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300"
                     >
                       <span className="sr-only">View notifications</span>
                       userName
@@ -94,11 +99,12 @@ const Navbar = () => {
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
                       <div>
-                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300">
                           <span className="sr-only">Open user menu</span>
                           <img
-                            className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-100"
-                            src={user ? "asdsadasd" : profilePP}
+                            className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300"
+                            // src={user ? "asdsadasd" : profilePP}
+                            src={profilePP}
                             alt="pic"
                           />
                         </Menu.Button>
@@ -116,6 +122,7 @@ const Navbar = () => {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
+                                // as={Button}
                                 to="/"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
@@ -128,7 +135,7 @@ const Navbar = () => {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <button
+                              <Link
                                 // to="/"
                                 onClick={handleLogout}
                                 className={classNames(
@@ -137,7 +144,7 @@ const Navbar = () => {
                                 )}
                               >
                                 Sign out
-                              </button>
+                              </Link>
                             )}
                           </Menu.Item>
                         </Menu.Items>
@@ -156,7 +163,11 @@ const Navbar = () => {
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
-                      <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" as={Link} to={'/login'}> 
+                      <Menu.Button
+                        className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                        as={Link}
+                        to={"/login"}
+                      >
                         <img
                           className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-100"
                           src={profilePP}
@@ -169,9 +180,9 @@ const Navbar = () => {
               </div>
             </div>
 
-            <Disclosure.Panel className="sm:hidden fixed bg-gray-800 w-screen">
+            <Disclosure.Panel className="sm:hidden fixed bg-gray-800 w-screen ">
               <div className="space-y-1 px-2 pt-2 pb-3 ">
-                {navigation.map((item) => (
+                {authLinks.map((item) => (
                   <Disclosure.Button
                     key={item.name}
                     as={Link}
