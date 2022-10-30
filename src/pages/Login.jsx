@@ -1,12 +1,13 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../features/authSlice";
+import { login } from "../features/auth/authSlice";
 import { useEffect } from "react";
 
 const Login = () => {
   const dispatch = useDispatch(); 
+  const navigate = useNavigate();
   // ! Form Validations
   const [formData, setFormData] = useState({
     username: "",
@@ -29,7 +30,7 @@ const Login = () => {
 		}
 
 		if (isSuccess || user) {
-			console.log("/");
+			console.log(user);
 		}
 
 		// dispatch(reset());
@@ -38,7 +39,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      login(formData)
+      login(formData,navigate)
     );
     // console.log(formData);
   };
@@ -50,7 +51,7 @@ const Login = () => {
           style={{ height: "91vh" }}
         >
           <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div className="p-6 space-y-4 md:space-y-6 sm:px-8">
+            <div className="p-6 space-y-6 md:space-y-6 sm:px-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center ">
                 Login
               </h1>
@@ -125,7 +126,7 @@ const Login = () => {
 
                 <button
                   type="submit"
-                  className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 "
+                  className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 transition-all"
                   // onClick={handleLogin()}
                 >
                   Login

@@ -54,6 +54,7 @@ const userSlice = createSlice({
     builder
       .addCase(register.pending, (state) => {
         state.isLoading = true;
+        console.log(state);
       })
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;

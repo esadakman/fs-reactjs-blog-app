@@ -20,9 +20,8 @@ const guestLinks = [
 const Navbar = () => {
   const navigate = useNavigate();
   // const dispatch = useDispatch();
-  // const user = useSelector((state) => state.auth);
-  const { user } = useSelector((state) => state );
-  // console.log(user);
+  const { user } = useSelector((state) => state.user );
+  console.log(user);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");

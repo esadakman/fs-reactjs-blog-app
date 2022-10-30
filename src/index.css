@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital@0;1&display=swap');
  @tailwind base;
  @tailwind components;
  @tailwind utilities;
@@ -7,6 +8,16 @@
    html,
    body,
    #root {
-     @apply h-full bg-zinc-50
+     @apply h-full bg-zinc-50 font-poppins
    }
  }
+
+ @layer components {
+  .centeralizer {
+    @apply flex justify-between items-center;
+  }
+  .footer-icons {
+    @apply transition-all no-underline text-white  hover:text-sky-500 hover:scale-125 text-lg;
+  }
+ 
+}

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toastSuccess } from "../../helpers/customToastify";
 
 
 const REGISTER_URL = "http://127.0.0.1:8000/users/register/";
@@ -27,6 +28,8 @@ const login = async (userData) => {
 	const response = await axios.post(LOGIN_URL, userData, config);
 	if (response.data) {
 		localStorage.setItem("user", JSON.stringify(response.data));
+		toastSuccess('Logged In')
+		
 	}
 	return response.data;
 };
