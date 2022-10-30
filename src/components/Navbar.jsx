@@ -32,7 +32,7 @@ const Navbar = () => {
 
   return (
     <>
-      <Disclosure as="nav" className="bg-gray-800 ">
+      <Disclosure as="nav" className="bg-gray-900 ">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-10xl px-2 sm:px-6 lg:px-8 ">
@@ -98,7 +98,7 @@ const Navbar = () => {
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
                       <div>
-                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300">
+                        <Menu.Button className="flex rounded-full bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300">
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300"

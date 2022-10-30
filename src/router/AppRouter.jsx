@@ -12,6 +12,7 @@ import Navbar from "../components/Navbar";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import NotFound from "../pages/NotFound";
 
 const AppRouter = () => {
   // const navigate = useNavigate();
@@ -32,6 +33,7 @@ const AppRouter = () => {
         {/* <Route path="/details" element={<PrivateRouter />}>
           <Route path="/" element={<Home />} />
         </Route>  */}
+        <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>
