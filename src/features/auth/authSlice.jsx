@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authService from "./authService";
 
-const user = JSON.parse(localStorage.getItem("user"));
+const user = window.atob(localStorage.getItem("token"));
 
 const initialState = {
   user: user ? user : null,
+  // user: false,
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -42,12 +43,19 @@ export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
   }
 });
 
+export const logout = createAsyncThunk("auth/logout", async (navigate) => {
+  authService.logout(navigate);
+});
+
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    resetRegistered: (state) => {
-      state.registered = false;
+    reset: (state) => { 
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = "";
     },
   },
   extraReducers: (builder) => {
@@ -66,9 +74,27 @@ const userSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.user = null;
-      });
+      })
+      .addCase(login.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        // console.log(action.payload.user);
+        state.user = action.payload.user;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+				state.user = null;
+			})
   },
 });
 
-export const { resetRegistered } = userSlice.actions;
+export const { reset } = userSlice.actions;
 export default userSlice.reducer;

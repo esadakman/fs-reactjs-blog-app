@@ -3,7 +3,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import logo from "../assets/images/logo.png";
 import profilePP from "../assets/images/default.webp";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, reset } from "../features/auth/authSlice";
 
 const authLinks = [
   { name: "Home", to: "/", current: false },
@@ -19,15 +20,20 @@ const guestLinks = [
 
 const Navbar = () => {
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user );
+  // const { user, isLoading, isError, isSuccess, message } = useSelector(
+  //   (state) => state.user
+  // ); 
   console.log(user);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-  const handleLogout = () => {
-    navigate("/login");
+  const handleLogout = () => { 
+    dispatch(logout(navigate));
+    dispatch(reset());
+    // navigate("/login");
   };
 
   return (
@@ -85,6 +91,7 @@ const Navbar = () => {
                     </div>
                   </div>
                 </div>
+                {/* // ! user True  */}
                 {user ? (
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <button
@@ -117,7 +124,7 @@ const Navbar = () => {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <Menu.Item>
                             {({ active }) => (
                               <Link
@@ -151,6 +158,7 @@ const Navbar = () => {
                     </Menu>
                   </div>
                 ) : (
+                  // ! user FALSE
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <button
                       type="button"

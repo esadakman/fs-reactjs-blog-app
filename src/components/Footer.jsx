@@ -11,12 +11,12 @@ const Footer = () => {
       </div>
       <div className="flex justify-between gap-4">
         <a
-          href="https://www.twitter.com/"
+          href="https://esadakman.github.io/"
           target="_blank"
           rel="noreferrer"
           className="footer-icons"
-        >
-          <i className="fa-brands fa-twitter"></i>
+        > 
+          <i className="fa-sharp fa-solid fa-globe"></i>
         </a>
         <a
           href="https://github.com/esadakman"

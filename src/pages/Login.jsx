@@ -6,7 +6,7 @@ import { login } from "../features/auth/authSlice";
 import { useEffect } from "react";
 
 const Login = () => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   // ! Form Validations
   const [formData, setFormData] = useState({
@@ -19,29 +19,30 @@ const Login = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  // let keys = localStorage.getItem("token");
+  // console.log(window.atob(keys));
   // ? useSelector
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.user
-  );
+  ); 
+  console.log(user)
   useEffect(() => {
-		if (isError) {
-			console.log(message);
-		}
+    if (isError) {
+      console.log(message);
+    }
 
-		if (isSuccess || user) {
-			console.log(user);
-		}
+    // if (isSuccess || user) {
+    // 	// console.log(user);
+    //   navigate("/");
+    // }
 
-		// dispatch(reset());
-	}, [isError, isSuccess, message, user,  dispatch]);
+    // dispatch(reset());
+  }, [isError, isSuccess, message, user, dispatch]);
   // ! HandleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      login(formData,navigate)
-    );
-    console.log(formData,isLoading);
+    dispatch(login(formData, navigate));
+    // console.log(formData, isLoading);
   };
   return (
     <>
