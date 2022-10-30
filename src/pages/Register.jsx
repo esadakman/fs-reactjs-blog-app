@@ -46,7 +46,7 @@ const Register = () => {
                 Create and account
               </h1>
               <form
-                className="space-y-4 md:space-y-6"
+                className="space-y-4 md:space-y-4"
                 action="#"
                 onSubmit={handleRegister}
               >

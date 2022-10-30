@@ -1,21 +1,46 @@
 import React from "react";
-import { Link } from "react-router-dom"; 
-import { useState } from "react"; 
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../features/authSlice";
+import { useEffect } from "react";
 
-const Login = () => {  
-
+const Login = () => {
+  const dispatch = useDispatch(); 
+  // ! Form Validations
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
   const { username, email, password } = formData;
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData); 
-  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // ? useSelector
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.user
+  );
+  useEffect(() => {
+		if (isError) {
+			console.log(message);
+		}
+
+		if (isSuccess || user) {
+			console.log("/");
+		}
+
+		// dispatch(reset());
+	}, [isError, isSuccess, message, user,  dispatch]);
+  // ! HandleSubmit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      login(formData)
+    );
+    // console.log(formData);
   };
   return (
     <>
