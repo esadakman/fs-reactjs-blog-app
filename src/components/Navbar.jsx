@@ -25,7 +25,7 @@ const Navbar = () => {
   // const { user, isLoading, isError, isSuccess, message } = useSelector(
   //   (state) => state.user
   // ); 
-  console.log(user);
+  // console.log(user);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");

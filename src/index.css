@@ -8,7 +8,7 @@
    html,
    body,
    #root {
-     @apply h-full bg-zinc-50 font-poppins
+     @apply h-full bg-zinc-50 font-poppins bg-gradient-to-r from-cyan-400 to-red-400
    }
  }
 
@@ -22,8 +22,12 @@
   .btn-custom {
     @apply bg-sky-500 border-solid border-2 border-main rounded-md font-medium transition-all text-lg hover:opacity-90 hover:bg-main hover:border-sky-500 hover:text-sky-400 active:opacity-100 py-2 px-3 ;
   }
+  .profile-input{
+    @apply w-full block py-1.5 px-3 text-base font-normal text-neutral-800 bg-white bg-clip-padding border-2 rounded-md border-solid border-slate-500 focus:border-2 dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all
+  } 
  
 }
+ 
 
 body::-webkit-scrollbar {
   width: 0.9rem;

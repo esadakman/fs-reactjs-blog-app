@@ -22,10 +22,10 @@ const Login = () => {
   // let keys = localStorage.getItem("token");
   // console.log(window.atob(keys));
   // ? useSelector
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state) => state.user
   ); 
-  console.log(user)
+  // console.log(user)
   useEffect(() => {
     if (isError) {
       console.log(message);

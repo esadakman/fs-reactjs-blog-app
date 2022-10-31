@@ -14,6 +14,10 @@ const Register = () => {
     password2: "",
   });
 
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  
   const { username, first_name, last_name, email, password, password2 } =
     formData;
   // const { user, isLoading, isError, isSuccess, message } = useSelector(
@@ -24,13 +28,7 @@ const Register = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     // console.log(formData);
-    dispatch(
-      register(formData)
-    );
-  };
-
-  const onChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    dispatch(register(formData));
   };
 
   return (

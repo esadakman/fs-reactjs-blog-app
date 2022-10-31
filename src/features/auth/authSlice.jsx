@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authService from "./authService";
 
-const user = window.atob(localStorage.getItem("token"));
+// const user = window.atob(localStorage.getItem("token"));
 
 const initialState = {
-  user: user ? user : null,
-  // user: false,
+  // user: user ? user : null,
+  user: null,
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -30,7 +30,7 @@ export const register = createAsyncThunk(
   }
 );
 
-export const login = createAsyncThunk("auth/login", async (user, thunkAPI) => {
+export const login = createAsyncThunk("auth/login", async (user, navigate, thunkAPI) => {
   try {
     return await authService.login(user);
   } catch (error) {
@@ -47,11 +47,30 @@ export const logout = createAsyncThunk("auth/logout", async (navigate) => {
   authService.logout(navigate);
 });
 
+export const update = createAsyncThunk(
+  "auth/update",
+  async (userData, thunkAPI) => {
+    try {
+      // console.log(userData);
+      return await authService.update(userData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    reset: (state) => { 
+    reset: (state) => {
       state.isLoading = false;
       state.isError = false;
       state.isSuccess = false;
@@ -81,7 +100,7 @@ const userSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        // console.log(action.payload.user);
+        state.message = false
         state.user = action.payload.user;
       })
       .addCase(login.rejected, (state, action) => {
@@ -91,8 +110,23 @@ const userSlice = createSlice({
         state.user = null;
       })
       .addCase(logout.fulfilled, (state) => {
-				state.user = null;
-			})
+        state.user = null;
+      })
+      .addCase(update.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(update.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        console.log(action.payload);
+        // state.user = action.payload.user;
+      })
+      .addCase(update.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        // state.user = null;
+      });
   },
 });
 
