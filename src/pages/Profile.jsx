@@ -1,32 +1,28 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import profilePP from "../assets/images/default.webp";
 import { update } from "../features/auth/authSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
-//   console.log(user);
+  const [image, setImage] = useState(user?.image);
   const [formData, setFormData] = useState({
-    username: user?.username,
-    email: user?.email,
-    first_name: user?.first_name,
-    last_name: user?.last_name,
-    // image: "",
+    username: user?.user.username,
+    email: user?.user.email,
+    first_name: user?.user.first_name,
+    last_name: user?.user.last_name,
   });
-//   console.log(formData);
+  // console.log(user.user.username);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleUpdate = (e) => {
     e.preventDefault();
-    dispatch(update(formData, navigate));
-    // console.log(formData, isLoading);
+    let updateData = { user: formData, image: image };
+    dispatch(update(updateData));
   };
   return (
     <main className="flex justify-center  p-1 ">
@@ -34,18 +30,18 @@ const Profile = () => {
         <section className="media flex">
           <img
             className="rounded-full h-32 w-32 mr-5 mb-4"
-            src={profilePP}
+            src={user?.image || profilePP}
             alt="pp"
           />
           <div className="block">
-            <h2 className="text-4xl m-0 text-slate-700">{user?.username}</h2>
-            <p className="text-md mb-4 text-gray-700">{user?.email}</p>
+            <h2 className="text-4xl m-0 text-slate-700">{user?.username || user?.user.username}</h2>
+            <p className="text-md mb-4 text-gray-700">{user?.email || user?.user.email}</p>
           </div>
         </section>
         <section className="">
           <form onSubmit={handleUpdate}>
             <div>
-              <label htmlFor="email" className="block my-1">
+              <label htmlFor="username" className="block my-1">
                 Username
               </label>
               <input
@@ -104,7 +100,22 @@ const Profile = () => {
                 onChange={handleChange}
               />
             </div>
-            <div className="flex flex-col ">
+            <div>
+              <label htmlFor="Image" className="block my-1">
+                Image
+              </label>
+              <input
+                type="text"
+                name="last_name"
+                id="Image"
+                className="profile-input"
+                placeholder="Image Url"
+                required=""
+                value={image || ""}
+                onChange={(e) => setImage(e.target.value)}
+              />
+            </div>
+            {/* <div className="flex flex-col ">
               <label htmlFor="formFile" className="form-label my-1">
                 Profile Picture
               </label>
@@ -113,17 +124,18 @@ const Profile = () => {
                 name="image"
                 accept="image/*"
                 id="formFile"
-                // onChange={handleChange}
+                // onChange={(e) => setImage(e.target.value)}
+                value={image || ""}
+                onChange={(e) => setImage(e.target.value)}
                 className="form-control block w-full text-sm text-slate-900
                 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
                 file:text-sm file:font-medium file:bg-slate-400 file:text-main
                 hover:file:bg-slate-600  hover:file:text-violet-50 file:transition-all file:cursor-pointer cursor-pointer"
               />
-            </div>
+            </div> */}
             <button
               type="submit"
               className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 transition-all my-1"
-              // onClick={handleLogin()}
             >
               Update
             </button>

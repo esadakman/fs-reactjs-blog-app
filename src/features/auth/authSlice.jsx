@@ -30,18 +30,24 @@ export const register = createAsyncThunk(
   }
 );
 
-export const login = createAsyncThunk("auth/login", async (user, navigate, thunkAPI) => {
-  try {
-    return await authService.login(user);
-  } catch (error) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString();
+export const login = createAsyncThunk(
+  "auth/login", 
+  async (loginData, thunkAPI) => {
+    // console.log(loginData, 'slice');
+    try {
+      return await authService.login(loginData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
 
-    return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(message);
+    }
   }
-});
+);
 
 export const logout = createAsyncThunk("auth/logout", async (navigate) => {
   authService.logout(navigate);
@@ -49,10 +55,10 @@ export const logout = createAsyncThunk("auth/logout", async (navigate) => {
 
 export const update = createAsyncThunk(
   "auth/update",
-  async (userData, thunkAPI) => {
-    try {
-      // console.log(userData);
-      return await authService.update(userData);
+  async (updateData, thunkAPI) => {
+    // console.log(updateData);
+    try { 
+      return await authService.update(updateData);
     } catch (error) {
       const message =
         (error.response &&
@@ -91,7 +97,7 @@ const userSlice = createSlice({
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload;
+        state.message = action.error;
         state.user = null;
       })
       .addCase(login.pending, (state) => {
@@ -100,13 +106,14 @@ const userSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.message = false
-        state.user = action.payload.user;
+        state.message = false;
+        console.log(action); 
+        state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload;
+        state.isError = true; 
+        state.message = action.error;
         state.user = null;
       })
       .addCase(logout.fulfilled, (state) => {
@@ -117,14 +124,14 @@ const userSlice = createSlice({
       })
       .addCase(update.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isSuccess = true;
-        console.log(action.payload);
-        // state.user = action.payload.user;
+        state.isSuccess = true; 
+        console.log(action.meta.arg);
+        state.user = action.meta.arg;
       })
       .addCase(update.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        state.message = action.payload;
+        state.message = action.error;
         // state.user = null;
       });
   },
@@ -132,3 +139,6 @@ const userSlice = createSlice({
 
 export const { reset } = userSlice.actions;
 export default userSlice.reducer;
+
+
+ 

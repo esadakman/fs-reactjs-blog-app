@@ -10,9 +10,11 @@ const Login = () => {
   const navigate = useNavigate();
   // ! Form Validations
   const [formData, setFormData] = useState({
-    username: "",
+    // username: "esadd",
+    // password: "123123",
+    username: "jim",
+    password: "Esad1926",
     email: "",
-    password: "",
   });
   const { username, email, password } = formData;
 
@@ -24,26 +26,29 @@ const Login = () => {
   // ? useSelector
   const { user, isError, isSuccess, message } = useSelector(
     (state) => state.user
-  ); 
+  );
   // console.log(user)
   useEffect(() => {
     if (isError) {
       console.log(message);
-    }
-
+    } 
     // if (isSuccess || user) {
     // 	// console.log(user);
     //   navigate("/");
-    // }
-
+    // } 
     // dispatch(reset());
   }, [isError, isSuccess, message, user, dispatch]);
+
   // ! HandleSubmit
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(formData, navigate));
+    let loginData= {user:formData, navigate: navigate} 
+    dispatch(login(loginData));
     // console.log(formData, isLoading);
   };
+   
+  // console.log(checked); 
+
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-700 ">
@@ -124,7 +129,21 @@ const Login = () => {
                     Please provide a valid email address.
                   </p> */}
                 </div>
-
+                {/* <div className="flex items-center mb-4">
+                  <input
+                    id="default-checkbox"
+                    type="checkbox"
+                    value=""
+                    className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 transition-all cursor-pointer"
+                    onChange={handleRemember}
+                  />
+                  <label
+                    htmlFor="default-checkbox"
+                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Remember me
+                  </label>
+                </div> */}
                 <button
                   type="submit"
                   className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 transition-all"

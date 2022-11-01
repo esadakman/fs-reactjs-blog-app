@@ -24,8 +24,7 @@ const Navbar = () => {
   const { user } = useSelector((state) => state.user );
   // const { user, isLoading, isError, isSuccess, message } = useSelector(
   //   (state) => state.user
-  // ); 
-  // console.log(user);
+  // );  
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -94,14 +93,13 @@ const Navbar = () => {
                 {/* // ! user True  */}
                 {user ? (
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <button
-                      type="button"
-                      className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      userName
-                    </button>
-
+                    <Link
+                      to="/"
+                      // type="button"
+                      className="p-1 rounded text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300 cursor-pointer"
+                    > 
+                      {user?.user.username}
+                    </Link> 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
                       <div>
@@ -110,7 +108,7 @@ const Navbar = () => {
                           <img
                             className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300"
                             // src={user ? "asdsadasd" : profilePP}
-                            src={profilePP}
+                            src={user?.image || profilePP}
                             alt="pic"
                           />
                         </Menu.Button>
@@ -177,7 +175,7 @@ const Navbar = () => {
                       >
                         <img
                           className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-100"
-                          src={profilePP}
+                          src={ profilePP }
                           alt="pic"
                         />
                       </Menu.Button>
