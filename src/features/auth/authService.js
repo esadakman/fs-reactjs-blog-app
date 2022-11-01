@@ -1,50 +1,63 @@
 import axios from "axios";
-import { toastSuccess } from "../../helpers/customToastify"; 
+import { toastError, toastSuccess } from "../../helpers/customToastify"; 
 
-const REGISTER_URL = "http://127.0.0.1:8000/users/register/"; 
-// const LOGOUT_URL = "http://127.0.0.1:8000/users/auth/logout/"; 
-const API_URL = "http://127.0.0.1:8000/"; 
+const axiosAPI = axios.create({
+  headers: {
+    "Content-Type": "application/json",
+  },
+  // timeout: 8000,
 
+  baseURL: "http://127.0.0.1:8000/",
+});
 // Register user
-const register = async (userData) => {
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
-  const response = await axios.post(REGISTER_URL, userData, config);
+const register = async ({userData,navigate}) => {
+  const response = await axiosAPI.post("users/register/", userData);
   console.log(response);
-  return response.data;
+  try {
+    if (response.status === 201) {
+      navigate('/login')
+      toastSuccess('Your Profile has been created succesfully !')
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-const login = async (loginData, navigate, checked) => {
-  // console.log(loginData.user);
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-  const res = await axios.post(`${API_URL}users/auth/login/`, loginData.user, config);
-  if (res.data) {
-    console.log(res.data);
-    let id = res.data.user.id 
-    const myToken = window.btoa(res.data.key);
-    // const userStorage = JSON.stringify(res.data.user);
-    // localStorage.setItem("userInfo", window.btoa(userStorage) );  
-    localStorage.setItem("token", myToken); 
-    const config = {
-      headers: {
-        Authorization: `Token ${res.data.key}`,
-        "Content-Type": "application/json",
-      },
-    }; 
-    var rest = await axios(`${API_URL}users/profile/${id-2}/`,config);  
-    localStorage.setItem("userInfo", window.btoa(JSON.stringify(rest.data)) ); 
-    toastSuccess("Logged In");
-    loginData.navigate("/");
+const login = async ({ user, navigate }) => {
+  const res = await axiosAPI.post(`users/auth/login/`, user);
+  try {
+    if (res.data) {
+      // if (res.status === 200) {
+      console.log(res.data);
+      let id = res.data.user.id;
+      const myToken = window.btoa(res.data.key);
+      // const userStorage = JSON.stringify(res.data.user);
+      // localStorage.setItem("userInfo", window.btoa(userStorage) );
+      localStorage.setItem("token", myToken);
+      const config = {
+        headers: {
+          Authorization: `Token ${res.data.key}`,
+        },
+      };
+      var rest = await axiosAPI(`users/profile/${id - 2}/`, config);
+      // localStorage.setItem("userInfo", window.btoa(JSON.stringify(rest.data)) );
+      localStorage.setItem("userInfo", JSON.stringify(rest.data));
+      toastSuccess("Logged In");
+      navigate("/");
+      return rest.data;
+    } else {
+      return res.data;
+    }
+  } catch (error) {
+    console.log(error);
   }
-  return rest.data;
+  //   // return res.data
+  // } finally {
+  //   console.log('error');
+  //   return rest.data
+  // }
+  // console.log('object');
 };
 
 const logout = async (navigate) => {
@@ -52,23 +65,54 @@ const logout = async (navigate) => {
   try {
     var config = {
       method: "post",
-      url: `${API_URL}users/auth/logout/`,
+      url: `users/auth/logout/`,
       headers: {
         Authorization: `Token ${myKey}`,
       },
     };
-    const res = await axios(config);
-    console.log(res);
+    const res = await axiosAPI(config);
+    // console.log(res);
     if (res.status === 200) {
       localStorage.clear();
-      toastSuccess("User log out successfully.");
-      navigate("/");
+      toastSuccess(`${res.data.detail}`);
+      navigate("/login");
+      return res.data;
     }
   } catch (error) {
     console.log(error);
   }
 };
- 
+
+const update = async ({ image, user, userId }) => {
+  let myKey = window.atob(localStorage.getItem("token"));
+  var data = JSON.stringify({
+    image,
+    user,
+  });
+  try {
+    var config = {
+      method: "put",
+      headers: {
+        Authorization: `Token ${myKey}`,
+      },
+      data: data,
+    };
+    const res = await axiosAPI(`users/profile/${userId - 2}/`, config);
+    if (res.status === 200) {
+      toastSuccess("Blog has been successfully updated");
+      // navigate("/register");
+      return res.data;
+    }
+  } catch (error) {
+    toastError("Oppss... Something went wrong. Please try again later ..");
+    console.log(error);
+  }
+};
+
+const authService = { register, login, logout, update };
+
+export default authService;
+
 //   try {
 //     var config = {
 //       method: "put",
@@ -89,45 +133,3 @@ const logout = async (navigate) => {
 //     console.log(error);
 //   }
 // };
-
-const update = async (userData, navigate) => {
-  let myKey = window.atob(localStorage.getItem("token")); 
-  let image = userData.image;
-  let user = userData.user; 
-  var data = JSON.stringify({
-    image,
-    user, 
-  }); 
-  try {
-    var config = {
-      method: "put",
-      url: `${API_URL}users/profile/${userData.userId-2}/`,
-      headers: {
-        Authorization: `Token ${myKey}`,
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-    const res = await axios(config, data);
-    if (res.status === 200) {
-      toastSuccess("Blog has been successfully updated");
-      // navigate("/register");
-      return(res.data)
-    }
-  } catch (error) {
-    console.log(error);
-  }
-
-  // const config = {
-  //   headers: {
-  //     Authorization: `Token ${res.data.key}`,
-  //     "Content-Type": "application/json",
-  //   },
-  // }; 
-  // var rest = await axios(`${API_URL}users/profile/${id-2}/`,config);
-   
-};
-
-const authService = { register, login, logout, update };
-
-export default authService;

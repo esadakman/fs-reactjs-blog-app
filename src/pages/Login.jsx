@@ -29,9 +29,9 @@ const Login = () => {
   );
   // console.log(authUser)
   useEffect(() => {
-    if (isError) {
-      console.log(message);
-    }  
+    // if (isError) {
+    //   console.log(message);
+    // }   
     // dispatch(reset());
   }, [isError, isSuccess, message, authUser, dispatch]);
 

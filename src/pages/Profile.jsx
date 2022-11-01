@@ -14,9 +14,9 @@ const Profile = () => {
     first_name: authUser?.user.first_name,
     last_name: authUser?.user.last_name,
   });
-  console.log(authUser);
+  // console.log(authUser);
   // btoa(window.localStorage.getItem('image')
-  let local = window.atob(((localStorage.getItem("userInfo"))))
+  // let local = window.atob(((localStorage.getItem("userInfo"))))
   // console.log(JSON.parse(local)); 
 
   // console.log(window.atob(localStorage.getItem("token")));

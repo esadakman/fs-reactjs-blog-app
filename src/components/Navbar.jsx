@@ -25,11 +25,12 @@ const Navbar = () => {
   // const { authUser, isLoading, isError, isSuccess, message } = useSelector(
   //   (state) => state.user
   // );  
-
+  // console.log(authUser)
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-  const handleLogout = () => { 
+  const handleLogout = (e) => { 
+    e.preventDefault()
     dispatch(logout(navigate));
     dispatch(reset());
     // navigate("/login");
@@ -98,7 +99,7 @@ const Navbar = () => {
                       // type="button"
                       className="p-1 rounded text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300 cursor-pointer"
                     > 
-                      {authUser?.user.username}
+                      {authUser?.user?.username}
                     </Link> 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">

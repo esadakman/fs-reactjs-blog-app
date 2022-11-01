@@ -1,10 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { register } from "../features/auth/authSlice";
 
 const Register = () => {
+  const navigate = useNavigate(); 
   const [formData, setFormData] = useState({
     username: "",
     first_name: "",
@@ -27,8 +28,9 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+    let registerData= {userData:formData, navigate: navigate}  
     // console.log(formData);
-    dispatch(register(formData));
+    dispatch(register(registerData));
   };
 
   return (
