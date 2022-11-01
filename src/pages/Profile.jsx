@@ -6,36 +6,43 @@ import { update } from "../features/auth/authSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
-  const [image, setImage] = useState(user?.image);
+  const { authUser } = useSelector((state) => state.user);
+  const [image, setImage] = useState(authUser?.image);
   const [formData, setFormData] = useState({
-    username: user?.user.username,
-    email: user?.user.email,
-    first_name: user?.user.first_name,
-    last_name: user?.user.last_name,
+    username: authUser?.user.username,
+    email: authUser?.user.email,
+    first_name: authUser?.user.first_name,
+    last_name: authUser?.user.last_name,
   });
-  // console.log(user.user.username);
+  console.log(authUser);
+  // btoa(window.localStorage.getItem('image')
+  let local = window.atob(((localStorage.getItem("userInfo"))))
+  // console.log(JSON.parse(local)); 
 
+  // console.log(window.atob(localStorage.getItem("token")));
+  // ? handleChange
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleUpdate = (e) => {
     e.preventDefault();
-    let updateData = { user: formData, image: image };
+    let updateData = { user: formData, image: image, userId: authUser.user.id };
     dispatch(update(updateData));
   };
   return (
     <main className="flex justify-center  p-1 ">
-      <div className="bg-slate-100 py-2.5 px-5 rounded-lg m-4 max-w-xl grid-cols-6  shadow-xl">
+      <div className="bg-slate-100 py-2.5 px-5 rounded-lg m-4 max-w-lg  w-full lg:w-1/2 shadow-xl">
         <section className="media flex">
           <img
             className="rounded-full h-32 w-32 mr-5 mb-4"
-            src={user?.image || profilePP}
+            src={authUser?.image || profilePP}
             alt="pp"
           />
           <div className="block">
-            <h2 className="text-4xl m-0 text-slate-700">{user?.username || user?.user.username}</h2>
-            <p className="text-md mb-4 text-gray-700">{user?.email || user?.user.email}</p>
+            <h2 className="text-4xl m-0 text-slate-700">
+              {authUser?.user.username}
+            </h2>
+            <p className="text-md mb-4 text-gray-700">{authUser?.user.email}</p>
           </div>
         </section>
         <section className="">
@@ -135,7 +142,7 @@ const Profile = () => {
             </div> */}
             <button
               type="submit"
-              className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 transition-all my-1"
+              className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 transition-all mt-3"
             >
               Update
             </button>

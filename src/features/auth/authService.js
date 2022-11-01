@@ -1,11 +1,9 @@
 import axios from "axios";
-import { toastSuccess } from "../../helpers/customToastify";
+import { toastSuccess } from "../../helpers/customToastify"; 
 
-const REGISTER_URL = "http://127.0.0.1:8000/users/register/";
-const LOGIN_URL = "http://127.0.0.1:8000/users/auth/login/";
-const LOGOUT_URL = "http://127.0.0.1:8000/users/auth/logout/";
-const UPDATE_URL = "http://127.0.0.1:8000/users/profile/6/";
-const API_URL = "http://127.0.0.1:8000/";
+const REGISTER_URL = "http://127.0.0.1:8000/users/register/"; 
+// const LOGOUT_URL = "http://127.0.0.1:8000/users/auth/logout/"; 
+const API_URL = "http://127.0.0.1:8000/"; 
 
 // Register user
 const register = async (userData) => {
@@ -27,11 +25,13 @@ const login = async (loginData, navigate, checked) => {
       "Content-Type": "application/json",
     },
   };
-  const res = await axios.post(LOGIN_URL, loginData.user, config);
+  const res = await axios.post(`${API_URL}users/auth/login/`, loginData.user, config);
   if (res.data) {
     console.log(res.data);
     let id = res.data.user.id 
     const myToken = window.btoa(res.data.key);
+    // const userStorage = JSON.stringify(res.data.user);
+    // localStorage.setItem("userInfo", window.btoa(userStorage) );  
     localStorage.setItem("token", myToken); 
     const config = {
       headers: {
@@ -39,7 +39,8 @@ const login = async (loginData, navigate, checked) => {
         "Content-Type": "application/json",
       },
     }; 
-    var rest = await axios(`${API_URL}users/profile/${id-2}/`,config); 
+    var rest = await axios(`${API_URL}users/profile/${id-2}/`,config);  
+    localStorage.setItem("userInfo", window.btoa(JSON.stringify(rest.data)) ); 
     toastSuccess("Logged In");
     loginData.navigate("/");
   }
@@ -51,13 +52,13 @@ const logout = async (navigate) => {
   try {
     var config = {
       method: "post",
-      url: LOGOUT_URL,
+      url: `${API_URL}users/auth/logout/`,
       headers: {
         Authorization: `Token ${myKey}`,
       },
     };
     const res = await axios(config);
-    // console.log(res);
+    console.log(res);
     if (res.status === 200) {
       localStorage.clear();
       toastSuccess("User log out successfully.");
@@ -90,21 +91,17 @@ const logout = async (navigate) => {
 // };
 
 const update = async (userData, navigate) => {
-  let myKey = window.atob(localStorage.getItem("token"));
-  // console.log(user);
+  let myKey = window.atob(localStorage.getItem("token")); 
   let image = userData.image;
-  let user = userData.user;
-  // console.log(image, user);
+  let user = userData.user; 
   var data = JSON.stringify({
     image,
     user, 
-  });
-  console.log(userData);
-  // console.log(`${API_URL}users/profile/${id-2}/`)
+  }); 
   try {
     var config = {
       method: "put",
-      url: UPDATE_URL,
+      url: `${API_URL}users/profile/${userData.userId-2}/`,
       headers: {
         Authorization: `Token ${myKey}`,
         "Content-Type": "application/json",
@@ -115,6 +112,7 @@ const update = async (userData, navigate) => {
     if (res.status === 200) {
       toastSuccess("Blog has been successfully updated");
       // navigate("/register");
+      return(res.data)
     }
   } catch (error) {
     console.log(error);

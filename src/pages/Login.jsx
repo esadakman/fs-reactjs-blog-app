@@ -24,20 +24,16 @@ const Login = () => {
   // let keys = localStorage.getItem("token");
   // console.log(window.atob(keys));
   // ? useSelector
-  const { user, isError, isSuccess, message } = useSelector(
+  const { isError, isSuccess, message,authUser } = useSelector(
     (state) => state.user
   );
-  // console.log(user)
+  // console.log(authUser)
   useEffect(() => {
     if (isError) {
       console.log(message);
-    } 
-    // if (isSuccess || user) {
-    // 	// console.log(user);
-    //   navigate("/");
-    // } 
+    }  
     // dispatch(reset());
-  }, [isError, isSuccess, message, user, dispatch]);
+  }, [isError, isSuccess, message, authUser, dispatch]);
 
   // ! HandleSubmit
   const handleSubmit = (e) => {

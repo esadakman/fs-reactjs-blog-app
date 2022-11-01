@@ -21,8 +21,8 @@ const guestLinks = [
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user );
-  // const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { authUser } = useSelector((state) => state.user );
+  // const { authUser, isLoading, isError, isSuccess, message } = useSelector(
   //   (state) => state.user
   // );  
 
@@ -91,14 +91,14 @@ const Navbar = () => {
                   </div>
                 </div>
                 {/* // ! user True  */}
-                {user ? (
+                {authUser ? (
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <Link
                       to="/"
                       // type="button"
                       className="p-1 rounded text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300 cursor-pointer"
                     > 
-                      {user?.user.username}
+                      {authUser?.user.username}
                     </Link> 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
@@ -107,8 +107,8 @@ const Navbar = () => {
                           <span className="sr-only">Open user menu</span>
                           <img
                             className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300"
-                            // src={user ? "asdsadasd" : profilePP}
-                            src={user?.image || profilePP}
+                            // src={authUser ? "asdsadasd" : profilePP}
+                            src={authUser?.image || profilePP}
                             alt="pic"
                           />
                         </Menu.Button>
