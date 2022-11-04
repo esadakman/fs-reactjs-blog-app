@@ -1,17 +1,17 @@
 import axios from "axios";
 import { toastError, toastSuccess } from "../../helpers/customToastify"; 
 
-const axiosAPI = axios.create({
+const userAPI = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
   // timeout: 8000,
 
-  baseURL: "http://127.0.0.1:8000/",
+  baseURL: "http://127.0.0.1:8000/users",
 });
 // Register user
 const register = async ({userData,navigate}) => {
-  const response = await axiosAPI.post("users/register/", userData);
+  const response = await userAPI.post("/register/", userData);
   console.log(response);
   try {
     if (response.status === 201) {
@@ -25,7 +25,7 @@ const register = async ({userData,navigate}) => {
 };
 
 const login = async ({ user, navigate }) => {
-  const res = await axiosAPI.post(`users/auth/login/`, user);
+  const res = await userAPI.post(`/auth/login/`, user);
   try {
     if (res.data) {
       // if (res.status === 200) {
@@ -40,7 +40,7 @@ const login = async ({ user, navigate }) => {
           Authorization: `Token ${res.data.key}`,
         },
       };
-      var rest = await axiosAPI(`users/profile/${id - 2}/`, config);
+      var rest = await userAPI(`/profile/${id - 2}/`, config);
       // localStorage.setItem("userInfo", window.btoa(JSON.stringify(rest.data)) );
       localStorage.setItem("userInfo", JSON.stringify(rest.data));
       toastSuccess("Logged In");
@@ -65,12 +65,12 @@ const logout = async (navigate) => {
   try {
     var config = {
       method: "post",
-      url: `users/auth/logout/`,
+      url: `/auth/logout/`,
       headers: {
         Authorization: `Token ${myKey}`,
       },
     };
-    const res = await axiosAPI(config);
+    const res = await userAPI(config);
     // console.log(res);
     if (res.status === 200) {
       localStorage.clear();
@@ -97,7 +97,7 @@ const update = async ({ image, user, userId }) => {
       },
       data: data,
     };
-    const res = await axiosAPI(`users/profile/${userId - 2}/`, config);
+    const res = await userAPI(`/profile/${userId - 2}/`, config);
     if (res.status === 200) {
       toastSuccess("Blog has been successfully updated");
       // navigate("/register");

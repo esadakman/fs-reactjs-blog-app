@@ -95,7 +95,7 @@ const Navbar = () => {
                 {authUser ? (
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <Link
-                      to="/"
+                      to="/profile"
                       // type="button"
                       className="p-1 rounded text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300 cursor-pointer"
                     > 
@@ -128,7 +128,7 @@ const Navbar = () => {
                             {({ active }) => (
                               <Link
                                 // as={Button}
-                                to="/"
+                                to="/profile"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"

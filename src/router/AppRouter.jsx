@@ -13,6 +13,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
+import Profile from "../pages/Profile";
 
 const AppRouter = () => {
   // const navigate = useNavigate();
@@ -30,6 +31,7 @@ const AppRouter = () => {
         <Route path="/register" element={<Register />} /> 
         <Route path="/login" element={<Login />} /> 
         <Route path="/newblog" element={<NewBlog />} /> 
+        <Route path="/profile" element={<Profile />} />  
         {/* <Route path="/details" element={<PrivateRouter />}>
           <Route path="/" element={<Home />} />
         </Route>  */}
