@@ -16,7 +16,10 @@ module.exports = {
       },
       height: {
         '82': '82vh',
-        // '84': '84vh',
+        '80%': '80%',
+      },
+      minHeight: {
+        '82': '82vh',
       },
       fontSize: {
         '10': '10rem', 
