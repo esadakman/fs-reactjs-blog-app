@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react'  
 import { useEffect } from 'react';
+import PostCard from '../components/PostCard';
 
 const Home = () => {
   const getDepartments = async (str) => {
@@ -18,7 +19,7 @@ const Home = () => {
   
   return (
     <div>
-      Home  
+     <PostCard/>
     </div>
   )
 }

@@ -6,6 +6,7 @@ import {
   // Outlet,
   Route,
   Routes,
+  // useNavigate,
 } from "react-router-dom"; 
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar"; 
@@ -15,10 +16,9 @@ import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Profile from "../pages/Profile";
 
-const AppRouter = () => {
-  // const navigate = useNavigate();
-  // const user = true
-  // const { user } = useSelector((state) => state.auth);
+const AppRouter = () => { 
+  // const user = JSON.parse(localStorage.getItem("userInfo"))
+  // console.log(user) 
 
   // function PrivateRouter() {
   //   return user ? <Outlet /> : <Navigate to="/" replace />;
@@ -32,8 +32,8 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} /> 
         <Route path="/newblog" element={<NewBlog />} /> 
         <Route path="/profile" element={<Profile />} />  
-        {/* <Route path="/details" element={<PrivateRouter />}>
-          <Route path="/" element={<Home />} />
+        {/* <Route path="/profile" element={<PrivateRouter />}>
+          <Route path="/profile" element={<Profile />} />
         </Route>  */}
         <Route path="/*" element={<NotFound />} />
       </Routes>

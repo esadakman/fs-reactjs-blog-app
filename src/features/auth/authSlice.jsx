@@ -168,7 +168,7 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.message = action.error;
-      console.log(action);
+      // console.log(action);
 
       // state.authUser = null;
     },
@@ -185,8 +185,7 @@ const userSlice = createSlice({
     [login.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.message = action.error;
-      // toastSuccess('Please check info')
+      state.message = action.error; 
       console.log(action);
 
       state.authUser = null;
