@@ -40,7 +40,7 @@ const login = async ({ user, navigate }) => {
           Authorization: `Token ${res.data.key}`,
         },
       };
-      var rest = await userAPI(`/profile/${id - 2}/`, config);
+      var rest = await userAPI(`/profile/${id}/`, config);
       // localStorage.setItem("userInfo", window.btoa(JSON.stringify(rest.data)) );
       localStorage.setItem("userInfo", JSON.stringify(rest.data));
       toastSuccess("Logged In");
@@ -97,7 +97,7 @@ const update = async ({ image, user, userId }) => {
       },
       data: data,
     };
-    const res = await userAPI(`/profile/${userId - 2}/`, config);
+    const res = await userAPI(`/profile/${userId}/`, config);
     if (res.status === 200) {
       toastSuccess("Blog has been successfully updated");
       // navigate("/register");
