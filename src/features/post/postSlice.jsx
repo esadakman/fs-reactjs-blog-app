@@ -34,6 +34,42 @@ export const blogCreate = createAsyncThunk(
     }
   }
 );
+export const postDetail = createAsyncThunk(
+  "post/detail",
+  async (postDetailData, thunkAPI) => {
+    // console.log(postDetailData);
+    try {
+      // console.log(thunkAPI.getState())
+      return await postService.postDetail(postDetailData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+export const postLike = createAsyncThunk(
+  "post/like",
+  async (postLikeData, thunkAPI) => {
+    // console.log(postLikeData);
+    try {
+      return await postService.postLike(postLikeData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+        console.log(error)
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 const post = createSlice({
   name: "post",
@@ -64,6 +100,28 @@ const post = createSlice({
       console.log(action)
     },
     [blogCreate.rejected]: (state, action) => {
+      state.isLoading = false;   
+    },
+    [postDetail.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [postDetail.fulfilled]: (state, { payload }) => {
+      state.isLoading = false; 
+      state.blogs = payload; 
+      // console.log(payload)
+    },
+    [postDetail.rejected]: (state, action) => {
+      state.isLoading = false;   
+    },
+    [postLike.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [postLike.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // state.blogs = action.payload;  
+      console.log(action)
+    },
+    [postLike.rejected]: (state, action) => {
       state.isLoading = false;   
     },
   },

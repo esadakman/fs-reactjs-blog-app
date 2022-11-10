@@ -1,6 +1,6 @@
 import axios from "axios";
 // import { createAsyncThunk } from "@reduxjs/toolkit";
-import {  toastSuccess } from "../../helpers/customToastify"; 
+import { toastSuccess } from "../../helpers/customToastify";
 
 const postAPI = axios.create({
   headers: {
@@ -37,8 +37,8 @@ const blogCreate = async ({ postData, navigate }) => {
     };
     const response = await postAPI(`/posts/`, config);
     if (response.status === 201) {
-      navigate('/')
-      toastSuccess('Your post has been created succesfully !')
+      navigate("/");
+      toastSuccess("Your post has been created succesfully !");
       return response.data;
     }
   } catch (error) {
@@ -46,6 +46,47 @@ const blogCreate = async ({ postData, navigate }) => {
   }
 };
 
-const postService = { blogPosts, blogCreate };
+const postDetail = async (postData) => {
+  let myKey = window.atob(localStorage.getItem("token"));
+  try {
+    var config = {
+      headers: {
+        Authorization: `Token ${myKey}`,
+      },
+    };
+    const response = await postAPI(`/posts/${postData}`, config);
+    if (response.status === 200) {
+      // navigate('/')
+      // toastSuccess('Your post has been created succesfully !')
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const postLike = async (postData) => {
+  let myKey = window.atob(localStorage.getItem("token"));
+  // console.log(postData);
+  try {
+    var config = {
+      method: "post",
+      headers: {
+        Authorization: `Token ${myKey}`,
+      },
+      data: postData,
+    };
+    const response = await postAPI(`/like/`, config);
+    if (response.status === 200) {
+      // navigate('/')
+      // toastSuccess('Your post has been created succesfully !')
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const postService = { blogPosts, blogCreate, postLike, postDetail };
 
 export default postService;
