@@ -4,16 +4,20 @@ import { useEffect } from "react";
 import { useState } from "react";
 import profilePP from "../assets/images/default.webp";
 import loadingGif from "../assets/images/loading.svg";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 // import PostDetails from "./PostDetails";
 
 const PostCard = () => {
+  const navigate = useNavigate();
   const [postData, setPostData] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const { authUser } = useSelector((state) => state.user);
   const getPosts = async (str) => {
     try {
       const { data } = await axios.get(`http://127.0.0.1:8000/blog/posts/`, {});
       // console.log(data)
-      setPostData(data);
+      setPostData(data.results);
       setIsLoading(true);
     } catch (error) {
       console.log(error.message);
@@ -24,18 +28,30 @@ const PostCard = () => {
   useEffect(() => {
     getPosts();
   }, []);
-  console.log(postData);
+  // console.log(postData);
+  const handleDetails = (blog) => {
+    // console.log(blog);
+    if (authUser) {
+      navigate(`/details/${blog.slug}`, {
+        state: blog,
+      });
+    } else {
+      console.log("You should login to see details");
+      // navigate("/login");
+    }
+  };
   return (
     <>
       {/* <PostDetails/> */}
       {isLoading ? (
         <img src={loadingGif} alt="Loading Gif" />
       ) : (
-        <div className=" min-h-82 flex justify-center items-center text-white  gap-5 flex-wrap my-2">
+        <div className=" min-h-82 flex justify-center items-center text-white  gap-5 flex-wrap py-2">
           {postData?.map((data) => (
             <div
               className="max-w-xs  container   rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-slate-800  transition-all"
               key={data.id}
+              onClick={() => handleDetails(data)}
             >
               <div>
                 <span className="text-white text-xs font-bold rounded-lg bg-green-500 inline-block mt-4 ml-4 py-1.5 px-4 cursor-pointer">
@@ -46,7 +62,7 @@ const PostCard = () => {
                 </h1>
               </div>
               <img
-                className="w-full cursor-pointer"
+                className="w-full cursor-pointer max-h-56"
                 src={data.post_image}
                 alt=""
               />

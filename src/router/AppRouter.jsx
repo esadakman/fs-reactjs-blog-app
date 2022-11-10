@@ -2,8 +2,8 @@
 import NewBlog from "../pages/NewBlog";
 import {
   BrowserRouter,
-  // Navigate,
-  // Outlet,
+  Navigate,
+  Outlet,
   Route,
   Routes,
   // useNavigate,
@@ -15,14 +15,15 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Profile from "../pages/Profile";
+import PostDetails from "../components/PostDetails";
 
 const AppRouter = () => { 
-  // const user = JSON.parse(localStorage.getItem("userInfo"))
+  const user = JSON.parse(localStorage.getItem("userInfo"))
   // console.log(user) 
 
-  // function PrivateRouter() {
-  //   return user ? <Outlet /> : <Navigate to="/" replace />;
-  // } 
+  function PrivateRouter() {
+    return user ? <Outlet /> : <Navigate to="/" replace />;
+  } 
   return (
     <BrowserRouter>
       <Navbar /> 
@@ -35,6 +36,9 @@ const AppRouter = () => {
         {/* <Route path="/profile" element={<PrivateRouter />}>
           <Route path="/profile" element={<Profile />} />
         </Route>  */}
+        <Route path="/details" element={<PrivateRouter />}>
+          <Route path="/details:slug" element={<PostDetails />} />
+        </Route>
         <Route path="/*" element={<NotFound />} />
       </Routes>
       <Footer />
