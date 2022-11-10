@@ -12,17 +12,19 @@ const PostCard = () => {
   const getPosts = async (str) => {
     try {
       const { data } = await axios.get(`http://127.0.0.1:8000/blog/posts/`, {});
-      setPostData(data.results);
-      setIsLoading(true); 
+      // console.log(data)
+      setPostData(data);
+      setIsLoading(true);
     } catch (error) {
       console.log(error.message);
     } finally {
       setIsLoading(false);
     }
-  }; 
+  };
   useEffect(() => {
     getPosts();
   }, []);
+  console.log(postData);
   return (
     <>
       {/* <PostDetails/> */}

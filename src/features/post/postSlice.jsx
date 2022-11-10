@@ -20,7 +20,7 @@ export const blogPosts = createAsyncThunk("blog/blog", async (thunkAPI) => {
 export const blogCreate = createAsyncThunk(
   "post/create",
   async (postCreateData, thunkAPI) => {
-    // console.log(postCreateData);
+    console.log(postCreateData);
     try {
       return await postService.blogCreate(postCreateData);
     } catch (error) {

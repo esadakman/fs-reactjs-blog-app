@@ -1,5 +1,6 @@
 import axios from "axios";
 // import { createAsyncThunk } from "@reduxjs/toolkit";
+import {  toastSuccess } from "../../helpers/customToastify"; 
 
 const postAPI = axios.create({
   headers: {
@@ -36,8 +37,8 @@ const blogCreate = async ({ postData, navigate }) => {
     };
     const response = await postAPI(`/posts/`, config);
     if (response.status === 201) {
-      // navigate('/')
-      // toastSuccess('Your post has been created succesfully !')
+      navigate('/')
+      toastSuccess('Your post has been created succesfully !')
       return response.data;
     }
   } catch (error) {

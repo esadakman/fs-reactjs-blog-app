@@ -4,26 +4,50 @@ import { useNavigate } from "react-router-dom";
 import "./pagesStyling/newBlog.scss";
 import { useDispatch } from "react-redux";
 import { blogCreate } from "../features/post/postSlice";
+import axios from "axios";
+import { useEffect } from "react";
 
 const NewBlog = () => {
   const navigate = useNavigate();
+  const [categoryData, setCategory] = useState();
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     post_image: "",
+    category: 1,
   });
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const { title, content, post_image } = formData;
+  const { title, content, post_image, category } = formData;
   const dispatch = useDispatch();
 
   const handleCreatePost = (e) => {
     e.preventDefault();
-    let postCreateData = { postData: JSON.stringify(formData), navigate: navigate };
-    dispatch(blogCreate(postCreateData)); 
+    let postCreateData = {
+      postData: JSON.stringify(formData),
+      navigate: navigate,
+    };
+    dispatch(blogCreate(postCreateData));
   };
-  // console.log(JSON.stringify(formData));
+
+  const getCategories = async (str) => { 
+    try {
+      const { data } = await axios.get(
+        `http://127.0.0.1:8000/blog/category/`,
+        {}
+      );
+      setCategory(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
+  // console.log(formData);
+  // console.log(formData.category); 
+
   return (
     <div>
       <div className="newBlog ">
@@ -53,7 +77,26 @@ const NewBlog = () => {
                 value={post_image}
                 onChange={onChange}
               />
-
+              {/* <label
+                htmlFor="countries"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
+              >
+                Select a Category
+              </label> */}
+              <select
+                id="category"
+                name="category"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={onChange}
+                value={category}
+              >
+                <option defaultValue value="1" name="category">Select a Category</option>
+                {categoryData?.map((data) => (
+                  <option key={data.id} value={data.id} name="category">
+                    {data.name}
+                  </option>
+                ))}
+              </select>
               <textarea
                 type="text"
                 placeholder="Content"
