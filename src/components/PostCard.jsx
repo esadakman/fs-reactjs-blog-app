@@ -7,8 +7,8 @@ import postDefault from "../assets/images/not-found.png";
 import loadingGif from "../assets/images/loading.svg";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-// import PostDetails from "./PostDetails";
-
+import { onImageError, onImageErrorPost } from "../helpers/functions";
+// import PostDetails from "./PostDetails"; 
 const PostCard = () => {
   const navigate = useNavigate();
   const [postData, setPostData] = useState();
@@ -16,8 +16,7 @@ const PostCard = () => {
   const { authUser } = useSelector((state) => state.user);
   const getPosts = async (str) => {
     try {
-      const { data } = await axios.get(`http://127.0.0.1:8000/blog/posts/`, {});
-      // console.log(data)
+      const { data } = await axios.get(process.env.REACT_APP_API_URL+`/blog/posts/`, {});  
       setPostData(data.results);
       setIsLoading(true);
     } catch (error) {
@@ -30,9 +29,8 @@ const PostCard = () => {
     getPosts();
   }, []);
   // console.log(postData);
-  const handleDetails = (blog) => {
-    // console.log(blog);
-    if (authUser) {
+  const handleDetails = (blog) => {  
+    if (authUser) { 
       navigate(`/details/${blog.slug}`, {
         state: blog,
       });
@@ -40,13 +38,7 @@ const PostCard = () => {
       console.log("You should login to see details");
       // navigate("/login");
     }
-  };
-  const onImageError = (e) => {
-    e.target.src = profileDefault;
-  };
-  const onImageErrorPost = (e) => {
-    e.target.src = postDefault;
-  };
+  }; 
   return (
     <>
       {/* <PostDetails/> */}
@@ -56,12 +48,12 @@ const PostCard = () => {
         <div className=" min-h-82 flex justify-center items-center text-white  gap-5 flex-wrap py-2">
           {postData?.map((data) => (
             <div
-              className="max-w-xs  container   rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-slate-800  transition-all"
+              className="max-w-xs  container   rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-slate-800  transition duration-300"
               key={data.id}
               onClick={() => handleDetails(data)}
             >
               <div>
-                <span className="text-white text-xs font-bold rounded-lg bg-green-500 inline-block mt-4 ml-4 py-1.5 px-4 cursor-pointer">
+                <span className="text-white text-xs font-bold rounded-lg bg-green-500 inline-block mt-4 ml-4 py-1.5 px-4  ">
                   {data.category_name}
                 </span>
                 <h1 className="text-2xl my-2 ml-4 font-bold hover:text-slate-200 cursor-pointer  transition duration-100">

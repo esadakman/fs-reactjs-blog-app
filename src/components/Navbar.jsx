@@ -5,6 +5,7 @@ import profileDefault from "../assets/images/default.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
+import { onImageError } from "../helpers/functions";
 
 const authLinks = [
   { name: "Home", to: "/", current: false },
@@ -35,9 +36,9 @@ const Navbar = () => {
     dispatch(reset());
     // navigate("/login");
   };
-  const onImageError = (e) => {
-    e.target.src = profileDefault;
-  };
+  // const onImageError = (e) => {
+  //   e.target.src = profileDefault;
+  // };
   return (
     <>
       <Disclosure as="nav" className="bg-gray-900 ">

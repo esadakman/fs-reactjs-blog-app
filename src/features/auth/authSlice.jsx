@@ -7,7 +7,7 @@ import authService from "./authService";
 
 // const userStorage = JSON.parse(window.atob(localStorage.getItem("userInfo")));
 const userStorage = JSON.parse(localStorage.getItem("userInfo"));
-// console.log(userStorage);
+// console.log(JSON.parse(localStorage.getItem("userInfo")));
 const initialState = {
   authUser: userStorage ? userStorage : null, 
   isError: false,

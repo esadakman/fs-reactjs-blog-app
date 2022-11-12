@@ -70,6 +70,23 @@ export const postLike = createAsyncThunk(
     }
   }
 );
+export const postComment = createAsyncThunk(
+  "post/comment", 
+  async (postCommentData, thunkAPI) => { 
+    try {
+      return await postService.postComment(postCommentData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+        console.log(error)
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 const post = createSlice({
   name: "post",
@@ -124,8 +141,20 @@ const post = createSlice({
     [postLike.rejected]: (state, action) => {
       state.isLoading = false;   
     },
+    [postComment.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [postComment.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // state.blogs = action.payload;  
+      console.log(action)
+    },
+    [postComment.rejected]: (state, action) => {
+      state.isLoading = false;   
+    },
   },
 });
 
 export const { reset } = post.actions;
 export default post.reducer;
+ 

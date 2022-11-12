@@ -1,6 +1,7 @@
 import axios from "axios";
 // import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toastSuccess } from "../../helpers/customToastify";
+let myKey = window.atob(localStorage.getItem("token"));
 
 const postAPI = axios.create({
   headers: {
@@ -8,7 +9,7 @@ const postAPI = axios.create({
   },
   // timeout: 8000,
 
-  baseURL: "http://127.0.0.1:8000/blog",
+  baseURL: process.env.REACT_APP_API_URL+'/blog',
 });
 
 const blogPosts = async () => {
@@ -25,7 +26,6 @@ const blogPosts = async () => {
 };
 
 const blogCreate = async ({ postData, navigate }) => {
-  let myKey = window.atob(localStorage.getItem("token"));
   // console.log(postData);
   try {
     var config = {
@@ -46,8 +46,7 @@ const blogCreate = async ({ postData, navigate }) => {
   }
 };
 
-const postDetail = async (postData) => {
-  let myKey = window.atob(localStorage.getItem("token"));
+const postDetail = async (postData) => { 
   try {
     var config = {
       headers: {
@@ -65,9 +64,7 @@ const postDetail = async (postData) => {
   }
 };
 
-const postLike = async (postData) => {
-  let myKey = window.atob(localStorage.getItem("token"));
-  // console.log(postData);
+const postLike = async (postData) => {  
   try {
     var config = {
       method: "post",
@@ -87,6 +84,31 @@ const postLike = async (postData) => {
   }
 };
 
-const postService = { blogPosts, blogCreate, postLike, postDetail };
+const postComment = async ({comment, url}) => { 
+  // console.log(comment);
+  let data = JSON.stringify({
+    "content": comment
+  });
+  try {
+    var config = {
+      method: "post",
+      headers: {
+        Authorization: `Token ${myKey}`,
+      },
+      data: data,
+    };
+    const response = await postAPI(url, config);
+    if (response.status === 200) {
+      console.log('object');
+      // navigate('/')
+      // toastSuccess('Your post has been created succesfully !')
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const postService = { blogPosts, blogCreate, postLike, postDetail , postComment};
 
 export default postService;

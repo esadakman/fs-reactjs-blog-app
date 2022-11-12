@@ -1,13 +1,13 @@
 import axios from "axios";
 import { toastError, toastSuccess } from "../../helpers/customToastify"; 
-
+// console.log(process.env.REACT_APP_API_URL+'/users');
 const userAPI = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
   // timeout: 8000,
 
-  baseURL: "http://127.0.0.1:8000/users",
+  baseURL: process.env.REACT_APP_API_URL+'/users',
 });
 // Register user
 const register = async ({userData,navigate}) => {
@@ -40,8 +40,7 @@ const login = async ({ user, navigate }) => {
           Authorization: `Token ${res.data.key}`,
         },
       };
-      var rest = await userAPI(`/profile/${id}/`, config);
-      // localStorage.setItem("userInfo", window.btoa(JSON.stringify(rest.data)) ); 
+      var rest = await userAPI(`/profile/${id}/`, config); 
       localStorage.setItem("userInfo", JSON.stringify(rest.data));
       toastSuccess("Logged In");
       navigate("/");
@@ -70,8 +69,7 @@ const logout = async (navigate) => {
         Authorization: `Token ${myKey}`,
       },
     };
-    const res = await userAPI(config);
-    // console.log(res);
+    const res = await userAPI(config); 
     if (res.status === 200) {
       localStorage.clear();
       toastSuccess(`${res.data.detail}`);
