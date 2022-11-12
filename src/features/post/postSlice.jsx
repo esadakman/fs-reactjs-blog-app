@@ -119,7 +119,7 @@ const post = createSlice({
     [postLike.fulfilled]: (state, action) => {
       state.isLoading = false;
       // state.blogs = action.payload;  
-      console.log(action)
+      // console.log(action)
     },
     [postLike.rejected]: (state, action) => {
       state.isLoading = false;   

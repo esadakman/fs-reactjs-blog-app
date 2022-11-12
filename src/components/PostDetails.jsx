@@ -4,19 +4,18 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { postDetail, postLike } from "../features/post/postSlice";
+import { postLike } from "../features/post/postSlice";
 import loadingGif from "../assets/images/loading.svg";
+import profileDefault from "../assets/images/default.webp";
+import postDefault from "../assets/images/not-found.png";
 
 const PostDetails = () => {
   const { state } = useLocation();
   const { authUser } = useSelector((state) => state.user);
-  const { blogs } = useSelector((state) => state.blog);
   const dispatch = useDispatch();
   const [postData, setPostData] = useState();
-  // setPostData(blogs)
   const [isLoading, setIsLoading] = useState(false);
   let myKey = window.atob(localStorage.getItem("token"));
-  // console.log(formData);
   const getPosts = async (str) => {
     try {
       var config = {
@@ -30,6 +29,7 @@ const PostDetails = () => {
         config
       );
       setPostData(data);
+      // console.log(data.like_count)
       setIsLoading(true);
     } catch (error) {
       console.log(error.message);
@@ -37,34 +37,50 @@ const PostDetails = () => {
       setIsLoading(false);
     }
   };
-
-  const postLike = async (str) => {
-    try {
-      var config = {
-        url: "http://127.0.0.1:8000/blog/like/",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const { data } = await axios(`http://127.0.0.1:8000/blog/like/`, config);
-      console.log(data.filter((x) => x.post === 7).length);
-    } catch (error) {
-      console.log(error.message);
-    }
+  // console.log(typeof `${postData.id}`);
+  // console.log(state);
+  // const postLikes = async (str) => {
+  //   try {
+  //     var config = {
+  //       url: "http://127.0.0.1:8000/blog/like/",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     };
+  //     const { data } = await axios(`http://127.0.0.1:8000/blog/like/`, config);
+  //     // console.log(data);
+  //     setLikeCounter(
+  //       data.filter((x) => x.post === parseInt(`${state.id}`)).length
+  //     );
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+  const formData = {
+    user_id: authUser?.user.id,
+    post: state?.id,
   };
-
   const handleLike = (e) => {
     e.preventDefault();
-    // dispatch(postLike(JSON.stringify(formData)));
-    postLike();
-    // getPosts();
+    dispatch(postLike(JSON.stringify(formData)));
+    // postLikes();
+    getPosts();
   };
 
   useEffect(() => {
     getPosts();
+    // postLikes();
     // dispatch(postDetail(state.slug));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // console.log(blogs,isLoading);
+  console.log(postData?.post_comment);
+
+  const onImageError = (e) => {
+    e.target.src = profileDefault;
+  };
+  const onImageErrorPost = (e) => {
+    e.target.src = postDefault;
+  };
   return (
     <div>
       {isLoading ? (
@@ -73,14 +89,16 @@ const PostDetails = () => {
         <div className="wrapper pt-10 centeralizer">
           <article className="mb-4 break-inside p-6 rounded-xl bg-white dark:bg-slate-800 dark:text-white flex flex-col bg-clip-border w-11/12 md:w-8/12 lg:w-1/2">
             <div className="flex pb-6 items-center justify-between">
-              <div className="flex">
-                <a className="inline-block mr-4" href="/#">
+              <div className="flex"> 
                   <img
-                    className="rounded-full max-w-none w-14 h-14"
-                    src="https://randomuser.me/api/portraits/women/9.jpg"
+                    className="rounded-full max-w-none w-14 h-14 mr-3"
+                    // src={postData?.author_pp}
+                    src={
+                      postData?.author_pp ? postData?.author_pp : profileDefault
+                    }
+                    onError={onImageError}
                     alt="asd"
-                  />
-                </a>
+                  /> 
                 <div className="flex flex-col">
                   <div className="flex items-center">
                     <p className="inline-block text-lg font-bold mr-2 ">
@@ -98,14 +116,15 @@ const PostDetails = () => {
               </div>
             </div>
             <h2 className="text-3xl font-extrabold ">{postData?.title}</h2>
-            <div className="py-4">
-              <a className="flex" href="/#">
+            <div className="py-4"> 
                 <img
-                  className="max-w-full rounded-lg w-screen "
-                  src={postData?.post_image}
+                  className="max-w-full rounded-lg w-screen " 
+                  src={
+                    postData?.post_image ? postData?.post_image : postDefault
+                  }
+                  onError={onImageErrorPost}
                   alt="post pic"
-                />
-              </a>
+                /> 
             </div>
             <p className="text-justify max-h-56 overflow-auto">
               {postData?.content}
@@ -121,9 +140,8 @@ const PostDetails = () => {
                     <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path>
                   </svg>
                 </span>
-                <span className="text-lg font-bold">
-                  {" "}
-                  {postData?.like_count}
+                <span className="text-lg font-bold"> 
+                  {postData?.like_count} 
                 </span>
               </div>
               <div className="flex">
@@ -136,8 +154,7 @@ const PostDetails = () => {
                     <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z" />
                   </svg>
                 </span>
-                <span className="text-lg font-bold">
-                  {" "}
+                <span className="text-lg font-bold"> 
                   {postData?.view_count}
                 </span>
               </div>
@@ -172,42 +189,33 @@ const PostDetails = () => {
             {/* <!-- Comments content --> */}
             <div className="pt-6">
               {/* <!-- Comment row --> */}
-              <div className="media flex pb-4">
-                <a className="mr-4" href="/#">
-                  <img
-                    className="rounded-full max-w-none w-12 h-12"
-                    src="https://randomuser.me/api/portraits/men/83.jpg"
-                    alt="asd"
-                  />
-                </a>
-                <div className="media-body">
-                  <div>
-                    <a
-                      className="inline-block text-base font-bold mr-2"
-                      href="/#"
-                    >
-                      Ronald Richards
-                    </a>
-                    <span className="text-slate-500 dark:text-slate-300">
-                      25 minutes ago
-                    </span>
-                  </div>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit sed
-                    do eiusmod 😀😀😀
-                  </p>
-                </div>
+              <div className="media flex pb-4 flex-col gap-3">
+                {postData?.post_comment?.map((data) => (
+                  <article className="flex " key={data.id}>
+                    <div className=" pr-4">
+                      <img
+                        className="rounded-full max-w-none w-12 h-12  "
+                        src={data.user_pp ? data.user_pp : profileDefault}
+                        onError={onImageError}
+                        alt="asd"
+                      />
+                    </div>
+                    <div className="media-body">
+                      <div>
+                        <p className="inline-block text-base font-bold mr-2">
+                          {data.user}
+                        </p>
+                        <span className="text-slate-500 dark:text-slate-300">
+                          25 minutes ago
+                        </span>
+                      </div>
+                      <p>{data.content}</p>
+                    </div>
+                  </article>
+                ))}
               </div>
               {/* <!-- End comments row --> */}
               {/* <!-- More comments --> */}
-              {/* <div className="w-full">
-              <a
-                href="/#"
-                className="py-3 px-4 w-full block bg-slate-100 dark:bg-slate-700 text-center rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition ease-in-out delay-75"
-              >
-                Show more comments
-              </a>
-            </div> */}
             </div>
           </article>
         </div>
@@ -217,3 +225,12 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
+
+// {/* <div className="w-full">
+// <a
+//   href="/#"
+//   className="py-3 px-4 w-full block bg-slate-100 dark:bg-slate-700 text-center rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-600 transition ease-in-out delay-75"
+// >
+//   Show more comments
+// </a>
+// </div> */}

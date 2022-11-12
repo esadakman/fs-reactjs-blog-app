@@ -29,7 +29,7 @@ const login = async ({ user, navigate }) => {
   try {
     if (res.data) {
       // if (res.status === 200) {
-      console.log(res.data);
+      // console.log(res.data);
       let id = res.data.user.id;
       const myToken = window.btoa(res.data.key);
       // const userStorage = JSON.stringify(res.data.user);
@@ -41,7 +41,7 @@ const login = async ({ user, navigate }) => {
         },
       };
       var rest = await userAPI(`/profile/${id}/`, config);
-      // localStorage.setItem("userInfo", window.btoa(JSON.stringify(rest.data)) );
+      // localStorage.setItem("userInfo", window.btoa(JSON.stringify(rest.data)) ); 
       localStorage.setItem("userInfo", JSON.stringify(rest.data));
       toastSuccess("Logged In");
       navigate("/");
@@ -97,7 +97,9 @@ const update = async ({ image, user, userId }) => {
       },
       data: data,
     };
-    const res = await userAPI(`/profile/${userId}/`, config);
+    const res = await userAPI(`/profile/${userId}/`, config); 
+    localStorage.setItem("userInfo", JSON.stringify(res.data));
+
     if (res.status === 200) {
       toastSuccess("Blog has been successfully updated");
       // navigate("/register");

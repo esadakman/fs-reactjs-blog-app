@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import profilePP from "../assets/images/default.webp";
+import profileDefault from "../assets/images/default.webp";
+import postDefault from "../assets/images/not-found.png";
 import loadingGif from "../assets/images/loading.svg";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -40,6 +41,12 @@ const PostCard = () => {
       // navigate("/login");
     }
   };
+  const onImageError = (e) => {
+    e.target.src = profileDefault;
+  };
+  const onImageErrorPost = (e) => {
+    e.target.src = postDefault;
+  };
   return (
     <>
       {/* <PostDetails/> */}
@@ -55,22 +62,25 @@ const PostCard = () => {
             >
               <div>
                 <span className="text-white text-xs font-bold rounded-lg bg-green-500 inline-block mt-4 ml-4 py-1.5 px-4 cursor-pointer">
-                  Home
+                  {data.category_name}
                 </span>
                 <h1 className="text-2xl my-2 ml-4 font-bold hover:text-slate-200 cursor-pointer  transition duration-100">
                   {data.title}
                 </h1>
               </div>
               <img
-                className="w-full cursor-pointer max-h-56"
-                src={data.post_image}
+                className="w-full cursor-pointer max-h-56" 
+                src={data.post_image ? data.post_image : postDefault}
+                onError={onImageErrorPost}
                 alt=""
               />
               <div className="flex p-4 justify-between">
                 <div className="flex items-center space-x-2">
                   <img
                     className="w-10 rounded-full"
-                    src={profilePP}
+                    // src={data.author_pp || profileDefault}
+                    src={data.author_pp ? data.author_pp : profileDefault}
+                    onError={onImageError}
                     alt="sara"
                   />
                   <h2 className=" font-bold cursor-pointer">{data.author}</h2>

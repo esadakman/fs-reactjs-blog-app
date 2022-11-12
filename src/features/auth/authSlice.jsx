@@ -179,7 +179,7 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
       state.message = false;
-      console.log(action);
+      // console.log(action);
       state.authUser = action.payload;
     },
     [login.rejected]: (state, action) => {

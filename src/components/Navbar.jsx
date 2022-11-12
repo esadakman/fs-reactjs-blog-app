@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import logo from "../assets/images/logo.png";
-import profilePP from "../assets/images/default.webp";
+import profileDefault from "../assets/images/default.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
@@ -15,27 +15,29 @@ const guestLinks = [
   // { name: "Home", to: "/", current: true },
   { name: "Register", to: "/register", current: false },
   { name: "Login", to: "/login", current: false },
-  { name: "New Post", to: "/newblog", current: false },  
+  { name: "New Post", to: "/newblog", current: false },
 ];
 
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { authUser } = useSelector((state) => state.user );
+  const { authUser } = useSelector((state) => state.user);
   // const { authUser, isLoading, isError, isSuccess, message } = useSelector(
   //   (state) => state.user
-  // );  
+  // );
   // console.log(authUser)
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-  const handleLogout = (e) => { 
-    e.preventDefault()
+  const handleLogout = (e) => {
+    e.preventDefault();
     dispatch(logout(navigate));
     dispatch(reset());
     // navigate("/login");
   };
-
+  const onImageError = (e) => {
+    e.target.src = profileDefault;
+  };
   return (
     <>
       <Disclosure as="nav" className="bg-gray-900 ">
@@ -98,18 +100,18 @@ const Navbar = () => {
                       to="/profile"
                       // type="button"
                       className="p-1 rounded text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300 cursor-pointer"
-                    > 
+                    >
                       {authUser?.user?.username}
-                    </Link> 
+                    </Link>
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
                       <div>
                         <Menu.Button className="flex rounded-full bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300">
                           <span className="sr-only">Open user menu</span>
                           <img
-                            className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300"
-                            // src={authUser ? "asdsadasd" : profilePP}
-                            src={authUser?.image || profilePP}
+                            className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300" 
+                            src={authUser?.image ? authUser?.image : profileDefault}
+                            onError={onImageError}
                             alt="pic"
                           />
                         </Menu.Button>
@@ -176,7 +178,7 @@ const Navbar = () => {
                       >
                         <img
                           className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-100"
-                          src={ profilePP }
+                          src={profileDefault}
                           alt="pic"
                         />
                       </Menu.Button>
