@@ -16,13 +16,13 @@ import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Profile from "../pages/Profile";
 import PostDetails from "../components/PostDetails";
+import { useSelector } from "react-redux";
 
-const AppRouter = () => { 
-  const user = JSON.parse(localStorage.getItem("userInfo"))
-  // console.log(user) 
+const AppRouter = () => {  
+  const { authUser } = useSelector((state) => state.user);
 
   function PrivateRouter() {
-    return user ? <Outlet /> : <Navigate to="/" replace />;
+    return authUser ? <Outlet /> : <Navigate to="/" replace />;
   } 
   return (
     <BrowserRouter>

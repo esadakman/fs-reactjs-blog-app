@@ -1,5 +1,5 @@
 import axios from "axios";
-import { toastError, toastSuccess } from "../../helpers/customToastify"; 
+import { toastError, toastSuccess } from "../../helpers/customToastify";
 // console.log(process.env.REACT_APP_API_URL+'/users');
 const userAPI = axios.create({
   headers: {
@@ -7,16 +7,16 @@ const userAPI = axios.create({
   },
   // timeout: 8000,
 
-  baseURL: process.env.REACT_APP_API_URL+'/users',
+  baseURL: process.env.REACT_APP_API_URL + "/users",
 });
 // Register user
-const register = async ({userData,navigate}) => {
+const register = async ({ userData, navigate }) => {
   const response = await userAPI.post("/register/", userData);
   console.log(response);
   try {
     if (response.status === 201) {
-      navigate('/login')
-      toastSuccess('Your Profile has been created succesfully !')
+      navigate("/login");
+      toastSuccess("Your Profile has been created succesfully !");
       return response.data;
     }
   } catch (error) {
@@ -28,25 +28,25 @@ const login = async ({ user, navigate }) => {
   const res = await userAPI.post(`/auth/login/`, user);
   try {
     if (res.data) {
-      // if (res.status === 200) {
-      // console.log(res.data);
-      let id = res.data.user.id;
-      const myToken = window.btoa(res.data.key);
-      // const userStorage = JSON.stringify(res.data.user);
-      // localStorage.setItem("userInfo", window.btoa(userStorage) );
-      localStorage.setItem("token", myToken);
-      const config = {
-        headers: {
-          Authorization: `Token ${res.data.key}`,
-        },
-      };
-      var rest = await userAPI(`/profile/${id}/`, config); 
-      localStorage.setItem("userInfo", JSON.stringify(rest.data));
-      toastSuccess("Logged In");
-      navigate("/");
-      return rest.data;
-    } else {
-      return res.data;
+      if (res.status === 200) { 
+        let id = res.data.user.id;
+        const myToken = window.btoa(res.data.key);
+        // const userStorage = JSON.stringify(res.data.user);
+        // localStorage.setItem("userInfo", window.btoa(userStorage) ); 
+        localStorage.setItem("token", myToken);
+        const config = {
+          headers: {
+            Authorization: `Token ${res.data.key}`,
+          },
+        };
+        var rest = await userAPI(`/profile/${id}/`, config);
+        localStorage.setItem("userInfo", JSON.stringify(rest.data));
+        toastSuccess("Logged In");
+        navigate("/");
+        return rest.data;
+      } else {
+        return res.data;
+      }
     }
   } catch (error) {
     console.log(error);
@@ -62,6 +62,8 @@ const login = async ({ user, navigate }) => {
 const logout = async (navigate) => {
   let myKey = window.atob(localStorage.getItem("token"));
   try {
+    // ! for preventing unauthorized error in postDetail page I changed the navigate function's place
+    navigate("/login");
     var config = {
       method: "post",
       url: `/auth/logout/`,
@@ -69,11 +71,10 @@ const logout = async (navigate) => {
         Authorization: `Token ${myKey}`,
       },
     };
-    const res = await userAPI(config); 
+    const res = await userAPI(config);
     if (res.status === 200) {
       localStorage.clear();
       toastSuccess(`${res.data.detail}`);
-      navigate("/login");
       return res.data;
     }
   } catch (error) {
@@ -95,7 +96,7 @@ const update = async ({ image, user, userId }) => {
       },
       data: data,
     };
-    const res = await userAPI(`/profile/${userId}/`, config); 
+    const res = await userAPI(`/profile/${userId}/`, config);
     localStorage.setItem("userInfo", JSON.stringify(res.data));
 
     if (res.status === 200) {

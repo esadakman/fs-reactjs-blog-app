@@ -11,7 +11,6 @@ import postDefault from "../assets/images/not-found.png";
 // import Picker from "emoji-picker-react";
 import { useRef } from "react";
 import { onImageError, onImageErrorPost } from "../helpers/functions";
-let myKey = window.atob(localStorage.getItem("token"));
 
 const PostDetails = () => {
   const { state } = useLocation();
@@ -21,6 +20,7 @@ const PostDetails = () => {
   const commentRef = useRef();
   const [isLoading, setIsLoading] = useState(false);
 
+  let myKey = window.atob(localStorage.getItem("token"));
   const getPosts = async (str) => {
     try {
       const config = {
@@ -30,8 +30,8 @@ const PostDetails = () => {
         },
       };
       const { data } = await axios.get(
-        `http://127.0.0.1:8000/blog/posts/${state.slug}`,
-        // process.env.REACT_APP_API_URL+`/blog/posts/${state.slug}`,
+        // `http://127.0.0.1:8000/blog/posts/${state.slug}`,
+        process.env.REACT_APP_API_URL + `/blog/posts/${state.slug}`,
         config
       );
       setPostData(data);
@@ -57,9 +57,9 @@ const PostDetails = () => {
     let commentData = {
       comment: commentRef.current.value,
       url: `/posts/${state.slug}/comments/`,
-    }; 
+    };
     dispatch(postComment(commentData));
-    // console.log("asd");
+    commentRef.current.value = "";
     getPosts();
   };
   useEffect(() => {
@@ -80,7 +80,6 @@ const PostDetails = () => {
               <div className="flex">
                 <img
                   className="rounded-full max-w-none w-14 h-14 mr-3"
-                  // src={postData?.author_pp}
                   src={
                     postData?.author_pp ? postData?.author_pp : profileDefault
                   }
@@ -116,7 +115,7 @@ const PostDetails = () => {
               {postData?.content}
             </p>
             <div className="py-4 flex">
-              <div className="flex mr-2" onClick={handleLike}>
+              <div className="flex mr-2 w-12" onClick={handleLike}>
                 <span className="mr-2 cursor-pointer">
                   <svg
                     className="fill-rose-600 dark:fill-rose-400 w-6 h-6"
@@ -129,7 +128,7 @@ const PostDetails = () => {
                   {postData?.like_count}
                 </span>
               </div>
-              <div className="flex">
+              <div className="flex mr-2">
                 <span className="mr-2 cursor-pointer">
                   <svg
                     className="fill-slate-100 dark:fill-slate-100 w-6 h-6"
@@ -140,6 +139,26 @@ const PostDetails = () => {
                 </span>
                 <span className="text-lg font-bold">
                   {postData?.view_count}
+                </span>
+              </div>
+              <div className="flex">
+                <span className="mr-2 cursor-pointer">
+                  <svg
+                    className="w-6 h-6   "
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                    />
+                  </svg>
+                </span>
+                <span className="text-lg font-bold">
+                  {postData?.post_comment.length}
                 </span>
               </div>
             </div>
@@ -163,9 +182,12 @@ const PostDetails = () => {
             {/* <!-- Comments content --> */}
             <div className="pt-6">
               {/* <!-- Comment row --> */}
-              <div className="media flex pb-4 flex-col gap-3">
+              <div className="media flex pb-2 flex-col gap-2">
                 {postData?.post_comment?.map((data) => (
-                  <article className="flex " key={data.id}>
+                  <article
+                    className="flex pb-2 border-b border-slate-100"
+                    key={data.id}
+                  >
                     <div className=" pr-4">
                       <img
                         className="rounded-full max-w-none w-12 h-12  "
@@ -183,9 +205,11 @@ const PostDetails = () => {
                           25 minutes ago
                         </span>
                       </div>
-                      <p>{data.content}</p>
+                      <p className="text-justify max-h-20 overflow-auto">
+                        {data.content}
+                      </p>
                     </div>
-                    <br/>
+                    <br />
                   </article>
                 ))}
               </div>

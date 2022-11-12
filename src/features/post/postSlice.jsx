@@ -147,7 +147,7 @@ const post = createSlice({
     [postComment.fulfilled]: (state, action) => {
       state.isLoading = false;
       // state.blogs = action.payload;  
-      console.log(action)
+      // console.log(action)
     },
     [postComment.rejected]: (state, action) => {
       state.isLoading = false;   

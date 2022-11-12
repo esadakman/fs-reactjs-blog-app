@@ -8,15 +8,19 @@ import loadingGif from "../assets/images/loading.svg";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { onImageError, onImageErrorPost } from "../helpers/functions";
-// import PostDetails from "./PostDetails"; 
+// import PostDetails from "./PostDetails";
 const PostCard = () => {
   const navigate = useNavigate();
   const [postData, setPostData] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const { authUser } = useSelector((state) => state.user);
+ 
   const getPosts = async (str) => {
     try {
-      const { data } = await axios.get(process.env.REACT_APP_API_URL+`/blog/posts/`, {});  
+      const { data } = await axios.get(
+        process.env.REACT_APP_API_URL + `/blog/posts/`,
+        {}
+      );
       setPostData(data.results);
       setIsLoading(true);
     } catch (error) {
@@ -27,18 +31,22 @@ const PostCard = () => {
   };
   useEffect(() => {
     getPosts();
-  }, []);
-  // console.log(postData);
-  const handleDetails = (blog) => {  
+  }, []); 
+  const handleDetails = (blog) => {
     if (authUser) { 
       navigate(`/details/${blog.slug}`, {
         state: blog,
       });
+      // navigate(`/details/${blog.slug}`, {
+      //   state: blog,
+      // });
+      
     } else {
       console.log("You should login to see details");
       // navigate("/login");
     }
-  }; 
+  };
+  // console.log(isLoading);
   return (
     <>
       {/* <PostDetails/> */}
@@ -61,7 +69,7 @@ const PostCard = () => {
                 </h1>
               </div>
               <img
-                className="w-full cursor-pointer max-h-56" 
+                className="w-full cursor-pointer max-h-56"
                 src={data.post_image ? data.post_image : postDefault}
                 onError={onImageErrorPost}
                 alt=""

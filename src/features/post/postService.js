@@ -1,20 +1,15 @@
 import axios from "axios";
-// import { createAsyncThunk } from "@reduxjs/toolkit";
-import { toastSuccess } from "../../helpers/customToastify";
-let myKey = window.atob(localStorage.getItem("token"));
-
+import { toastSuccess } from "../../helpers/customToastify"; 
 const postAPI = axios.create({
   headers: {
     "Content-Type": "application/json",
-  },
-  // timeout: 8000,
+  }, 
 
-  baseURL: process.env.REACT_APP_API_URL+'/blog',
+  baseURL: process.env.REACT_APP_API_URL + "/blog",
 });
 
 const blogPosts = async () => {
-  const response = await postAPI.get("/posts/");
-  // console.log(response);
+  const response = await postAPI.get("/posts/"); 
   try {
     if (response.status === 200) {
       // console.log(response.data);
@@ -26,7 +21,7 @@ const blogPosts = async () => {
 };
 
 const blogCreate = async ({ postData, navigate }) => {
-  // console.log(postData);
+  let myKey = window.atob(localStorage.getItem("token")); 
   try {
     var config = {
       method: "post",
@@ -46,7 +41,8 @@ const blogCreate = async ({ postData, navigate }) => {
   }
 };
 
-const postDetail = async (postData) => { 
+const postDetail = async (postData) => {
+  let myKey = window.atob(localStorage.getItem("token"));
   try {
     var config = {
       headers: {
@@ -55,8 +51,6 @@ const postDetail = async (postData) => {
     };
     const response = await postAPI(`/posts/${postData}`, config);
     if (response.status === 200) {
-      // navigate('/')
-      // toastSuccess('Your post has been created succesfully !')
       return response.data;
     }
   } catch (error) {
@@ -64,12 +58,13 @@ const postDetail = async (postData) => {
   }
 };
 
-const postLike = async (postData) => {  
+const postLike = async (postData) => {
+  let myKey = window.atob(localStorage.getItem("token"));
   try {
     var config = {
       method: "post",
       headers: {
-        Authorization: `Token ${myKey}`,
+        Authorization: "Token " + myKey, 
       },
       data: postData,
     };
@@ -84,10 +79,10 @@ const postLike = async (postData) => {
   }
 };
 
-const postComment = async ({comment, url}) => { 
-  // console.log(comment);
+const postComment = async ({ comment, url }) => {
+  let myKey = window.atob(localStorage.getItem("token")); 
   let data = JSON.stringify({
-    "content": comment
+    content: comment,
   });
   try {
     var config = {
@@ -98,10 +93,9 @@ const postComment = async ({comment, url}) => {
       data: data,
     };
     const response = await postAPI(url, config);
-    if (response.status === 200) {
-      console.log('object');
+    if (response.status === 201) {
       // navigate('/')
-      // toastSuccess('Your post has been created succesfully !')
+      toastSuccess("Your comment has been created succesfully !");
       return response.data;
     }
   } catch (error) {
@@ -109,6 +103,12 @@ const postComment = async ({comment, url}) => {
   }
 };
 
-const postService = { blogPosts, blogCreate, postLike, postDetail , postComment};
+const postService = {
+  blogPosts,
+  blogCreate,
+  postLike,
+  postDetail,
+  postComment,
+};
 
 export default postService;

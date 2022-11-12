@@ -197,8 +197,8 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
       // state.message = action;
-      console.log(action);
-      state.authUser = null;
+      // console.log(action);
+      state.authUser = false;
     },
     [logout.rejected]: (state, action) => {
       state.isLoading = false;
