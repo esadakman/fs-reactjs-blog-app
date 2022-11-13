@@ -1,7 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./pagesStyling/newBlog.scss";
 import { useDispatch } from "react-redux";
 import { blogCreate } from "../features/post/postSlice";
 import axios from "axios";
@@ -31,7 +30,7 @@ const NewBlog = () => {
     dispatch(blogCreate(postCreateData));
   };
 
-  const getCategories = async (str) => { 
+  const getCategories = async (str) => {
     try {
       const { data } = await axios.get(
         `http://127.0.0.1:8000/blog/category/`,
@@ -46,15 +45,18 @@ const NewBlog = () => {
     getCategories();
   }, []);
   // console.log(formData);
-  // console.log(formData.category); 
+  // console.log(formData.category);
 
   return (
     <div>
-      <div className="newBlog ">
-        <div className="contactForm">
-          <h2 className="text-3xl"> Create a Post</h2>
-          <div>
-            <form className="blogForm" onSubmit={handleCreatePost}>
+      <div className="newBlog centeralizer min-h-82   ">
+        <div className="contactForm bg-gray-900 bg-opacity-40 w-11/12 max-w-40rem min-w-20rem h-fit flex flex-col items-center justify-start pb-6 text-white rounded-2xl transition-all duration-500 ease-linear">
+          <h2 className="text-3xl m-5 "> Create a Post</h2>
+          <div className="centeralizer w-11/12 max-w-xl text-slate-800">
+            <form
+              className="flex items-start flex-col w-screen text-base gap-2"
+              onSubmit={handleCreatePost}
+            >
               <input
                 type="text"
                 name="title"
@@ -65,6 +67,7 @@ const NewBlog = () => {
                 maxLength={21}
                 value={title}
                 onChange={onChange}
+                className="transition-all duration-500 ease-linear w-full h-12 text-base indent-2 outline-none py-2 rounded-lg border-2 border-slate-900 bg-white placeholder:text-slate-900 "
               />
               <input
                 type="text"
@@ -73,24 +76,20 @@ const NewBlog = () => {
                 placeholder="Image URL"
                 required
                 name="post_image"
-                className="form-control"
+                className="transition-all duration-500 ease-linear w-full h-12 text-base indent-2 outline-none py-2 rounded-lg border-2 border-slate-900 bg-white  placeholder:text-slate-900 focus:border-blue-800 "
                 value={post_image}
                 onChange={onChange}
               />
-              {/* <label
-                htmlFor="countries"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
-              >
-                Select a Category
-              </label> */}
               <select
                 id="category"
                 name="category"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 opacity-80 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
                 onChange={onChange}
                 value={category}
               >
-                <option defaultValue value="1" name="category">Select a Category</option>
+                <option defaultValue value="1" name="category">
+                  Select a Category
+                </option>
                 {categoryData?.map((data) => (
                   <option key={data.id} value={data.id} name="category">
                     {data.name}
@@ -100,6 +99,7 @@ const NewBlog = () => {
               <textarea
                 type="text"
                 placeholder="Content"
+                className="transition-all duration-500 ease-linear  w-full h-44 text-base  outline-none p-2 rounded-lg border-2 border-slate-900 bg-white  placeholder:text-slate-900 focus:border-sky-300 resize-none"
                 required
                 id="content"
                 label="Content"
@@ -107,7 +107,12 @@ const NewBlog = () => {
                 value={content}
                 onChange={onChange}
               />
-              <button value="submit">Send</button>
+              <button
+                value="submit"
+                className="text-white w-full text-base rounded-md tracking-wider p-3 dark:bg-gray-800 opacity-80 hover:opacity-100 transition-all duration-500 ease-linear "
+              >
+                Send
+              </button>
             </form>
           </div>
         </div>

@@ -51,7 +51,7 @@ export const login = createAsyncThunk(
     } catch (error) { 
       let datas = error.response.data;
       for (let i in datas) {
-        console.log(datas[i]);
+        // console.log(datas[i]);
         if (datas[i].toString().includes("provided credentials.")) {
           return toastError(
             `Your email or password is incorrect. Please Try Again`

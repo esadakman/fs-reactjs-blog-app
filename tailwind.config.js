@@ -21,6 +21,12 @@ module.exports = {
       minHeight: {
         '82': '82vh',
       },
+      minWidth: {
+        '20rem': '20rem',
+      },
+      maxWidth: {
+        '40rem': '40rem',
+      },
       fontSize: {
         '10': '10rem', 
       } 
@@ -28,3 +34,4 @@ module.exports = {
   },
   plugins: [],
 };
+
