@@ -14,22 +14,21 @@ const PostCard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [postData, setPostData] = useState();
   const { authUser } = useSelector((state) => state.user);
-
   const getPosts = async (str) => {
     try {
+      setIsLoading(true);
       const { data } = await axios.get(
         process.env.REACT_APP_API_URL + `/blog/posts/`,
         {}
       );
       setPostData(data.results);
-      setIsLoading(true);
     } catch (error) {
       console.log(error.message);
     } finally {
       setIsLoading(false);
     }
   };
-  useEffect(() => { 
+  useEffect(() => {
     getPosts();
   }, []);
 
@@ -46,12 +45,14 @@ const PostCard = () => {
   return (
     <>
       {isLoading ? (
-        <img src={loadingGif} alt="Loading Gif" />
+        <div className="w-screen min-h-82  centeralizer">
+          <img className=" " src={loadingGif} alt="Loading Gif" />
+        </div>
       ) : (
-        <div className=" min-h-82 flex justify-center items-center text-white  gap-5 flex-wrap py-2">
+        <div className=" min-h-82 flex justify-center items-center text-white  gap-5 flex-wrap py-2 ">
           {postData?.map((data) => (
             <div
-              className="max-w-xs  container   rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-slate-800  transition duration-300"
+              className=" max-w-xs lg:max-w-sm  container   rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-slate-800  transition-all"
               key={data.id}
               onClick={() => handleDetails(data)}
             >
@@ -64,7 +65,7 @@ const PostCard = () => {
                 </h1>
               </div>
               <img
-                className="w-full cursor-pointer max-h-56"
+                className="w-full cursor-pointer h-72 lg:h-80 max-h-80"
                 src={data.post_image ? data.post_image : postDefault}
                 onError={onImageErrorPost}
                 alt=""
