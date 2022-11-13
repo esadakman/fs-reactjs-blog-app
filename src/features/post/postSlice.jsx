@@ -4,23 +4,41 @@ import postService from "./postService";
 const initialState = {
   isLoading: false,
   blogs: [],
-  isError: false, 
+  blogDetail: [],
+  isError: false,
 };
 
-export const blogPosts = createAsyncThunk("blog/blog", async (thunkAPI) => {
+export const getPosts = createAsyncThunk("blog/blog", async (thunkAPI) => {
   // let res = await api.get(`blog/blog/`);
   try {
-    return await postService.blogPosts();
+    return await postService.getPosts();
   } catch (error) {
     // return thunkAPI.rejectWithValue(error);
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
+export const getPostDetail = createAsyncThunk(
+  "blog/blog",
+  async (postDetailData, thunkAPI) => {
+    try {
+      return await postService.getPostDetail(postDetailData);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const blogCreate = createAsyncThunk(
   "post/create",
   async (postCreateData, thunkAPI) => {
-    console.log(postCreateData);
+    // console.log(postCreateData);
     try {
       return await postService.blogCreate(postCreateData);
     } catch (error) {
@@ -33,25 +51,7 @@ export const blogCreate = createAsyncThunk(
       return thunkAPI.rejectWithValue(message);
     }
   }
-);
-export const postDetail = createAsyncThunk(
-  "post/detail",
-  async (postDetailData, thunkAPI) => {
-    // console.log(postDetailData);
-    try {
-      // console.log(thunkAPI.getState())
-      return await postService.postDetail(postDetailData);
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
+); 
 export const postLike = createAsyncThunk(
   "post/like",
   async (postLikeData, thunkAPI) => {
@@ -65,14 +65,14 @@ export const postLike = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-        console.log(error)
+      console.log(error);
       return thunkAPI.rejectWithValue(message);
     }
   }
 );
 export const postComment = createAsyncThunk(
-  "post/comment", 
-  async (postCommentData, thunkAPI) => { 
+  "post/comment",
+  async (postCommentData, thunkAPI) => {
     try {
       return await postService.postComment(postCommentData);
     } catch (error) {
@@ -82,7 +82,7 @@ export const postComment = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-        console.log(error)
+      console.log(error);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -97,15 +97,26 @@ const post = createSlice({
     },
   },
   extraReducers: {
-    [blogPosts.pending]: (state, action) => {
+    [getPosts.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [blogPosts.fulfilled]: (state, action) => {
+    [getPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.blogs = action.payload;
-      // console.log(action);
+      state.blogs = action.payload.results;
     },
-    [blogPosts.rejected]: (state, action) => {
+    [getPosts.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true; 
+    },
+    [getPostDetail.pending]: (state, action) => {
+      state.isLoading = true; 
+      // console.log(state.isLoading);
+    },
+    [getPostDetail.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.blogDetail = action.payload;  
+    },
+    [getPostDetail.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true; 
     },
@@ -113,48 +124,32 @@ const post = createSlice({
       state.isLoading = true;
     },
     [blogCreate.fulfilled]: (state, action) => {
-      state.isLoading = false; 
-      console.log(action)
+      state.isLoading = false;
+      // console.log(action)
     },
     [blogCreate.rejected]: (state, action) => {
-      state.isLoading = false;   
-    },
-    [postDetail.pending]: (state, action) => {
-      state.isLoading = true;
-    },
-    [postDetail.fulfilled]: (state, { payload }) => {
-      state.isLoading = false; 
-      state.blogs = payload; 
-      // console.log(payload)
-    },
-    [postDetail.rejected]: (state, action) => {
-      state.isLoading = false;   
-    },
+      state.isLoading = false;
+    }, 
     [postLike.pending]: (state, action) => {
       state.isLoading = true;
     },
     [postLike.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      // state.blogs = action.payload;  
-      // console.log(action)
+      state.isLoading = false; 
     },
     [postLike.rejected]: (state, action) => {
-      state.isLoading = false;   
+      state.isLoading = false;
     },
     [postComment.pending]: (state, action) => {
       state.isLoading = true;
     },
     [postComment.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      // state.blogs = action.payload;  
-      // console.log(action)
+      state.isLoading = false; 
     },
     [postComment.rejected]: (state, action) => {
-      state.isLoading = false;   
+      state.isLoading = false;
     },
   },
 });
 
 export const { reset } = post.actions;
 export default post.reducer;
- 

@@ -1,15 +1,15 @@
 import axios from "axios";
-import { toastSuccess } from "../../helpers/customToastify"; 
+import { toastSuccess } from "../../helpers/customToastify";
 const postAPI = axios.create({
   headers: {
     "Content-Type": "application/json",
-  }, 
+  },
 
   baseURL: process.env.REACT_APP_API_URL + "/blog",
 });
 
-const blogPosts = async () => {
-  const response = await postAPI.get("/posts/"); 
+const getPosts = async () => {
+  const response = await postAPI.get("/posts/");
   try {
     if (response.status === 200) {
       // console.log(response.data);
@@ -20,8 +20,24 @@ const blogPosts = async () => {
   }
 };
 
+const getPostDetail = async ({ detailURL, myKey }) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Token ${myKey}`,
+      },
+    };
+    const response = await postAPI.get(detailURL, config);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error); 
+  }
+};
+
 const blogCreate = async ({ postData, navigate }) => {
-  let myKey = window.atob(localStorage.getItem("token")); 
+  let myKey = window.atob(localStorage.getItem("token"));
   try {
     var config = {
       method: "post",
@@ -41,30 +57,13 @@ const blogCreate = async ({ postData, navigate }) => {
   }
 };
 
-const postDetail = async (postData) => {
-  let myKey = window.atob(localStorage.getItem("token"));
-  try {
-    var config = {
-      headers: {
-        Authorization: `Token ${myKey}`,
-      },
-    };
-    const response = await postAPI(`/posts/${postData}`, config);
-    if (response.status === 200) {
-      return response.data;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const postLike = async (postData) => {
   let myKey = window.atob(localStorage.getItem("token"));
   try {
     var config = {
       method: "post",
       headers: {
-        Authorization: "Token " + myKey, 
+        Authorization: "Token " + myKey,
       },
       data: postData,
     };
@@ -80,7 +79,7 @@ const postLike = async (postData) => {
 };
 
 const postComment = async ({ comment, url }) => {
-  let myKey = window.atob(localStorage.getItem("token")); 
+  let myKey = window.atob(localStorage.getItem("token"));
   let data = JSON.stringify({
     content: comment,
   });
@@ -104,10 +103,10 @@ const postComment = async ({ comment, url }) => {
 };
 
 const postService = {
-  blogPosts,
+  getPosts,
+  getPostDetail,
   blogCreate,
-  postLike,
-  postDetail,
+  postLike, 
   postComment,
 };
 

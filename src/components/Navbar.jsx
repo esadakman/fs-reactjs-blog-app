@@ -10,13 +10,12 @@ import { onImageError } from "../helpers/functions";
 const authLinks = [
   { name: "Home", to: "/", current: false },
   { name: "New Post", to: "/newblog", current: false },
-  { name: "Profile", to: "/login", current: false },
+  { name: "Profile", to: "/profile", current: false },
 ];
 const guestLinks = [
-  // { name: "Home", to: "/", current: true },
+  { name: "Home", to: "/", current: true },
   { name: "Register", to: "/register", current: false },
-  { name: "Login", to: "/login", current: false },
-  { name: "New Post", to: "/newblog", current: false },
+  { name: "Login", to: "/login", current: false }, 
 ];
 
 const Navbar = () => {
@@ -34,11 +33,7 @@ const Navbar = () => {
     e.preventDefault();
     dispatch(logout(navigate));
     dispatch(reset());
-    // navigate("/login");
   };
-  // const onImageError = (e) => {
-  //   e.target.src = profileDefault;
-  // };
   return (
     <>
       <Disclosure as="nav" className="bg-gray-900 ">
@@ -74,19 +69,13 @@ const Navbar = () => {
                   </div>
                   <div className="hidden sm:ml-6 sm:block ">
                     <div className="flex space-x-4 ">
-                      {guestLinks.map((item) => (
+                      {/* {guestLinks.map((item) => ( */}
+                      {(authUser ? authLinks : guestLinks).map((item) => (
                         <Link
                           key={item.name}
                           to={item.to}
-                          // className={classNames(
-                          //   item.current
-                          //     ? "bg-gray-900 text-white"
-                          //     : "text-gray-300  hover:bg-gray-700 hover:text-white transition-all ",
-                          //   "px-3 py-2 rounded-md text-sm font-medium "
-                          // )}
                           className="text-gray-300  hover:bg-gray-700 hover:text-white transition-all px-3 py-2 rounded-md text-sm font-medium "
                           aria-current={item.current ? "page" : undefined}
-                          // onClick={item.current = true}
                         >
                           {item.name}
                         </Link>
@@ -110,8 +99,10 @@ const Navbar = () => {
                         <Menu.Button className="flex rounded-full bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300">
                           <span className="sr-only">Open user menu</span>
                           <img
-                            className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300" 
-                            src={authUser?.image ? authUser?.image : profileDefault}
+                            className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300"
+                            src={
+                              authUser?.image ? authUser?.image : profileDefault
+                            }
                             onError={onImageError}
                             alt="pic"
                           />
@@ -189,9 +180,9 @@ const Navbar = () => {
               </div>
             </div>
 
-            <Disclosure.Panel className="sm:hidden fixed bg-gray-800 w-screen ">
+            <Disclosure.Panel className="sm:hidden fixed bg-gray-800 w-screen z-10">
               <div className="space-y-1 px-2 pt-2 pb-3 ">
-                {authLinks.map((item) => (
+                {(authUser ? authLinks : guestLinks).map((item) => (
                   <Disclosure.Button
                     key={item.name}
                     as={Link}
@@ -201,8 +192,7 @@ const Navbar = () => {
                         ? "bg-gray-900 text-white"
                         : "text-gray-300 hover:bg-gray-700 hover:text-white",
                       "block px-3 py-2 rounded-md text-base font-medium"
-                    )}
-                    // onClick={handleLogout()}
+                    )} 
                     aria-current={item.current ? "page" : undefined}
                   >
                     {item.name}

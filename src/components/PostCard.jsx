@@ -1,20 +1,20 @@
-import React from "react";
-import axios from "axios";
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
-import { useState } from "react";
 import profileDefault from "../assets/images/default.webp";
 import postDefault from "../assets/images/not-found.png";
 import loadingGif from "../assets/images/loading.svg";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { onImageError, onImageErrorPost } from "../helpers/functions";
-// import PostDetails from "./PostDetails";
+import axios from "axios";
+import { useState } from "react";
+
 const PostCard = () => {
   const navigate = useNavigate();
-  const [postData, setPostData] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [postData, setPostData] = useState();
   const { authUser } = useSelector((state) => state.user);
- 
+
   const getPosts = async (str) => {
     try {
       const { data } = await axios.get(
@@ -29,27 +29,22 @@ const PostCard = () => {
       setIsLoading(false);
     }
   };
-  useEffect(() => {
+  useEffect(() => { 
     getPosts();
-  }, []); 
+  }, []);
+
   const handleDetails = (blog) => {
-    if (authUser) { 
+    if (authUser) {
       navigate(`/details/${blog.slug}`, {
         state: blog,
       });
-      // navigate(`/details/${blog.slug}`, {
-      //   state: blog,
-      // });
-      
     } else {
       console.log("You should login to see details");
-      // navigate("/login");
+      navigate("/login");
     }
   };
-  // console.log(isLoading);
   return (
     <>
-      {/* <PostDetails/> */}
       {isLoading ? (
         <img src={loadingGif} alt="Loading Gif" />
       ) : (
@@ -134,14 +129,8 @@ const PostCard = () => {
 
 export default PostCard;
 
-// const [postData, setPostData] = useState();
-// const getPosts = async (str) => {
-//   try {
-//     const { data } = await axios.get(`http://127.0.0.1:8000/blog/posts/`, {});
-//     setPostData(data.results);
-//     // console.log(data);
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
-// console.log(postData);
+// const { blogs, isLoading } = useSelector((state) => state.blog);
+// dispatch(getPosts());
+
+// const [isLoading, setIsLoading] = useState(false);
+// const [postData, setPostData] = useState(blogs);

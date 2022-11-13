@@ -3,55 +3,41 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { postComment, postLike } from "../features/post/postSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  getPostDetail,
+  postComment,
+  postLike,
+} from "../features/post/postSlice";
 import loadingGif from "../assets/images/loading.svg";
 import profileDefault from "../assets/images/default.webp";
 import postDefault from "../assets/images/not-found.png";
-// import Picker from "emoji-picker-react";
 import { useRef } from "react";
 import { onImageError, onImageErrorPost } from "../helpers/functions";
 
 const PostDetails = () => {
   const { state } = useLocation();
-  const { authUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [postData, setPostData] = useState();
+  const { authUser } = useSelector((state) => state.user);
+  const { blogDetail, isLoading } = useSelector((state) => state.blog);
+  const navigate = useNavigate();
   const commentRef = useRef();
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [isLoader, setIsLoader] = useState(false);
   let myKey = window.atob(localStorage.getItem("token"));
-  const getPosts = async (str) => {
-    try {
-      const config = {
-        method: "post",
-        headers: {
-          Authorization: `Token ${myKey}`,
-        },
-      };
-      const { data } = await axios.get(
-        // `http://127.0.0.1:8000/blog/posts/${state.slug}`,
-        process.env.REACT_APP_API_URL + `/blog/posts/${state.slug}`,
-        config
-      );
-      setPostData(data);
-      setIsLoading(true);
-    } catch (error) {
-      console.log(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
   const formData = {
     user_id: authUser?.user.id,
     post: state?.id,
   };
+  const detailData = {
+    detailURL: `/posts/${state?.slug}/`,
+    myKey: myKey,
+  };
   const handleLike = (e) => {
     e.preventDefault();
     dispatch(postLike(JSON.stringify(formData)));
-    // postLikes();
-    getPosts();
+    dispatch(getPostDetail(detailData));
   };
+
   const handleComment = (e) => {
     e.preventDefault();
     let commentData = {
@@ -60,18 +46,22 @@ const PostDetails = () => {
     };
     dispatch(postComment(commentData));
     commentRef.current.value = "";
-    getPosts();
+    dispatch(getPostDetail(detailData));
   };
+
   useEffect(() => {
-    getPosts();
+    dispatch(getPostDetail(detailData));
     commentRef.current.focus();
-    // postLikes();
+    if (!state) {
+      navigate("/notfound");
+    }
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  console.log(isLoading); 
   return (
     <div>
-      {isLoading ? (
+      {isLoader ? (
         <img src={loadingGif} alt="Loading Gif" />
       ) : (
         <div className="wrapper pt-10 centeralizer">
@@ -81,7 +71,9 @@ const PostDetails = () => {
                 <img
                   className="rounded-full max-w-none w-14 h-14 mr-3"
                   src={
-                    postData?.author_pp ? postData?.author_pp : profileDefault
+                    blogDetail?.author_pp
+                      ? blogDetail?.author_pp
+                      : profileDefault
                   }
                   onError={onImageError}
                   alt="asd"
@@ -89,11 +81,11 @@ const PostDetails = () => {
                 <div className="flex flex-col">
                   <div className="flex items-center">
                     <p className="inline-block text-lg font-bold mr-2 ">
-                      {postData?.author}
+                      {blogDetail?.author}
                     </p>
                   </div>
                   <div className="text-slate-500 dark:text-slate-300">
-                    {new Date(postData?.date_posted)
+                    {new Date(blogDetail?.date_posted)
                       .toDateString()
                       .split(" ")
                       .slice(1)
@@ -102,17 +94,19 @@ const PostDetails = () => {
                 </div>
               </div>
             </div>
-            <h2 className="text-3xl font-extrabold ">{postData?.title}</h2>
+            <h2 className="text-3xl font-extrabold ">{blogDetail?.title}</h2>
             <div className="py-4">
               <img
                 className="max-w-full rounded-lg w-screen "
-                src={postData?.post_image ? postData?.post_image : postDefault}
+                src={
+                  blogDetail?.post_image ? blogDetail?.post_image : postDefault
+                }
                 onError={onImageErrorPost}
                 alt="post pic"
               />
             </div>
             <p className="text-justify max-h-56 overflow-auto ">
-              {postData?.content}
+              {blogDetail?.content}
             </p>
             <div className="py-4 flex">
               <div className="flex mr-2 w-12" onClick={handleLike}>
@@ -125,7 +119,7 @@ const PostDetails = () => {
                   </svg>
                 </span>
                 <span className="text-lg font-bold">
-                  {postData?.like_count}
+                  {blogDetail?.like_count}
                 </span>
               </div>
               <div className="flex mr-2">
@@ -138,7 +132,7 @@ const PostDetails = () => {
                   </svg>
                 </span>
                 <span className="text-lg font-bold">
-                  {postData?.view_count}
+                  {blogDetail?.view_count}
                 </span>
               </div>
               <div className="flex">
@@ -158,7 +152,7 @@ const PostDetails = () => {
                   </svg>
                 </span>
                 <span className="text-lg font-bold">
-                  {postData?.post_comment.length}
+                  {blogDetail?.post_comment?.length}
                 </span>
               </div>
             </div>
@@ -182,37 +176,44 @@ const PostDetails = () => {
             {/* <!-- Comments content --> */}
             <div className="pt-6">
               {/* <!-- Comment row --> */}
-              <div className="media flex pb-2 flex-col gap-2">
-                {postData?.post_comment?.map((data) => (
-                  <article
-                    className="flex pb-2 border-b border-slate-100"
-                    key={data.id}
-                  >
-                    <div className=" pr-4">
-                      <img
-                        className="rounded-full max-w-none w-12 h-12  "
-                        src={data.user_pp ? data.user_pp : profileDefault}
-                        onError={onImageError}
-                        alt="asd"
-                      />
-                    </div>
-                    <div className="media-body">
-                      <div>
-                        <p className="inline-block text-base font-bold mr-2">
-                          {data.user}
-                        </p>
-                        <span className="text-slate-500 dark:text-slate-300">
-                          25 minutes ago
-                        </span>
+              {blogDetail?.post_comment?.length > 0 ? (
+                <div className="media flex pb-2 flex-col gap-2">
+                  {blogDetail?.post_comment?.map((data) => (
+                    <article
+                      className="flex pb-2 border-b border-slate-100"
+                      key={data.id}
+                    >
+                      <div className=" pr-4">
+                        <img
+                          className="rounded-full max-w-none w-12 h-12  "
+                          src={data.user_pp ? data.user_pp : profileDefault}
+                          onError={onImageError}
+                          alt="asd"
+                        />
                       </div>
-                      <p className="text-justify max-h-20 overflow-auto">
-                        {data.content}
-                      </p>
-                    </div>
-                    <br />
-                  </article>
-                ))}
-              </div>
+                      <div className="media-body">
+                        <div>
+                          <p className="inline-block text-base font-bold mr-2">
+                            {data.user}
+                          </p>
+                          <span className="text-slate-500 dark:text-slate-300">
+                            25 minutes ago
+                          </span>
+                        </div>
+                        <p className="text-justify max-h-20 overflow-auto">
+                          {data.content}
+                        </p>
+                      </div>
+                      <br />
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-2xl font-bold tracking-wide">
+                  No comment yet . . .
+                </p>
+              )}
+
               {/* <!-- End comments row --> */}
               {/* <!-- More comments --> */}
             </div>
@@ -224,6 +225,28 @@ const PostDetails = () => {
 };
 
 export default PostDetails;
+// const [postData, setPostData] = useState();
+// const getPosts = async (str) => {
+//   try {
+//     const config = {
+//       // method: "post",
+//       headers: {
+//         Authorization: `Token ${myKey}`,
+//       },
+//     };
+//     const { data } = await axios.get(
+//       process.env.REACT_APP_API_URL + `/blog/posts/${state.slug}`,
+//       config
+//     );
+//     setPostData(data);
+//     // console.log(data);
+//     setIsLoading(true);
+//   } catch (error) {
+//     console.log(error.message);
+//   } finally {
+//     setIsLoading(false);
+//   }
+// };
 
 // {/* <EmojiPicker/> */}
 //                 {/* <svg
