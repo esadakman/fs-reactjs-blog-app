@@ -24,8 +24,7 @@ const PostDetails = () => {
   const { blogDetail } = useSelector((state) => state.blog);
   const navigate = useNavigate();
   const commentRef = useRef();
-  const [isLoader, setIsLoader] = useState(false);
-  // console.log((authUser?.id).toString(), parseInt(blogDetail?.author_id));
+  const [isLoader, setIsLoader] = useState(false); 
   let myKey = window.atob(localStorage.getItem("token"));
   const formData = {
     user_id: authUser?.user.id,
@@ -166,16 +165,16 @@ const PostDetails = () => {
                 </div>
               </div>
             </article>
-            {/* // ? modals */}
+            {/* // ? modals _________________________________ */}
             <div className=" flex gap-4 justify-end mb-4">
               {authUser?.id === parseInt(blogDetail?.author_id) ? (
                 <>
-                  <DeleteModal />
+                  <DeleteModal blog={blogDetail}   />
                   <EditModal />
                 </>
               ) : null}
             </div>
-            {/* // ! modals */}
+            {/* // ! modals _________________________________ */}
             <form className="relative" onSubmit={handleComment}>
               <input
                 className="py-2 pl-3 w-full h-11 bg-slate-100 dark:bg-slate-600 rounded-lg placeholder:text-slate-600 dark:placeholder:text-slate-300 font-medium pr-20"

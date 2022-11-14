@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toastSuccess } from "../../helpers/customToastify";
-const postAPI = axios.create({
+export const postAPI = axios.create({
   headers: {
     "Content-Type": "application/json",
   },

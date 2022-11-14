@@ -1,10 +1,32 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+// import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { postAPI } from "../features/post/postService";
+import { toastSuccess } from "../helpers/customToastify";
 
-const DeleteModal = () => {
+const DeleteModal = ({ blog }) => { 
   const [open, setOpen] = useState(false);
-
   const cancelButtonRef = useRef(null);
+  const navigate = useNavigate();
+  let myKey = window.atob(localStorage.getItem("token"));
+
+  const deletePost = async (str) => {
+    try { 
+      const config = {
+        headers: {
+          Authorization: `Token ${myKey}`,
+        },
+      };
+      const res = await postAPI.delete(`/posts/${blog.slug}`, config);
+    } catch (error) {
+      console.log(error.message);
+    } finally { 
+      setOpen(false);
+      navigate('/') 
+      toastSuccess('Your post has been succesfully deleted.')
+    }
+  };
 
   return (
     <section>
@@ -88,7 +110,7 @@ const DeleteModal = () => {
                         Are you sure you want to delete this post?
                       </h3>
                       <button
-                        onClick={() => setOpen(false)}
+                        onClick={deletePost}
                         type="button"
                         className="text-white bg-red-400 hover:bg-red-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md p-2 inline-flex items-center  dark:bg-red-500 dark:hover:bg-red-600  dark:focus:ring-red-500 transition-all duration-300 mr-5"
                       >
