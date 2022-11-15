@@ -68,7 +68,7 @@ const PostDetails = () => {
             <h2 className="text-center text-5xl">──── Details ────</h2>
             <div className="my-2   border-2 rounded-md border-slate-500">
               <img
-                className="max-w-full rounded-lg w-screen "
+                className="max-w-full rounded-lg w-screen max-h-96"
                 src={
                   blogDetail?.post_image ? blogDetail?.post_image : postDefault
                 }

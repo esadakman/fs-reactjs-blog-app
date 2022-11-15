@@ -49,23 +49,23 @@ const PostCard = () => {
           <img className=" " src={loadingGif} alt="Loading Gif" />
         </div>
       ) : (
-        <div className=" min-h-82 flex justify-center items-center text-white  gap-5 flex-wrap py-2 ">
+        <div className=" min-h-82  flex justify-center items-center text-white  gap-5 md:gap-10  flex-wrap py-2 ">
           {postData?.map((data) => (
             <div
-              className=" max-w-xs lg:max-w-sm  container   rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-main  transition-all"
+              className=" max-w-xs lg:max-w-sm  container rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-main  transition-all duration-300 max-h-448"
               key={data.id}
               onClick={() => handleDetails(data)}
             >
-              <div>
-                <span className="text-white text-xs font-bold rounded-lg bg-green-500 inline-block mt-4 ml-4 py-1.5 px-4  ">
-                  {data.category_name}
-                </span>
-                <h1 className="text-2xl my-2 ml-4 font-bold hover:text-slate-200 cursor-pointer  transition duration-100">
+              <div className="flex justify-between items-center my-3 px-4 ">
+                <h1 className="text-2xl font-bold hover:text-slate-200 cursor-pointer  transition duration-100 max-h-8 overflow-hidden">
                   {data.title}
                 </h1>
+                <span className="text-white text-xs font-bold rounded-lg bg-green-500 py-1.5 px-3  ">
+                  {data.category_name}
+                </span>
               </div>
               <img
-                className="w-full cursor-pointer h-72 lg:h-80 max-h-80"
+                className="w-full cursor-pointer h-80  "
                 src={data.post_image ? data.post_image : postDefault}
                 onError={onImageErrorPost}
                 alt=""

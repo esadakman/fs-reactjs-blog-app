@@ -13,13 +13,7 @@ const Profile = () => {
     email: authUser?.user.email,
     first_name: authUser?.user.first_name,
     last_name: authUser?.user.last_name,
-  });
-  // console.log(authUser);
-  // btoa(window.localStorage.getItem('image')
-  // let local = window.atob(((localStorage.getItem("userInfo"))))
-  // console.log(JSON.parse(local)); 
-
-  // console.log(window.atob(localStorage.getItem("token")));
+  }); 
   // ? handleChange
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,19 +24,19 @@ const Profile = () => {
     dispatch(update(updateData));
   };
   return (
-    <main className="flex justify-center  p-1 ">
+    <main className="flex justify-center  p-1 h-full">
       <div className="bg-slate-100 py-2.5 px-5 rounded-lg m-4 max-w-lg  w-full lg:w-1/2 shadow-xl">
-        <section className="media flex">
+        <section className="flex">
           <img
-            className="rounded-full h-32 w-32 mr-5 mb-4"
+            className="rounded-full w-20 h-20  md:h-32  md:w-32 mr-2  md:mr-5 mb-4"
             src={authUser?.image || profilePP}
             alt="pp"
           />
-          <div className="block">
-            <h2 className="text-4xl m-0 text-slate-700">
+          <div className="flex flex-col overflow-hidden">
+            <h2 className="text-2xl md:text-4xl m-0 text-slate-700">
               {authUser?.user.username}
             </h2>
-            <p className="text-md mb-4 text-gray-700">{authUser?.user.email}</p>
+            <div className="text-sm md:text-md mb-4 text-gray-700 w-57 overflow-auto">{authUser?.user.email}</div>
           </div>
         </section>
         <section className="">
