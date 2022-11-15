@@ -51,7 +51,7 @@ export const blogCreate = createAsyncThunk(
       return thunkAPI.rejectWithValue(message);
     }
   }
-); 
+);
 export const postLike = createAsyncThunk(
   "post/like",
   async (postLikeData, thunkAPI) => {
@@ -87,6 +87,24 @@ export const postComment = createAsyncThunk(
     }
   }
 );
+// export const postUpdate = createAsyncThunk(
+//   "post/update",
+//   async (postUpdateData, thunkAPI) => {
+//     console.log(postUpdateData);
+// try {
+//   return await postService.postUpdate(postUpdateData);
+// } catch (error) {
+//   const message =
+//     (error.response &&
+//       error.response.data &&
+//       error.response.data.message) ||
+//     error.message ||
+//     error.toString();
+//   console.log(error);
+//   return thunkAPI.rejectWithValue(message);
+// }
+// }
+// );
 
 const post = createSlice({
   name: "post",
@@ -106,19 +124,19 @@ const post = createSlice({
     },
     [getPosts.rejected]: (state, action) => {
       state.isLoading = false;
-      state.isError = true; 
+      state.isError = true;
     },
     [getPostDetail.pending]: (state, action) => {
-      state.isLoading = true; 
+      state.isLoading = true;
       // console.log(state.isLoading);
     },
     [getPostDetail.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.blogDetail = action.payload;  
+      state.blogDetail = action.payload;
     },
     [getPostDetail.rejected]: (state, action) => {
       state.isLoading = false;
-      state.isError = true; 
+      state.isError = true;
     },
     [blogCreate.pending]: (state, action) => {
       state.isLoading = true;
@@ -129,12 +147,12 @@ const post = createSlice({
     },
     [blogCreate.rejected]: (state, action) => {
       state.isLoading = false;
-    }, 
+    },
     [postLike.pending]: (state, action) => {
       state.isLoading = true;
     },
     [postLike.fulfilled]: (state, action) => {
-      state.isLoading = false; 
+      state.isLoading = false;
     },
     [postLike.rejected]: (state, action) => {
       state.isLoading = false;
@@ -143,7 +161,7 @@ const post = createSlice({
       state.isLoading = true;
     },
     [postComment.fulfilled]: (state, action) => {
-      state.isLoading = false; 
+      state.isLoading = false;
     },
     [postComment.rejected]: (state, action) => {
       state.isLoading = false;

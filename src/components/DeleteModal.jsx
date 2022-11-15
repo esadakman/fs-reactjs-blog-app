@@ -1,11 +1,10 @@
 import { Fragment, useRef, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-// import axios from "axios";
+import { Dialog, Transition } from "@headlessui/react"; 
 import { useNavigate } from "react-router-dom";
 import { postAPI } from "../features/post/postService";
 import { toastSuccess } from "../helpers/customToastify";
 
-const DeleteModal = ({ blog }) => { 
+const DeleteModal = ({ blogDetail }) => { 
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ const DeleteModal = ({ blog }) => {
           Authorization: `Token ${myKey}`,
         },
       };
-      const res = await postAPI.delete(`/posts/${blog.slug}`, config);
+      await postAPI.delete(`/posts/${blogDetail.slug}`, config);
     } catch (error) {
       console.log(error.message);
     } finally { 

@@ -1,19 +1,71 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import axios from "axios";
+import { useEffect } from "react";
+import { postAPI } from "../features/post/postService";
+import { toastError, toastSuccess } from "../helpers/customToastify";
+import { getPostDetail } from "../features/post/postSlice";
+import { useDispatch } from "react-redux";
 // import { useSelector } from "react-redux";
 
-const EditModal = ({ blogDetail }) => {
+const EditModal = ({ blogDetails }) => {
+  const { blogDetail, detailData } = blogDetails;
+  const [categoryData, setCategory] = useState();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
-  //   const { blogDetail } = useSelector((state) => state.blog);
-  //   const [categoryData, setCategory] = useState();
-  //   const [formData, setFormData] = useState({
-  //     title: "",
-  //     content: "",
-  //     post_image: "",
-  //     category: 1,
-  //   });
-  //   const { title, content, post_image, category } = formData;
+  const [formData, setFormData] = useState({
+    title: blogDetail.title,
+    content: blogDetail.content,
+    post_image: blogDetail.post_image,
+    category: blogDetail.category,
+  });
+
+  const getCategories = async (str) => {
+    try {
+      const { data } = await axios.get(
+        process.env.REACT_APP_API_URL + "/blog/category/"
+      );
+      setCategory(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  let myKey = window.atob(localStorage.getItem("token"));
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    let data = JSON.stringify({ 
+      title: formData.title,
+      content: formData.content,
+      post_image: formData.post_image,
+      category: formData.category,
+    });
+    try {
+      var config = {
+        method: "put",
+        headers: {
+          Authorization: `Token ${myKey}`,
+        },
+        data: data,
+      };
+      await postAPI(`/posts/${blogDetail.slug}/`, config);
+      dispatch(getPostDetail(detailData));
+      toastSuccess("Your post has been succesfully updated.");
+    } catch (error) {
+      console.log(error.message);
+      toastError("Ooppss... Something went wrong");
+    } finally {
+      setOpen(false);
+    }
+  };
+
   return (
     <section>
       <button
@@ -62,7 +114,7 @@ const EditModal = ({ blogDetail }) => {
                     <div className="centeralizer w-11/12 max-w-xl text-slate-800">
                       <form
                         className="flex items-start flex-col w-screen text-base gap-2"
-                        // onSubmit={handleCreatePost}
+                        onSubmit={handleUpdate}
                       >
                         <input
                           type="text"
@@ -72,8 +124,8 @@ const EditModal = ({ blogDetail }) => {
                           required
                           autoFocus
                           maxLength={21}
-                          //   value={title}
-                          //   onChange={onChange}
+                          value={formData.title}
+                          onChange={onChange}
                           className="transition-all duration-500 ease-linear w-full h-12 text-base indent-2 outline-none py-2 rounded-lg border-2 border-slate-900 bg-white placeholder:text-slate-900 "
                         />
                         <input
@@ -84,20 +136,23 @@ const EditModal = ({ blogDetail }) => {
                           required
                           name="post_image"
                           className="transition-all duration-500 ease-linear w-full h-12 text-base indent-2 outline-none py-2 rounded-lg border-2 border-slate-900 bg-white  placeholder:text-slate-900 focus:border-blue-800 "
-                          //   value={post_image}
-                          //   onChange={onChange}
+                          value={formData.post_image}
+                          onChange={onChange}
                         />
                         <select
                           id="category"
                           name="category"
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 opacity-80 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
-                          //   onChange={onChange}
-                          //   value={category}
+                          onChange={onChange}
+                          value={formData.category}
                         >
-                          <option defaultValue value="1" name="category">
+                          {/* <option defaultValue name="category" >
+                            Select a Category
+                          </option> */}
+                          <option value="1" name="category">
                             Select a Category
                           </option>
-                          {/* {categoryData?.map((data) => (
+                          {categoryData?.map((data) => (
                             <option
                               key={data.id}
                               value={data.id}
@@ -105,8 +160,9 @@ const EditModal = ({ blogDetail }) => {
                             >
                               {data.name}
                             </option>
-                          ))} */}
+                          ))}
                         </select>
+
                         <textarea
                           type="text"
                           placeholder="Content"
@@ -115,8 +171,8 @@ const EditModal = ({ blogDetail }) => {
                           id="content"
                           label="Content"
                           name="content"
-                          //   value={content}
-                          //   onChange={onChange}
+                          value={formData.content}
+                          onChange={onChange}
                         />
                         <button
                           value="submit"

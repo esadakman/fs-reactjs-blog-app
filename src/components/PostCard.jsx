@@ -52,7 +52,7 @@ const PostCard = () => {
         <div className=" min-h-82 flex justify-center items-center text-white  gap-5 flex-wrap py-2 ">
           {postData?.map((data) => (
             <div
-              className=" max-w-xs lg:max-w-sm  container   rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-slate-800  transition-all"
+              className=" max-w-xs lg:max-w-sm  container   rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-main  transition-all"
               key={data.id}
               onClick={() => handleDetails(data)}
             >

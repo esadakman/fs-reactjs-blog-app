@@ -87,7 +87,10 @@ const NewBlog = () => {
                 onChange={onChange}
                 value={category}
               >
-                <option defaultValue value="1" name="category">
+                {/* <option defaultValue value="1" name="category">
+                  Select a Category
+                </option> */}
+                <option value="1" name="category">
                   Select a Category
                 </option>
                 {categoryData?.map((data) => (

@@ -24,7 +24,7 @@ const PostDetails = () => {
   const { blogDetail } = useSelector((state) => state.blog);
   const navigate = useNavigate();
   const commentRef = useRef();
-  const [isLoader, setIsLoader] = useState(false); 
+  const [isLoader, setIsLoader] = useState(false);
   let myKey = window.atob(localStorage.getItem("token"));
   const formData = {
     user_id: authUser?.user.id,
@@ -50,7 +50,6 @@ const PostDetails = () => {
     commentRef.current.value = "";
     dispatch(getPostDetail(detailData));
   };
-
   useEffect(() => {
     dispatch(getPostDetail(detailData));
     commentRef.current.focus();
@@ -65,7 +64,7 @@ const PostDetails = () => {
         <img src={loadingGif} alt="Loading Gif" />
       ) : (
         <div className="wrapper pt-10 centeralizer">
-          <article className="mb-4 break-inside p-6 rounded-xl bg-white dark:bg-slate-800 dark:text-white flex flex-col bg-clip-border w-11/12 md:w-8/12 lg:w-1/2">
+          <article className="mb-4 break-inside p-6 rounded-xl bg-white dark:bg-main dark:text-white flex flex-col bg-clip-border w-11/12 md:w-8/12 lg:w-1/2">
             <h2 className="text-center text-5xl">──── Details ────</h2>
             <div className="my-2   border-2 rounded-md border-slate-500">
               <img
@@ -90,7 +89,7 @@ const PostDetails = () => {
               </p>
             </div>
 
-            <p className="text-justify max-h-56 overflow-auto bg-slate-700 px-2 rounded-lg">
+            <p className="text-justify max-h-56 overflow-auto bg-slate-700 px-2 rounded-md">
               {blogDetail?.content}
             </p>
             {/* // ! author pp  */}
@@ -169,8 +168,8 @@ const PostDetails = () => {
             <div className=" flex gap-4 justify-end mb-4">
               {authUser?.id === parseInt(blogDetail?.author_id) ? (
                 <>
-                  <DeleteModal blog={blogDetail}   />
-                  <EditModal />
+                  <DeleteModal blogDetail={blogDetail} />
+                  <EditModal blogDetails={{ blogDetail, detailData }} />
                 </>
               ) : null}
             </div>
