@@ -142,7 +142,7 @@ const EditModal = ({ blogDetails }) => {
                         <select
                           id="category"
                           name="category"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 opacity-80 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-main dark:border-gray-600 opacity-80 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
                           onChange={onChange}
                           value={formData.category}
                         >
@@ -176,7 +176,7 @@ const EditModal = ({ blogDetails }) => {
                         />
                         <button
                           value="submit"
-                          className="text-white w-full text-base rounded-md tracking-wider p-3 dark:bg-gray-800 opacity-80 hover:opacity-100 transition-all duration-500 ease-linear "
+                          className="text-white w-full text-base rounded-md tracking-wider p-3 dark:bg-main opacity-80 hover:opacity-100 transition-all duration-500 ease-linear "
                         >
                           Send
                         </button>

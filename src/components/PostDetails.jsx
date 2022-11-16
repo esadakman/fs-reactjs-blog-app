@@ -63,12 +63,12 @@ const PostDetails = () => {
       {isLoader ? (
         <img src={loadingGif} alt="Loading Gif" />
       ) : (
-        <div className="wrapper pt-10 centeralizer">
-          <article className="mb-4 break-inside p-6 rounded-xl bg-white dark:bg-main dark:text-white flex flex-col bg-clip-border w-11/12 md:w-8/12 lg:w-1/2">
-            <h2 className="text-center text-5xl">──── Details ────</h2>
+        <div className="wrapper pt-5 centeralizer">
+          <article className="mb-4 break-inside p-6 rounded-xl bg-white dark:bg-main dark:text-white flex flex-col bg-clip-border w-11/12 md:w-200">
+            <h2 className="text-center text-2xl md:text-5xl">──── Details ────</h2>
             <div className="my-2   border-2 rounded-md border-slate-500">
               <img
-                className="max-w-full rounded-lg w-screen max-h-96"
+                className="max-w-full rounded-lg w-screen max-h-548px"
                 src={
                   blogDetail?.post_image ? blogDetail?.post_image : postDefault
                 }
@@ -89,11 +89,11 @@ const PostDetails = () => {
               </p>
             </div>
 
-            <p className="text-justify max-h-56 overflow-auto bg-slate-700 px-2 rounded-md">
+            <p className="text-justify max-h-56 overflow-auto bg-slate-700 p-2 rounded-md ">
               {blogDetail?.content}
             </p>
             {/* // ! author pp  */}
-            <article className="flex justify-between mt-4">
+            <article className="flex justify-between mt-4  flex-col md:flex-row">
               <div className="  items-center justify-between">
                 <div className="flex">
                   <img
@@ -115,7 +115,7 @@ const PostDetails = () => {
                   </div>
                 </div>
               </div>
-              <div className=" flex  items-center">
+              <div className=" flex  items-center  justify-end my-2 md:my-0">
                 <div className="flex  mr-2 w-12" onClick={handleLike}>
                   <span className="mr-2 cursor-pointer">
                     <svg

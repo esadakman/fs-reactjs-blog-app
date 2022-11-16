@@ -13,13 +13,18 @@ module.exports = {
       width: {
         '48': '48%', 
         '80': '80vh',
+        '200': '38rem',
       },
       height: {
         '82': '82vh',
         '80%': '80%',
       },
       minHeight: {
-        '82': '82vh',
+        '82': '74.4vh',
+      },
+      maxHeight: {
+        '548px': '548px',
+        '400px': '400px',
       },
       minWidth: {
         '20rem': '20rem',
