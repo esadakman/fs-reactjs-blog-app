@@ -18,9 +18,12 @@ module.exports = {
       height: {
         '82': '82vh',
         '80%': '80%',
+        '600px': '600px',
+
       },
       minHeight: {
         '82': '74.4vh',
+        '81': '81.7vh',
       },
       maxHeight: {
         '548px': '548px',
