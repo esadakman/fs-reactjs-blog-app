@@ -8,7 +8,7 @@
    html,
    body,
    #root {
-     @apply font-poppins bg-gradient-to-r from-cyan-400 to-red-400
+     @apply font-poppins bg-gradient-to-r from-cyan-400 to-red-400  overflow-x-hidden relative min-h-screen 
      /* @apply h-full bg-zinc-50 font-poppins bg-gradient-to-r from-cyan-400 to-red-400 */
    }
  } 
@@ -27,7 +27,11 @@
   } 
   
 }
- 
+
+/* * {
+  
+  transition: all 1s linear;
+} */
 
 ::-webkit-scrollbar {
   width: 0.9rem;

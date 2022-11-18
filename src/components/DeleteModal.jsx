@@ -57,8 +57,9 @@ const DeleteModal = ({ blogDetail }) => {
             <div className="fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity" />
           </Transition.Child>
 
-          <div className="fixed inset-0 z-10 overflow-y-auto">
-            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div className="fixed inset-0 z-10 overflow-auto">
+          {/* <div className="fixed inset-0 flex items-center justify-center"> */}
+            <div className="flex min-h-full  justify-center p-4 text-center  items-center sm:p-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -111,7 +112,7 @@ const DeleteModal = ({ blogDetail }) => {
                       <button
                         onClick={deletePost}
                         type="button"
-                        className="text-white bg-red-400 hover:bg-red-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md p-2 inline-flex items-center  dark:bg-red-500 dark:hover:bg-red-600  dark:focus:ring-red-500 transition-all duration-300 mr-5"
+                        className="text-white bg-red-400 hover:bg-red-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md p-2 inline-flex items-center  dark:bg-red-500 dark:hover:bg-red-600  dark:focus:ring-red-500 transition-all duration-300 mr-1 sm:mr-5"
                       >
                         Yes, I'm sure
                       </button>
@@ -119,7 +120,7 @@ const DeleteModal = ({ blogDetail }) => {
                         onClick={() => setOpen(false)}
                         ref={cancelButtonRef}
                         type="button"
-                        className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600 transition-all duration-300"
+                        className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-2 sm:px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600 transition-all duration-300"
                       >
                         No, cancel
                       </button>

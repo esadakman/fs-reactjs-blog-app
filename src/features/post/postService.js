@@ -8,9 +8,9 @@ export const postAPI = axios.create({
   baseURL: process.env.REACT_APP_API_URL + "/blog",
 });
 
-const getPosts = async () => {
-  const response = await postAPI.get("/posts/");
+const getPost = async () => { 
   try {
+    const response = await postAPI.get("/posts/");
     if (response.status === 200) {
       // console.log(response.data);
       return response.data;
@@ -32,7 +32,7 @@ const getPostDetail = async ({ detailURL, myKey }) => {
       return response.data;
     }
   } catch (error) {
-    console.log(error); 
+    console.log(error);
   }
 };
 
@@ -103,10 +103,10 @@ const postComment = async ({ comment, url }) => {
 };
 
 const postService = {
-  getPosts,
+  getPost,
   getPostDetail,
   blogCreate,
-  postLike, 
+  postLike,
   postComment,
 };
 

@@ -26,6 +26,7 @@ const EditModal = ({ blogDetails }) => {
       const { data } = await axios.get(
         process.env.REACT_APP_API_URL + "/blog/category/"
       );
+      // console.log(data);
       setCategory(data);
     } catch (error) {
       console.log(error.message);
@@ -34,14 +35,14 @@ const EditModal = ({ blogDetails }) => {
   useEffect(() => {
     getCategories();
   }, []);
-
+  // console.log(categoryData);
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   let myKey = window.atob(localStorage.getItem("token"));
   const handleUpdate = async (e) => {
     e.preventDefault();
-    let data = JSON.stringify({ 
+    let data = JSON.stringify({
       title: formData.title,
       content: formData.content,
       post_image: formData.post_image,
@@ -97,7 +98,7 @@ const EditModal = ({ blogDetails }) => {
           </Transition.Child>
 
           <div className="fixed inset-0 z-10 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
+            <div className="flex min-h-full items-center justify-center p-2 text-center  sm:p-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -109,7 +110,7 @@ const EditModal = ({ blogDetails }) => {
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-gray-500  text- shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   {/* // ! form */}
-                  <div className="contactForm bg-gray-900 bg-opacity-40 w-full  h-fit flex flex-col items-center  pb-6 text-white  transition-all duration-500 ease-linear">
+                  <div className="bg-white bg-opacity-50 w-full  h-fit flex flex-col items-center  pb-6 text-main  transition-all duration-500 ease-linear">
                     <h2 className="text-3xl m-5 "> Update Post</h2>
                     <div className="centeralizer w-11/12 max-w-xl text-slate-800">
                       <form
@@ -142,16 +143,16 @@ const EditModal = ({ blogDetails }) => {
                         <select
                           id="category"
                           name="category"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-main dark:border-gray-600 opacity-80 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-main dark:border-gray-600 opacity-90 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
                           onChange={onChange}
                           value={formData.category}
                         >
                           {/* <option defaultValue name="category" >
                             Select a Category
                           </option> */}
-                          <option value="1" name="category">
+                          {/* <option value="1" name="category">
                             Select a Category
-                          </option>
+                          </option> */}
                           {categoryData?.map((data) => (
                             <option
                               key={data.id}
@@ -176,7 +177,7 @@ const EditModal = ({ blogDetails }) => {
                         />
                         <button
                           value="submit"
-                          className="text-white w-full text-base rounded-md tracking-wider p-3 dark:bg-main opacity-80 hover:opacity-100 transition-all duration-500 ease-linear "
+                          className="text-white w-full text-base rounded-md tracking-wider p-3 dark:bg-main opacity-90 hover:opacity-100 transition-all duration-500 ease-linear "
                         >
                           Send
                         </button>

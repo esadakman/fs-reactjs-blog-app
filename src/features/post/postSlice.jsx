@@ -8,10 +8,10 @@ const initialState = {
   isError: false,
 };
 
-export const getPosts = createAsyncThunk("blog/blog", async (thunkAPI) => {
+export const getPost = createAsyncThunk("blog/posts", async ( thunkAPI) => {
   // let res = await api.get(`blog/blog/`);
   try {
-    return await postService.getPosts();
+    return await postService.getPost();
   } catch (error) {
     // return thunkAPI.rejectWithValue(error);
     return thunkAPI.rejectWithValue(error.response.data);
@@ -115,16 +115,19 @@ const post = createSlice({
     },
   },
   extraReducers: {
-    [getPosts.pending]: (state, action) => {
-      state.isLoading = true;
+    [getPost.pending]: (state, action) => {
+      state.isLoading = true; 
     },
-    [getPosts.fulfilled]: (state, action) => {
+    [getPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.blogs = action.payload.results;
+      state.blogs = action.payload;
+      console.log(action)
     },
-    [getPosts.rejected]: (state, action) => {
+    [getPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
+      // console.log(action)
+
     },
     [getPostDetail.pending]: (state, action) => {
       state.isLoading = true;
