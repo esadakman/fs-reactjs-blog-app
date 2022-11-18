@@ -25,17 +25,14 @@ const AppRouter = () => {
     return authUser ? <Outlet /> : <Navigate to="/" replace />;
   } 
   return (
-    <BrowserRouter>
+    <BrowserRouter >
       <Navbar /> 
       <Routes>
         <Route path="/" element={<Home />} /> 
         <Route path="/register" element={<Register />} /> 
         <Route path="/login" element={<Login />} /> 
         <Route path="/newblog" element={<NewBlog />} /> 
-        <Route path="/profile" element={<Profile />} />  
-        {/* <Route path="/profile" element={<PrivateRouter />}>
-          <Route path="/profile" element={<Profile />} />
-        </Route>  */}
+        <Route path="/profile" element={<Profile />} />   
         <Route path="/details" element={<PrivateRouter />}>
           <Route path="/details:slug" element={<PostDetails />} />
         </Route>

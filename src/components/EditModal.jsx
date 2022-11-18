@@ -177,9 +177,9 @@ const EditModal = ({ blogDetails }) => {
                         />
                         <button
                           value="submit"
-                          className="text-white w-full text-base rounded-md tracking-wider p-3 dark:bg-main opacity-90 hover:opacity-100 transition-all duration-500 ease-linear "
+                          className="btn-custom w-full " 
                         >
-                          Send
+                          Update
                         </button>
                       </form>
                     </div>

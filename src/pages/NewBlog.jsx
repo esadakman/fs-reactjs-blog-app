@@ -49,8 +49,8 @@ const NewBlog = () => {
 
   return (
     <div>
-      <div className="newBlog centeralizer min-h-82   ">
-        <div className="contactForm bg-gray-900 bg-opacity-40 w-11/12 max-w-40rem min-w-20rem h-fit flex flex-col items-center justify-start pb-6 text-white rounded-2xl transition-all duration-500 ease-linear">
+      <div className="centeralizer p-2">
+        <div className="bg-gray-900 bg-opacity-40 w-11/12 max-w-40rem min-w-20rem h-fit flex flex-col items-center justify-start pb-6 text-white rounded-2xl transition-all duration-500 ease-linear">
           <h2 className="text-3xl m-5 "> Create a Post</h2>
           <div className="centeralizer w-11/12 max-w-xl text-slate-800">
             <form
@@ -83,7 +83,7 @@ const NewBlog = () => {
               <select
                 id="category"
                 name="category"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-800 dark:border-gray-600 opacity-80 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
+                className="bg-gray-50 border-2 border-gray text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-main dark:border-sky-500 opacity-90 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
                 onChange={onChange}
                 value={category}
               >
@@ -112,7 +112,7 @@ const NewBlog = () => {
               />
               <button
                 value="submit"
-                className="text-white w-full text-base rounded-md tracking-wider p-3 dark:bg-gray-800 opacity-80 hover:opacity-100 transition-all duration-500 ease-linear "
+                className="btn-custom w-full " 
               >
                 Send
               </button>

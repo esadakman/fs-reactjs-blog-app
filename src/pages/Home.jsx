@@ -3,7 +3,7 @@ import PostCard from "../components/PostCard";
 
 const Home = () => {
   return (
-    <div>
+    <div className="overflow-x-hidden pb-16 ">
       <PostCard />
     </div>
   );

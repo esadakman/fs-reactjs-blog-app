@@ -23,11 +23,14 @@ module.exports = {
       },
       minHeight: {
         '82': '74.4vh',
+        '72vh': '78vh',
         '81': '81.7vh',
+        '38rem': '38rem',
       },
       maxHeight: {
         '548px': '548px',
         '400px': '400px',
+        '30rem': '30rem',
       },
       minWidth: {
         '20rem': '20rem',
@@ -37,6 +40,9 @@ module.exports = {
       },
       fontSize: {
         '10': '10rem', 
+      },
+      screens: {
+        '2xl': '1920px',
       } 
     },
   },

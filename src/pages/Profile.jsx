@@ -13,7 +13,7 @@ const Profile = () => {
     email: authUser?.user.email,
     first_name: authUser?.user.first_name,
     last_name: authUser?.user.last_name,
-  }); 
+  });
   // ? handleChange
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,7 +24,7 @@ const Profile = () => {
     dispatch(update(updateData));
   };
   return (
-    <main className="flex justify-center  p-1 h-full">
+    <main className="flex justify-center p-1 h-full pb-16">
       <div className="bg-slate-100 py-2.5 px-5 rounded-lg m-4 max-w-lg  w-full lg:w-1/2 shadow-xl">
         <section className="flex">
           <img
@@ -36,7 +36,9 @@ const Profile = () => {
             <h2 className="text-2xl md:text-4xl m-0 text-slate-700">
               {authUser?.user.username}
             </h2>
-            <div className="text-sm md:text-md mb-4 text-gray-700 w-57 overflow-auto">{authUser?.user.email}</div>
+            <div className="text-sm md:text-md mb-4 text-gray-700 w-57 overflow-auto">
+              {authUser?.user.email}
+            </div>
           </div>
         </section>
         <section className="">
@@ -116,24 +118,6 @@ const Profile = () => {
                 onChange={(e) => setImage(e.target.value)}
               />
             </div>
-            {/* <div className="flex flex-col ">
-              <label htmlFor="formFile" className="form-label my-1">
-                Profile Picture
-              </label>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                id="formFile"
-                // onChange={(e) => setImage(e.target.value)}
-                value={image || ""}
-                onChange={(e) => setImage(e.target.value)}
-                className="form-control block w-full text-sm text-slate-900
-                file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0
-                file:text-sm file:font-medium file:bg-slate-400 file:text-main
-                hover:file:bg-slate-600  hover:file:text-violet-50 file:transition-all file:cursor-pointer cursor-pointer"
-              />
-            </div> */}
             <button
               type="submit"
               className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 transition-all mt-3"

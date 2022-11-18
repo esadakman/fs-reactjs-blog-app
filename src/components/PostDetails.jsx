@@ -16,6 +16,7 @@ import { useRef } from "react";
 import { onImageError, onImageErrorPost } from "../helpers/functions";
 import DeleteModal from "./DeleteModal";
 import EditModal from "./EditModal";
+import moment from "moment";
 
 const PostDetails = () => {
   const { state } = useLocation();
@@ -52,20 +53,22 @@ const PostDetails = () => {
   };
   useEffect(() => {
     dispatch(getPostDetail(detailData));
-    commentRef.current.focus();
+    // commentRef.current.focus();
     if (!state) {
       navigate("/notfound");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div>
+    <div className="pb-16">
       {isLoader ? (
         <img src={loadingGif} alt="Loading Gif" />
       ) : (
-        <div className="wrapper pt-5 centeralizer">
+        <div className="wrapper pt-5 centeralizer ">
           <article className="mb-4 break-inside p-6 rounded-xl bg-white dark:bg-main dark:text-white flex flex-col bg-clip-border w-11/12 md:w-200">
-            <h2 className="text-center text-2xl md:text-5xl">──── Details ────</h2>
+            <h2 className="text-center text-2xl sm:text-5xl">
+              ──── Details ────
+            </h2>
             <div className="my-2   border-2 rounded-md border-slate-500">
               <img
                 className="max-w-full rounded-lg w-screen max-h-548px"
@@ -221,7 +224,7 @@ const PostDetails = () => {
                           {data.user}
                         </p>
                         <span className="text-slate-500 dark:text-slate-300">
-                          25 minutes ago
+                          {moment(new Date(data.time_stamp)).fromNow()}
                         </span>
                       </div>
                       <p className="text-justify max-h-20 overflow-auto">
@@ -236,6 +239,11 @@ const PostDetails = () => {
           </article>
         </div>
       )}
+      <div className="w-full centeralizer pb-3">
+        <button className="btn-custom" onClick={() => navigate("/")}>
+          Go Back
+        </button>
+      </div>
     </div>
   );
 };
