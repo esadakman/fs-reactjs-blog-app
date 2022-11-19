@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 export const loginSchema = Yup.object().shape({
   username: Yup.string()
-    .min(5, "Username should be at least 8 characters")
+    .min(4, "Username should be at least 4 characters")
     .max(20, "Username should be at most 20 characters")
     .required("Please fill out user name"),
   email: Yup.string()

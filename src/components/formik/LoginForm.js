@@ -12,13 +12,9 @@ const LoginForm = ({ values, handleChange, errors, touched, handleBlur }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const user = {
-      username: values.username,
-      email: values.email,
-      password: values.password,
-    };
-    let loginData = { user: user, navigate: navigate };
-    if (values.username && values.email && values.password) {
+    // const user = values 
+    let loginData = { user: values, navigate: navigate };
+    if ((values.username || values.email) && values.password) {
       dispatch(login(loginData));
     } else {
       toastWarn("Please fill out all fields.");
@@ -27,7 +23,7 @@ const LoginForm = ({ values, handleChange, errors, touched, handleBlur }) => {
   return (
     <div>
       <div className="p-6 space-y-6 md:space-y-6 sm:px-8">
-        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center ">
+        <h1 className="text-xl font-bold leading-tight tracking-wide text-gray-900 md:text-2xl dark:text-white text-center ">
           Login
         </h1>
         <form className="flex flex-col gap-2" action="#" onSubmit={handleLogin}>
@@ -105,7 +101,7 @@ const LoginForm = ({ values, handleChange, errors, touched, handleBlur }) => {
 
           <button
             type="submit"
-            className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 transition-all mt-2"
+            className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 transition-all mt-2 mb-1"
           >
             {isLoading ? (
               <>
