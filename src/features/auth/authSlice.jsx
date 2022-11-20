@@ -25,7 +25,7 @@ export const register = createAsyncThunk(
       let datas = error.response.data;
       for (let i in datas) {
         if (datas[i].toString().includes("already exists")) {
-          return toastError(`${i} must be unique`);
+          return toastError(`${i.replace(/^./, i => i.toUpperCase())} must be unique`);
         } else if (datas[i].toString().includes("not be blank.")) {
           return toastError(
             `${i.replace(/^./, (str) =>
@@ -168,7 +168,7 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.isError = true;
       state.message = action.error;
-      // console.log(action);
+      console.log(action);
 
       // state.authUser = null;
     },

@@ -30,5 +30,6 @@ export const registerSchema = Yup.object().shape({
     .max(16, "Password  should be maximum 16 characters")
     .required("Please fill out this field")
     .matches(/\d+/, "Password should contain numbers ")
-    .matches(/[a-z]+/, "Password should contain letters "),
+    .matches(/[a-z]+/, "Password should contain letters ")
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
 });

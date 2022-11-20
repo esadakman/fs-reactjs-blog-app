@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 import { onImageError } from "../helpers/functions";
+import { AvatarLoader } from "../helpers/loaders";
 
 const authLinks = [
   { name: "Home", to: "/", current: false },
@@ -15,7 +16,7 @@ const authLinks = [
 const guestLinks = [
   { name: "Home", to: "/", current: true },
   { name: "Register", to: "/register", current: false },
-  { name: "Login", to: "/login", current: false }, 
+  { name: "Login", to: "/login", current: false },
 ];
 
 const Navbar = () => {
@@ -98,14 +99,20 @@ const Navbar = () => {
                       <div>
                         <Menu.Button className="flex rounded-full bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300">
                           <span className="sr-only">Open user menu</span>
-                          <img
-                            className="h-8 w-8 rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300"
-                            src={
-                              authUser?.image ? authUser?.image : profileDefault
-                            }
-                            onError={onImageError}
-                            alt="pic"
-                          />
+
+                          {/* <AvatarLoader /> */}
+                          {(authUser?.image && (
+                            <img
+                              className="h-8 w-8  rounded-full  hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300"
+                              src={
+                                authUser?.image
+                                  ? authUser?.image
+                                  : profileDefault
+                              }
+                              onError={onImageError}
+                              alt="pic"
+                            />
+                          )) || <AvatarLoader />}
                         </Menu.Button>
                       </div>
                       <Transition
@@ -192,7 +199,7 @@ const Navbar = () => {
                         ? "bg-gray-900 text-white"
                         : "text-gray-300 hover:bg-gray-700 hover:text-white",
                       "block px-3 py-2 rounded-md text-base font-medium"
-                    )} 
+                    )}
                     aria-current={item.current ? "page" : undefined}
                   >
                     {item.name}

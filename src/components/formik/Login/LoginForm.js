@@ -1,32 +1,28 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { login } from "../../features/auth/authSlice";
-import { toastWarn } from "../../helpers/customToastify";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-const LoginForm = ({ values, handleChange, errors, touched, handleBlur }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+const LoginForm = ({
+  values,
+  handleChange,
+  errors,
+  touched,
+  handleBlur,
+  handleSubmit,
+}) => {
   const { isLoading } = useSelector((state) => state.user);
   // ! Form Validations
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    // const user = values 
-    let loginData = { user: values, navigate: navigate };
-    if ((values.username || values.email) && values.password) {
-      dispatch(login(loginData));
-    } else {
-      toastWarn("Please fill out all fields.");
-    }
-  }; 
   return (
     <div>
       <div className="p-6 space-y-6 md:space-y-6 sm:px-8">
         <h1 className="text-xl font-bold leading-tight tracking-wide text-gray-900 md:text-2xl dark:text-white text-center ">
           Login
         </h1>
-        <form className="flex flex-col gap-2" action="#" onSubmit={handleLogin}>
+        <form
+          className="flex flex-col gap-2"
+          action="#"
+          onSubmit={handleSubmit}
+        >
           <div>
             <label
               htmlFor="email"

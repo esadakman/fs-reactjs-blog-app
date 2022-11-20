@@ -1,5 +1,9 @@
 import axios from "axios";
-import { toastError, toastSuccess } from "../../helpers/customToastify";
+import {
+  toastError,
+  toastSuccess,
+  toastWarn,
+} from "../../helpers/customToastify";
 // console.log(process.env.REACT_APP_API_URL+'/users');
 const userAPI = axios.create({
   headers: {
@@ -12,7 +16,7 @@ const userAPI = axios.create({
 // Register user
 const register = async ({ userData, navigate }) => {
   const response = await userAPI.post("/register/", userData);
-  console.log(response);
+  // console.log(response);
   try {
     if (response.status === 201) {
       navigate("/login");
@@ -28,11 +32,11 @@ const login = async ({ user, navigate }) => {
   const res = await userAPI.post(`/auth/login/`, user);
   try {
     if (res.data) {
-      if (res.status === 200) { 
+      if (res.status === 200) {
         let id = res.data.user.id;
         const myToken = window.btoa(res.data.key);
         // const userStorage = JSON.stringify(res.data.user);
-        // localStorage.setItem("userInfo", window.btoa(userStorage) ); 
+        // localStorage.setItem("userInfo", window.btoa(userStorage) );
         localStorage.setItem("token", myToken);
         const config = {
           headers: {
@@ -105,7 +109,11 @@ const update = async ({ image, user, userId }) => {
       return res.data;
     }
   } catch (error) {
-    toastError("Oppss... Something went wrong. Please try again later ..");
+    if (error.request.responseText === `{"image":["Enter a valid URL."]}`) {
+      toastWarn("Please enter a valid URL");
+    } else {
+      toastError("Oppss... Something went wrong. Please try again later ..");
+    }
     console.log(error);
   }
 };

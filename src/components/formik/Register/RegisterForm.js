@@ -1,25 +1,16 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { register } from "../../features/auth/authSlice";
-
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom"; 
 const RegisterForm = ({
   values,
-  handleChange,
   errors,
   touched,
+  isSubmitting,
   handleBlur,
+  handleChange,
+  handleSubmit,
 }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.user);
-
-
-  const handleRegister = (e) => {
-    e.preventDefault(); 
-    let registerData = { userData: values, navigate: navigate }; 
-    dispatch(register(registerData));
-  };
   return (
     <div>
       <div className="p-6 sm:p-8 space-y-4 md:space-y-6">
@@ -29,7 +20,7 @@ const RegisterForm = ({
         <form
           className="flex flex-col gap-2"
           action="#"
-          onSubmit={handleRegister}
+          onSubmit={handleSubmit}
         >
           <div>
             <label
@@ -48,6 +39,7 @@ const RegisterForm = ({
               value={values.username}
               onChange={handleChange}
               onBlur={handleBlur}
+              // error={ Boolean(errors.username) && touched.username }
             />
             {errors.username && touched.username ? (
               <p className="ml-2 mt-2 text-pink-600 text-sm">
@@ -181,6 +173,7 @@ const RegisterForm = ({
           </div>
           <button
             type="submit"
+            disabled={isSubmitting}
             className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 mt-2 mb-1"
           >
             {isLoading ? (

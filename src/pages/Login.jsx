@@ -1,9 +1,17 @@
 import React from "react";
 import { Formik } from "formik";
-import { loginSchema } from "../components/formik/LoginSchema";
-import LoginForm from "../components/formik/LoginForm";
+import { loginSchema } from "../components/formik/Login/LoginSchema";
+import LoginForm from "../components/formik/Login/LoginForm";
+import { useNavigate } from "react-router-dom";
+import { useDispatch  } from "react-redux";
+import { login } from "../features/auth/authSlice";
+import { toastWarn } from "../helpers/customToastify";
+// import { loginSchema } from "../components/formik/Login/LoginSchema";
+// import LoginForm from "../components/formik/Login/LoginForm";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch(); 
   return (
     <>
       <div className="centeralizer flex-col px-6 py-8 mx-auto lg:py-0 min-h-81">
@@ -12,9 +20,19 @@ const Login = () => {
             initialValues={{
               username: "jim",
               email: "",
-              password: "Esad1926",
+              password: "",
             }}
             validationSchema={loginSchema}
+            onSubmit={(values, actions) => {
+              let loginData = { user: values, navigate: navigate };
+              if ((values.username || values.email) && values.password) {
+                dispatch(login(loginData));
+              } else {
+                toastWarn("Please fill out all fields.");
+              } 
+              actions.resetForm();
+              actions.setSubmitting(false);
+            }}
             component={(props) => <LoginForm {...props} />}
           ></Formik>
         </div>
