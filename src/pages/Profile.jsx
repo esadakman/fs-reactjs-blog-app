@@ -20,8 +20,7 @@ const Profile = () => {
   };
   const handleUpdate = (e) => {
     e.preventDefault();
-    let updateData = { user: formData, image: image, userId: authUser.user.id };
-    console.log(updateData);
+    let updateData = { user: formData, image: image.replace(/\s/g, ''), userId: authUser.user.id }; 
     dispatch(update(updateData));
   };
 
@@ -115,7 +114,7 @@ const Profile = () => {
                 id="Image"
                 className="profile-input"
                 placeholder="Image Url"
-                required=""
+                required
                 value={image || ""}
                 onChange={(e) => setImage(e.target.value)}
               />

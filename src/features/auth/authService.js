@@ -89,9 +89,9 @@ const logout = async (navigate) => {
 const update = async ({ image, user, userId }) => {
   let myKey = window.atob(localStorage.getItem("token"));
   var data = JSON.stringify({
-    image,
-    user,
-  });
+  image,
+  user,
+  });  
   try {
     var config = {
       method: "put",
@@ -101,11 +101,11 @@ const update = async ({ image, user, userId }) => {
       data: data,
     };
     const res = await userAPI(`/profile/${userId}/`, config);
-    localStorage.setItem("userInfo", JSON.stringify(res.data));
 
     if (res.status === 200) {
       toastSuccess("Blog has been successfully updated");
       // navigate("/register");
+      localStorage.setItem("userInfo", JSON.stringify(res.data));
       return res.data;
     }
   } catch (error) {

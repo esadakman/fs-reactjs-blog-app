@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import profileDefault from "../assets/images/default.webp";
 import postDefault from "../assets/images/not-found.png";
-import loadingGif from "../assets/images/loading.svg";
+// import loadingGif from "../assets/images/loading.svg";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { onImageError, onImageErrorPost } from "../helpers/functions";
@@ -59,9 +59,9 @@ const PostCard = () => {
         <div className=" min-h-82 2xl:min-h-screen flex justify-center items-center text-white  gap-5 md:gap-10  flex-wrap pt-2 sm:w-full">
           {postData?.results?.map((data) =>
             isLoading ? (
-              <>
+              <div key={data.id}>
                 <PostLoader />
-              </>
+              </div>
             ) : (
               <div
                 className="max-w-sm 2xl:max-w-lg container rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-main  transition-all duration-300 max-h-548px 2xl:max-h-max 2xl:min-h-38 rem w-11/12 h-auto
@@ -79,8 +79,8 @@ const PostCard = () => {
                 </div>
                 <div className="relative">
                   <img
-                    className="min-w-full w-auto cursor-pointer h-80 sm:h-96  max-h-96 2xl:max-h-30rem "
-                    // className="min-w-full w-auto cursor-pointer h-80 sm:h-96 2xl:h-auto max-h-96 2xl "
+                    className="cursor-pointer min-w-full h-80 sm:h-96 min-h-full  max-h-96 2xl:max-h-30rem object-cover"
+                    // className="min-w-full w-auto h-80 sm:h-96 2xl:h-auto max-h-96 aspect-square "
                     src={data.post_image ? data.post_image : postDefault}
                     onError={onImageErrorPost}
                     alt=""
