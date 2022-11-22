@@ -1,7 +1,4 @@
-// import axios from "axios";
-import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -9,24 +6,24 @@ import {
   postComment,
   postLike,
 } from "../features/post/postSlice";
-import loadingGif from "../assets/images/loading.svg";
+// import loadingGif from "../assets/images/loading.svg";
 import profileDefault from "../assets/images/default.webp";
 import postDefault from "../assets/images/not-found.png";
 import { useRef } from "react";
 import { onImageError, onImageErrorPost } from "../helpers/functions";
 import DeleteModal from "./DeleteModal";
 import EditModal from "./EditModal";
-import moment from "moment";
+import moment from "moment"; 
+import { CommentLoader } from "../helpers/loaders";
 
 const PostDetails = () => {
   const { state } = useLocation();
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.user);
   const { blogDetail, isLoading } = useSelector((state) => state.blog);
-  // console.log(isLoading)
   const navigate = useNavigate();
   const commentRef = useRef();
-  const [isLoader, setIsLoader] = useState(false);
+  // const [isLoader, setIsLoader] = useState(false);
   let myKey = window.atob(localStorage.getItem("token"));
   const formData = {
     user_id: authUser?.user.id,
@@ -47,6 +44,7 @@ const PostDetails = () => {
     let commentData = {
       comment: commentRef.current.value,
       url: `/posts/${state.slug}/comments/`,
+      dispatch,
     };
     dispatch(postComment(commentData));
     commentRef.current.value = "";
@@ -57,20 +55,21 @@ const PostDetails = () => {
     // commentRef.current.focus();
     if (!state) {
       navigate("/notfound");
-    }
+    } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
       <div className="pb-16">
-        {isLoader ? (
-          <img src={loadingGif} alt="Loading Gif" />
-        ) : (
-          <div className="wrapper pt-5 centeralizer ">
-            <article className="mb-4 break-inside p-6 rounded-xl bg-white dark:bg-main dark:text-white flex flex-col bg-clip-border w-11/12 md:w-200">
-              <h2 className="text-center text-2xl sm:text-5xl">
-                ──── Details ────
-              </h2>
+        <div className="wrapper pt-5 centeralizer ">
+          {/* {isLoader ? (
+            <img src={loadingGif} alt="Loading Gif" />
+          ) : ( */}
+          <article className="mb-4 break-inside p-6 rounded-xl bg-white dark:bg-main dark:text-white flex flex-col bg-clip-border w-11/12 md:w-200">
+            <h2 className="text-center text-2xl sm:text-5xl">
+              ──── Details ────
+            </h2>
+            <>
               <div className="my-2   border-2 rounded-md border-slate-500">
                 <img
                   className="max-w-full rounded-lg w-screen max-h-548px"
@@ -200,7 +199,7 @@ const PostDetails = () => {
               </form>
               {/* <!-- // ! Comments content --> */}
               <div className="pt-6">
-                {/* <!-- Comment row --> */}
+                {/* <!-- //*  Comment row --> */}
                 <div className="media flex pb-2 flex-col gap-2">
                   <div className="flex justify-between">
                     <p className="text-2xl font-bold tracking-wide">
@@ -208,42 +207,54 @@ const PostDetails = () => {
                         ? "Comments"
                         : "No Comment Yet . . ."}
                     </p>
-                    {/* // ? button div */}
                   </div>
-                  {blogDetail?.post_comment?.map((data) => (
-                    <article
-                      className="flex pb-2 border-b border-slate-100"
-                      key={data.id}
-                    >
-                      <div className=" pr-4">
-                        <img
-                          className="rounded-full max-w-none w-12 h-12  "
-                          src={data.user_pp ? data.user_pp : profileDefault}
-                          onError={onImageError}
-                          alt="asd"
-                        />
-                      </div>
-                      <div className="media-body">
-                        <div>
-                          <p className="inline-block text-base font-bold mr-2 ">
-                            {data.user}
-                          </p>
-                          <span className="text-slate-500 dark:text-slate-300">
-                            {moment(new Date(data.time_stamp)).fromNow()}
-                          </span>
+                  {blogDetail?.post_comment?.map(
+                    (data) =>
+                      // <>
+                      isLoading ? (
+                        <div
+                          key={data.id}
+                          className="border-b border-slate-100"
+                        >
+                          <CommentLoader />
                         </div>
-                        <p className="text-justify max-h-20 overflow-auto">
-                          {data.content}
-                        </p>
-                      </div>
-                    </article>
-                  ))}
+                      ) : (
+                        <article
+                          className="flex pb-2 border-b border-slate-100"
+                          key={data.id}
+                        >
+                          <div className=" pr-4">
+                            <img
+                              className="rounded-full max-w-none w-12 h-12  "
+                              src={data.user_pp ? data.user_pp : profileDefault}
+                              onError={onImageError}
+                              alt="asd"
+                            />
+                          </div>
+                          <div className="media-body">
+                            <div>
+                              <p className="inline-block text-base font-bold mr-2 ">
+                                {data.user}
+                              </p>
+                              <span className="text-slate-500 dark:text-slate-300">
+                                {moment(new Date(data.time_stamp)).fromNow()}
+                              </span>
+                            </div>
+                            <p className="text-justify max-h-20 overflow-auto">
+                              {data.content}
+                            </p>
+                          </div>
+                        </article>
+                      )
+                    // </>
+                  )}
                 </div>
                 {/* <!-- End comments row --> */}
               </div>
-            </article>
-          </div>
-        )}
+            </>
+          </article>
+          {/* )} */}
+        </div>
         <div className="w-full centeralizer pb-3">
           <button className="btn-custom" onClick={() => navigate("/")}>
             Go Back

@@ -9,7 +9,7 @@ import { onImageError, onImageErrorPost } from "../helpers/functions";
 import axios from "axios";
 import { useState } from "react";
 import { toastWarn } from "../helpers/customToastify";
-import PostLoader from "../helpers/loaders";
+import {PostLoader} from "../helpers/loaders";
 
 const PostCard = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const PostCard = () => {
 
       setPostData(res.data);
     } catch (error) {
-      console.log(error.message);
+      throw Error(error.message);
     } finally {
       setTimeout(() => {
         setIsLoading(false);
@@ -56,16 +56,18 @@ const PostCard = () => {
   return (
     <>
       <>
-        <div className=" min-h-82 2xl:min-h-screen flex justify-center items-center text-white  gap-5 md:gap-10  flex-wrap pt-2 sm:w-full">
+        <div className=" min-h-82 2xl:min-h-screen flex justify-center items-center text-white  gap-5 md:gap-10  flex-wrap pt-4 sm:w-full">
           {postData?.results?.map((data) =>
             isLoading ? (
-              <div key={data.id}>
+              <div
+                key={data.id}
+                // className="border-2"
+              >
                 <PostLoader />
               </div>
             ) : (
               <div
-                className="max-w-sm 2xl:max-w-lg container rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-main  transition-all duration-300 max-h-548px 2xl:max-h-max 2xl:min-h-38 rem w-11/12 h-auto
-                "
+                className="max-w-sm 2xl:max-w-lg container rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-main  transition-all duration-300 max-h-548px 2xl:max-h-max 2xl:min-h-38 rem w-11/12 h-auto"
                 key={data.id}
                 onClick={() => handleDetails(data)}
               >
@@ -150,8 +152,9 @@ const PostCard = () => {
                       <h2 className="font-bold 2xl:text-2xl  cursor-pointer">
                         @{data.author}
                       </h2>
-                      <p className="overflow-hidden h-8">
-                        {data.content.slice(0, 35)}...
+                      <p className="line-clamp-2 text-justify">
+                        {data.content}
+                        {/* {data.content.slice(0, 35)}... */}
                       </p>
                     </div>
                   </div>
@@ -159,6 +162,7 @@ const PostCard = () => {
               </div>
             )
           )}
+          
         </div>
       </>
       {authUser ? (

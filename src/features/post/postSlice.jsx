@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import postService from "./postService";
+import postService from "./postService"; 
+
 // import { toastError, toastWarn } from "../../helpers/customToastify";
 const initialState = {
   isLoading: false,
@@ -8,7 +9,7 @@ const initialState = {
   isError: false,
 };
 
-export const getPost = createAsyncThunk("blog/posts", async ( thunkAPI) => {
+export const getPost = createAsyncThunk("blog/posts", async (thunkAPI) => {
   // let res = await api.get(`blog/blog/`);
   try {
     return await postService.getPost();
@@ -37,8 +38,7 @@ export const getPostDetail = createAsyncThunk(
 
 export const blogCreate = createAsyncThunk(
   "post/create",
-  async (postCreateData, thunkAPI) => {
-    // console.log(postCreateData);
+  async (postCreateData, thunkAPI) => { 
     try {
       return await postService.blogCreate(postCreateData);
     } catch (error) {
@@ -116,18 +116,17 @@ const post = createSlice({
   },
   extraReducers: {
     [getPost.pending]: (state, action) => {
-      state.isLoading = true; 
+      state.isLoading = true;
     },
     [getPost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.blogs = action.payload;
-      console.log(action)
+      console.log(action);
     },
     [getPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       // console.log(action)
-
     },
     [getPostDetail.pending]: (state, action) => {
       state.isLoading = true;

@@ -8,7 +8,7 @@ export const postAPI = axios.create({
   baseURL: process.env.REACT_APP_API_URL + "/blog",
 });
 
-const getPost = async () => { 
+const getPost = async () => {
   try {
     const response = await postAPI.get("/posts/");
     if (response.status === 200) {
@@ -16,12 +16,13 @@ const getPost = async () => {
       return response.data;
     }
   } catch (error) {
-    console.log(error);
+    throw Error(error);
   }
 };
 
 const getPostDetail = async ({ detailURL, myKey }) => {
   try {
+    // dispatch(toggleLoading());
     const config = {
       headers: {
         Authorization: `Token ${myKey}`,
@@ -32,7 +33,7 @@ const getPostDetail = async ({ detailURL, myKey }) => {
       return response.data;
     }
   } catch (error) {
-    console.log(error);
+    throw Error(error);
   }
 };
 
@@ -53,7 +54,7 @@ const blogCreate = async ({ postData, navigate }) => {
       return response.data;
     }
   } catch (error) {
-    console.log(error);
+    throw Error(error);
   }
 };
 
@@ -74,11 +75,11 @@ const postLike = async (postData) => {
       return response.data;
     }
   } catch (error) {
-    console.log(error);
+    throw Error(error);
   }
 };
 
-const postComment = async ({ comment, url }) => {
+const postComment = async ({ dispatch, comment, url }) => {
   let myKey = window.atob(localStorage.getItem("token"));
   let data = JSON.stringify({
     content: comment,
@@ -98,7 +99,7 @@ const postComment = async ({ comment, url }) => {
       return response.data;
     }
   } catch (error) {
-    console.log(error);
+    throw Error(error);
   }
 };
 
