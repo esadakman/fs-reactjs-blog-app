@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -13,7 +13,7 @@ import { useRef } from "react";
 import { onImageError, onImageErrorPost } from "../helpers/functions";
 import DeleteModal from "./DeleteModal";
 import EditModal from "./EditModal";
-import moment from "moment"; 
+import moment from "moment";
 import { CommentLoader } from "../helpers/loaders";
 
 const PostDetails = () => {
@@ -55,7 +55,7 @@ const PostDetails = () => {
     // commentRef.current.focus();
     if (!state) {
       navigate("/notfound");
-    } 
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

@@ -1,28 +1,35 @@
+import { Formik } from "formik";
 import React from "react";
-import { useState } from "react";
+// import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import profilePP from "../assets/images/default.webp";
+import ProfileForm from "../components/formik/Profile/ProfileForm";
+import { profileSchema } from "../components/formik/Profile/ProfileSchema";
 import { update } from "../features/auth/authSlice";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.user);
-  const [image, setImage] = useState(authUser?.image);
-  const [formData, setFormData] = useState({
-    username: authUser?.user.username,
-    email: authUser?.user.email,
-    first_name: authUser?.user.first_name,
-    last_name: authUser?.user.last_name,
-  });
+  // const [image, setImage] = useState(authUser?.image);
+  // const [formData, setFormData] = useState({
+  //   username: authUser?.user.username,
+  //   email: authUser?.user.email,
+  //   first_name: authUser?.user.first_name,
+  //   last_name: authUser?.user.last_name,
+  // });
   // ? handleChange
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    let updateData = { user: formData, image: image.replace(/\s/g, ''), userId: authUser.user.id }; 
-    dispatch(update(updateData));
-  };
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
+  // const handleUpdate = (e) => {
+  //   e.preventDefault();
+  //   let updateData = {
+  //     user: formData,
+  //     image: image.replace(/\s/g, ""),
+  //     userId: authUser.user.id,
+  //   };
+  //   dispatch(update(updateData));
+  // };
 
   return (
     <main className="flex justify-center p-1 h-full pb-16">
@@ -43,89 +50,38 @@ const Profile = () => {
           </div>
         </section>
         <section className="">
-          <form onSubmit={handleUpdate}>
-            <div>
-              <label htmlFor="username" className="block my-1">
-                Username
-              </label>
-              <input
-                type="text"
-                name="username"
-                id="username"
-                className="profile-input"
-                placeholder="User Name"
-                required=""
-                value={formData.username || ""}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="email" className="block my-1">
-                E-mail
-              </label>
-              <input
-                type="text"
-                name="email"
-                id="username"
-                className="profile-input"
-                placeholder="name@company.com"
-                required=""
-                value={formData.email || ""}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="Name" className="block my-1">
-                Name
-              </label>
-              <input
-                type="Name"
-                name="first_name"
-                id="Name"
-                className="profile-input"
-                placeholder="Name"
-                required=""
-                value={formData.first_name || ""}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="Surname" className="block my-1">
-                Surname
-              </label>
-              <input
-                type="Surname"
-                name="last_name"
-                id="Surname"
-                className="profile-input"
-                placeholder="Surname"
-                required=""
-                value={formData.last_name || ""}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="image" className="block my-1">
-                Image
-              </label>
-              <input
-                type="text"
-                name="image"
-                id="Image"
-                className="profile-input"
-                placeholder="Image Url"
-                required
-                value={image || ""}
-                onChange={(e) => setImage(e.target.value)}
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 transition-all mt-3"
-            >
-              Update
-            </button>
-          </form>
+          <Formik
+            initialValues={{
+              user: {
+                username: authUser?.user.username,
+                email: authUser?.user.email,
+                first_name: authUser?.user.first_name,
+                last_name: authUser?.user.last_name,
+              },
+              image: authUser?.image,
+            }}
+            validationSchema={profileSchema}
+            onSubmit={(values, actions) => {
+              // console.log(values);
+              let updateData = { values, userId: authUser.user.id };
+              dispatch(update(updateData));
+              // if (
+              //   values.username &&
+              //   values.first_name &&
+              //   values.last_name &&
+              //   values.email &&
+              //   values.password &&
+              //   values.password
+              // ) {
+              // let updateData = { user: formData, image: image.replace(/\s/g, ''), userId: authUser.user.id };
+              // dispatch(update(updateData));
+              // } else {
+              //   toastWarn("Please fill out all fields");
+              // // }
+              actions.setSubmitting(false);
+            }}
+            component={(props) => <ProfileForm {...props} />}
+          ></Formik>
         </section>
       </div>
     </main>

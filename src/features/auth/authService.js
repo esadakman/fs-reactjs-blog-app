@@ -86,19 +86,19 @@ const logout = async (navigate) => {
   }
 };
 
-const update = async ({ image, user, userId }) => {
-  let myKey = window.atob(localStorage.getItem("token"));
-  var data = JSON.stringify({
-  image,
-  user,
-  });  
+const update = async ({ values, userId }) => {
+  let myKey = window.atob(localStorage.getItem("token")); 
+  // var data = JSON.stringify({
+  //   values.image,
+  //   values.user,
+  // });  
   try {
     var config = {
       method: "put",
       headers: {
         Authorization: `Token ${myKey}`,
       },
-      data: data,
+      data: values,
     };
     const res = await userAPI(`/profile/${userId}/`, config);
 

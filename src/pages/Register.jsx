@@ -24,8 +24,8 @@ const Register = () => {
             }}
             validationSchema={registerSchema}
             onSubmit={(values, actions) => {
-              let registerData = { userData: values, navigate: navigate };
-              dispatch(register(registerData));
+              // let registerData = { userData: values, navigate: navigate };
+              // dispatch(register(registerData));
               if (
                 values.username &&
                 values.first_name &&

@@ -11,6 +11,7 @@ const RegisterForm = ({
   handleSubmit,
 }) => {
   const { isLoading } = useSelector((state) => state.user);
+  // console.log(errors);
   return (
     <div>
       <div className="p-6 sm:p-8 space-y-4 md:space-y-6">
@@ -32,14 +33,16 @@ const RegisterForm = ({
             <input
               type="text"
               name="username"
-              id="username"
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all"
-              placeholder="Username"
-              required=""
-              value={values.username}
+              id="username" 
+              className={
+                errors.username
+                  ? "login-input border-pink-500"
+                  : "login-input dark:focus:border-blue-500 "
+              }
+              placeholder="User Name"
+              value={values.username || ""}
               onChange={handleChange}
-              onBlur={handleBlur}
-              // error={ Boolean(errors.username) && touched.username }
+              onBlur={handleBlur} 
             />
             {errors.username && touched.username ? (
               <p className="ml-2 mt-2 text-pink-600 text-sm">
@@ -59,14 +62,14 @@ const RegisterForm = ({
                 type="Name"
                 name="first_name"
                 id="Name"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg 
-                      block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
-                      focus:ring-primary-600 focus:border-primary-600 
-                      dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all
-                      "
+                className={
+                  errors.first_name
+                    ? "login-input border-pink-500"
+                    : "login-input dark:focus:border-blue-500 "
+                }
                 placeholder="Name"
                 required=""
-                value={values.first_name}
+                value={values.first_name || ""}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
@@ -87,7 +90,11 @@ const RegisterForm = ({
                 type="Surname"
                 name="last_name"
                 id="Surname"
-                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all"
+                className={
+                  errors.last_name
+                    ? "login-input border-pink-500"
+                    : "login-input dark:focus:border-blue-500 "
+                }
                 placeholder="Surname"
                 required=""
                 value={values.last_name}
@@ -112,7 +119,11 @@ const RegisterForm = ({
               type="email"
               name="email"
               id="email"
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all"
+              className={
+                errors.email
+                  ? "login-input border-pink-500"
+                  : "login-input dark:focus:border-blue-500 "
+              }
               placeholder="name@company.com"
               required=""
               value={values.email}
@@ -135,7 +146,11 @@ const RegisterForm = ({
               name="password"
               id="password"
               placeholder="••••••••"
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all"
+              className={
+                errors.password
+                  ? "login-input border-pink-500"
+                  : "login-input dark:focus:border-blue-500 "
+              }
               required=""
               value={values.password}
               onChange={handleChange}
@@ -159,7 +174,11 @@ const RegisterForm = ({
               name="password2"
               id="password2"
               placeholder="••••••••"
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 outline-0 transition-all"
+              className={
+                errors.password2
+                  ? "login-input border-pink-500"
+                  : "login-input dark:focus:border-blue-500 "
+              }
               required=""
               value={values.password2}
               onChange={handleChange}
