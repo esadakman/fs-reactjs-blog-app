@@ -7,10 +7,12 @@ export const registerSchema = Yup.object().shape({
     .required("Please fill out user name"),
 
   first_name: Yup.string()
+    .min(3, "Name should be at least 3 characters")
     .max(20, "Must be at most 20 characters")
     .required("Please enter a first name"),
 
   last_name: Yup.string()
+    .min(3, "Surname should be at least 3 characters") 
     .max(20, "Must be at most 20 characters")
     .required("Please enter a last name"),
 
@@ -24,12 +26,12 @@ export const registerSchema = Yup.object().shape({
     .required("Please fill out this field")
     .matches(/\d+/, "Password should contain numbers ")
     .matches(/[a-z]+/, "Password should contain letters "),
-    
+
   password2: Yup.string()
     .min(8, "Password should be at least 8 characters")
     .max(16, "Password  should be maximum 16 characters")
     .required("Please fill out this field")
     .matches(/\d+/, "Password should contain numbers ")
     .matches(/[a-z]+/, "Password should contain letters ")
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });

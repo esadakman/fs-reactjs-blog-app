@@ -49,8 +49,8 @@ const NewBlog = () => {
 
   return (
     <div>
-      <div className="centeralizer p-2">
-        <div className="bg-gray-900 bg-opacity-40 w-11/12 max-w-40rem min-w-20rem h-fit flex flex-col items-center justify-start pb-6 text-white rounded-2xl transition-all duration-500 ease-linear">
+      <div className="centeralizer min-h-81 mb-16 md:mb-0">
+        <div className="bg-gray-900 bg-opacity-40 w-11/12 max-w-40rem sm:min-w-20rem h-fit flex flex-col items-center justify-start pb-6 text-white rounded-2xl transition-all duration-500 ease-linear centeralizer">
           <h2 className="text-3xl m-5 "> Create a Post</h2>
           <div className="centeralizer w-11/12 max-w-xl text-slate-800">
             <form
@@ -67,7 +67,7 @@ const NewBlog = () => {
                 maxLength={21}
                 value={title}
                 onChange={onChange}
-                className="transition-all duration-500 ease-linear w-full h-12 text-base indent-2 outline-none py-2 rounded-lg border-2 border-slate-900 bg-white placeholder:text-slate-900 "
+                className="post-input h-12"
               />
               <input
                 type="text"
@@ -76,14 +76,14 @@ const NewBlog = () => {
                 placeholder="Image URL"
                 required
                 name="post_image"
-                className="transition-all duration-500 ease-linear w-full h-12 text-base indent-2 outline-none py-2 rounded-lg border-2 border-slate-900 bg-white  placeholder:text-slate-900 focus:border-blue-800 "
+                className="post-input h-12"
                 value={post_image}
                 onChange={onChange}
               />
               <select
                 id="category"
                 name="category"
-                className="bg-gray-50 border-2 border-gray text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-main dark:border-sky-500 opacity-90 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
+                className="bg-gray-50 border-2 border-gray text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-main dark:border-sky-500 opacity-90 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear "
                 onChange={onChange}
                 value={category}
               >
@@ -102,7 +102,8 @@ const NewBlog = () => {
               <textarea
                 type="text"
                 placeholder="Content"
-                className="transition-all duration-500 ease-linear  w-full h-44 text-base  outline-none p-2 rounded-lg border-2 border-slate-900 bg-white  placeholder:text-slate-900 focus:border-sky-300 resize-none"
+                className="post-input h-44 resize-none"
+                // className="transition-all duration-500 ease-linear  w-full h-44 text-base  outline-none p-2 rounded-lg border-2 border-slate-900 bg-white  placeholder:text-slate-900 focus:border-sky-300 "
                 required
                 id="content"
                 label="Content"

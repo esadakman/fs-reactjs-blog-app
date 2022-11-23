@@ -20,7 +20,7 @@ const PostDetails = () => {
   const { state } = useLocation();
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.user);
-  const { blogDetail, isLoading } = useSelector((state) => state.blog);
+  const { blogDetail, isLoadingComment } = useSelector((state) => state.blog);
   const navigate = useNavigate();
   const commentRef = useRef();
   // const [isLoader, setIsLoader] = useState(false);
@@ -211,7 +211,7 @@ const PostDetails = () => {
                   {blogDetail?.post_comment?.map(
                     (data) =>
                       // <>
-                      isLoading ? (
+                      isLoadingComment ? (
                         <div
                           key={data.id}
                           className="border-b border-slate-100"

@@ -1,17 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 const RegisterForm = ({
   values,
   errors,
   touched,
-  isSubmitting,
   handleBlur,
   handleChange,
   handleSubmit,
+  isValid,
+  dirty,
 }) => {
-  const { isLoading } = useSelector((state) => state.user);
-  // console.log(errors);
+  const { isLoading } = useSelector((state) => state.user); 
   return (
     <div>
       <div className="p-6 sm:p-8 space-y-4 md:space-y-6">
@@ -33,16 +33,17 @@ const RegisterForm = ({
             <input
               type="text"
               name="username"
-              id="username" 
+              id="username"
+              htmlFor="switch"
               className={
-                errors.username
-                  ? "login-input border-pink-500"
+                errors.username && touched.username
+                  ? "login-input border-pink-500 animate-handshake"
                   : "login-input dark:focus:border-blue-500 "
               }
               placeholder="User Name"
               value={values.username || ""}
               onChange={handleChange}
-              onBlur={handleBlur} 
+              onBlur={handleBlur}
             />
             {errors.username && touched.username ? (
               <p className="ml-2 mt-2 text-pink-600 text-sm">
@@ -62,9 +63,10 @@ const RegisterForm = ({
                 type="Name"
                 name="first_name"
                 id="Name"
+                htmlFor="switch"
                 className={
-                  errors.first_name
-                    ? "login-input border-pink-500"
+                  errors.first_name && touched.first_name
+                    ? "login-input border-pink-500 animate-handshake"
                     : "login-input dark:focus:border-blue-500 "
                 }
                 placeholder="Name"
@@ -90,9 +92,10 @@ const RegisterForm = ({
                 type="Surname"
                 name="last_name"
                 id="Surname"
+                htmlFor="switch"
                 className={
-                  errors.last_name
-                    ? "login-input border-pink-500"
+                  errors.last_name && touched.last_name
+                    ? "login-input border-pink-500 animate-handshake"
                     : "login-input dark:focus:border-blue-500 "
                 }
                 placeholder="Surname"
@@ -119,9 +122,10 @@ const RegisterForm = ({
               type="email"
               name="email"
               id="email"
+              htmlFor="switch"
               className={
-                errors.email
-                  ? "login-input border-pink-500"
+                errors.email && touched.email
+                  ? "login-input border-pink-500 animate-handshake"
                   : "login-input dark:focus:border-blue-500 "
               }
               placeholder="name@company.com"
@@ -146,9 +150,10 @@ const RegisterForm = ({
               name="password"
               id="password"
               placeholder="••••••••"
+              htmlFor="switch"
               className={
-                errors.password
-                  ? "login-input border-pink-500"
+                errors.password && touched.password
+                  ? "login-input border-pink-500 animate-handshake"
                   : "login-input dark:focus:border-blue-500 "
               }
               required=""
@@ -174,9 +179,10 @@ const RegisterForm = ({
               name="password2"
               id="password2"
               placeholder="••••••••"
+              htmlFor="switch"
               className={
-                errors.password2
-                  ? "login-input border-pink-500"
+                errors.password2 && touched.password2
+                  ? "login-input border-pink-500 animate-handshake"
                   : "login-input dark:focus:border-blue-500 "
               }
               required=""
@@ -192,8 +198,8 @@ const RegisterForm = ({
           </div>
           <button
             type="submit"
-            disabled={isSubmitting}
-            className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 mt-2 mb-1"
+            disabled={!(isValid && dirty)}
+            className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 mt-2 mb-1 disabled:opacity-60 disabled:hover:bg-blue-500 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <>

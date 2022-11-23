@@ -4,6 +4,7 @@ import postService from "./postService";
 // import { toastError, toastWarn } from "../../helpers/customToastify";
 const initialState = {
   isLoading: false,
+  isLoadingComment: false,
   blogs: [],
   blogDetail: [],
   isError: false,
@@ -160,13 +161,13 @@ const post = createSlice({
       state.isLoading = false;
     },
     [postComment.pending]: (state, action) => {
-      state.isLoading = true;
+      state.isLoadingComment = true;
     },
     [postComment.fulfilled]: (state, action) => {
-      state.isLoading = false;
+      state.isLoadingComment = false;
     },
     [postComment.rejected]: (state, action) => {
-      state.isLoading = false;
+      state.isLoadingComment = false;
     },
   },
 });

@@ -16,22 +16,23 @@ const AvatarLoader = (props) => (
 );
 
 const PostLoader = (props) => (
-  <ContentLoader
+  <ContentLoader 
     speed={2}
-    width={380}
-    height={490}
-    viewBox="0 0 400 500"
+    width={384}
+    height={544}
+    viewBox="0 0 384 544"
     backgroundColor="#a2a0a0"
     foregroundColor="#ecebeb"
     {...props}
-  >
-    <circle cx="35" cy="470" r="31" />
-    <rect x="3" y="7" rx="8" ry="8" width="188" height="18" />
-    <rect x="290" y="5" rx="8" ry="8" width="100" height="18" />
-    <rect x="3" y="35" rx="5" ry="7" width="393" height="400" />
-    <rect x="72" y="445" rx="8" ry="8" width="120" height="12" />
-    <rect x="72" y="465" rx="8" ry="8" width="320" height="12" />
-    <rect x="72" y="485" rx="8" ry="8" width="320" height="12" />
+    className="sm:max-h-full max-h-480px w-11/12 max-w-sm 2xl:max-w-lg"
+  > 
+    <rect x="255" y="5" rx="10" ry="10" width="120" height="18" /> 
+    <rect x="4" y="5" rx="10" ry="10" width="140" height="18" /> 
+    <rect x="5" y="40" rx="10" ry="10" width="374" height="410" /> 
+    <circle cx="45" cy="500" r="32" /> 
+    <rect x="87" y="460" rx="10" ry="10" width="120" height="15" /> 
+    <rect x="87" y="490" rx="10" ry="10" width="290" height="15" /> 
+    <rect x="87" y="520" rx="10" ry="10" width="290" height="15" />
   </ContentLoader>
 );
 

@@ -19,16 +19,17 @@ module.exports = {
         82: "82vh",
         "80%": "80%",
         "600px": "600px",
+        "480px": "480px",
       },
       minHeight: {
-        82: "74.4vh",
+        '74vh': "74.4vh",
         "72vh": "78vh",
         81: "81.7vh",
         "38rem": "38rem",
       },
       maxHeight: {
         "548px": "548px",
-        "400px": "400px",
+        "400px": "400px", 
         "30rem": "30rem",
       },
       minWidth: {
