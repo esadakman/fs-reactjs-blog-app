@@ -7,11 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 import { onImageError } from "../helpers/functions";
 import { AvatarLoader } from "../helpers/loaders";
+import { useRef } from "react";
 
 const authLinks = [
   { name: "Home", to: "/", current: false },
   { name: "New Post", to: "/newblog", current: false },
-  { name: "Profile", to: "/profile", current: false },
+  { name: "My Posts", to: "/myposts", current: false },
 ];
 const guestLinks = [
   { name: "Home", to: "/", current: true },
@@ -22,11 +23,8 @@ const guestLinks = [
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const searchRef = useRef(); 
   const { authUser } = useSelector((state) => state.user);
-  // const { authUser, isLoading, isError, isSuccess, message } = useSelector(
-  //   (state) => state.user
-  // );
-  // console.log(authUser)
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
@@ -34,6 +32,14 @@ const Navbar = () => {
     e.preventDefault();
     dispatch(logout(navigate));
     dispatch(reset());
+  };
+  const handleSearch = (e) => {
+    e.preventDefault(); 
+    let param = searchRef.current.value
+    navigate(`/search/${param}`, {
+      state: param,
+    });
+    searchRef.current.value = "";  
   };
   return (
     <>
@@ -84,11 +90,14 @@ const Navbar = () => {
                               </Link>
                             ))}
                           </div>
-                          <div className="relative centeralizer text-gray-600 dark:text-white sm:block hidden">
+                          <form className="relative centeralizer text-gray-600 dark:text-white sm:block hidden" 
+                          onSubmit={handleSearch}
+                          >
                             <input
                               className="border-2 w-40 border-gray-400 dark:bg-gray-700 h-8 pl-2 rounded-xl text-sm outline-0 focus:border-blue-500 transition-all  duration-300"
                               type="text"
                               name="search"
+                              ref={searchRef}
                               placeholder="Search"
                             />
                             <button
@@ -109,7 +118,7 @@ const Navbar = () => {
                                 <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
                               </svg>
                             </button>
-                          </div>
+                          </form>
                         </>
                       ) : (
                         <div className="centeralizer">
@@ -131,9 +140,12 @@ const Navbar = () => {
                 {/* // ! user True  */}
                 {authUser ? (
                   <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-3 sm:pr-0">
-                    <p className="p-1 rounded text-white select-none">
+                    <Link
+                      className="p-1 rounded text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300 cursor-pointer"
+                      to="/profile"
+                    >
                       {authUser?.user?.username}
-                    </p>
+                    </Link>
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3 flex">
                       <div>
@@ -218,7 +230,7 @@ const Navbar = () => {
             </div>
 
             <Disclosure.Panel className="sm:hidden fixed bg-gray-800 w-screen z-10">
-              <div className="space-y-1 px-2 pt-2 pb-3 "> 
+              <div className="space-y-1 px-2 pt-2 pb-3 ">
                 {authUser ? (
                   <>
                     {authLinks.map((item) => (

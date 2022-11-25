@@ -18,12 +18,12 @@ import { CommentLoader } from "../helpers/loaders";
 
 const PostDetails = () => {
   const { state } = useLocation();
+  // console.log(state);
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.user);
   const { blogDetail, isLoadingComment } = useSelector((state) => state.blog);
   const navigate = useNavigate();
-  const commentRef = useRef();
-  // const [isLoader, setIsLoader] = useState(false);
+  const commentRef = useRef(); 
   let myKey = window.atob(localStorage.getItem("token"));
   const formData = {
     user_id: authUser?.user.id,
@@ -55,9 +55,8 @@ const PostDetails = () => {
     // commentRef.current.focus();
     if (!state) {
       navigate("/notfound");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    } 
+  }, [detailData, dispatch, navigate, state]);
   return (
     <>
       <div className="pb-16">

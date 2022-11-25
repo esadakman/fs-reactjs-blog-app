@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { blogCreate } from "../features/post/postSlice";
 import axios from "axios";
 import { useEffect } from "react";
+import AnimatedPage from "../helpers/AnimatedPage";
 
 const NewBlog = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const NewBlog = () => {
   // console.log(formData.category);
 
   return (
-    <div>
+    <AnimatedPage>
       <div className="centeralizer min-h-81 mb-16 md:mb-0">
         <div className="bg-gray-900 bg-opacity-40 w-11/12 max-w-40rem sm:min-w-20rem h-fit flex flex-col items-center justify-start pb-6 text-white rounded-2xl transition-all duration-500 ease-linear centeralizer">
           <h2 className="text-3xl m-5 "> Create a Post</h2>
@@ -121,7 +122,7 @@ const NewBlog = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AnimatedPage>
   );
 };
 

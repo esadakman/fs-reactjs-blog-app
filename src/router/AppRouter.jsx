@@ -18,6 +18,8 @@ import Profile from "../pages/Profile";
 import PostDetails from "../components/PostDetails";
 import { useSelector } from "react-redux";
 import { toastWarn } from "../helpers/customToastify";
+import MyPosts from "../pages/MyPosts";
+import SearchPage from "../pages/SearchPage";
 
 const AppRouter = () => {
   const { authUser } = useSelector((state) => state.user);
@@ -38,11 +40,17 @@ const AppRouter = () => {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} /> 
+        {/* <Route path="/myposts" element={<PrivateRouter />}> */}
+          <Route path="/myposts" element={<MyPosts />} />
+        {/* </Route> */}
         <Route path="/newblog" element={<PrivateRouter />}>
           <Route path="/newblog" element={<NewBlog />} />
         </Route>
         <Route path="/profile" element={<PrivateRouter />}>
           <Route path="/profile" element={<Profile />} />
+        </Route>
+        <Route path="/search" element={<PrivateRouter />}>
+          <Route path="/search:param" element={<SearchPage />} />
         </Route>
         <Route path="/details" element={<PrivateRouter />}>
           <Route path="/details:slug" element={<PostDetails />} />

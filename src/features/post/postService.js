@@ -8,9 +8,10 @@ export const postAPI = axios.create({
   baseURL: process.env.REACT_APP_API_URL + "/blog",
 });
 
-const getPost = async () => {
+const getPost = async (url) => {
+  // console.log(url)
   try {
-    const response = await postAPI.get("/posts/");
+    const response = await postAPI.get(url);
     if (response.status === 200) {
       // console.log(response.data);
       return response.data;
@@ -21,8 +22,7 @@ const getPost = async () => {
 };
 
 const getPostDetail = async ({ detailURL, myKey }) => {
-  try {
-    // dispatch(toggleLoading());
+  try { 
     const config = {
       headers: {
         Authorization: `Token ${myKey}`,
