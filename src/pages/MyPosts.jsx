@@ -20,7 +20,7 @@ const MyPosts = () => {
 
   return (
     <AnimatedPage>
-      <div className="overflow-x-hidden pb-24">
+      <div className="overflow-x-hidden py-20">
         <div className="min-h-74vh 2xl:min-h-81 flex justify-center items-center gap-5 md:gap-10  flex-wrap pt-4 sm:w-full">
           {blogs?.results?.length > 0 ? (
             blogs?.results?.map((data) =>
@@ -39,7 +39,7 @@ const MyPosts = () => {
               </h1>
               <button
                 onClick={() => navigate(`/newblog`)}
-                className=" btn-custom mt-4 w-fit px-5"
+                className=" btn-custom mt-4 w-fit px-"
               >
                 New Post
               </button>

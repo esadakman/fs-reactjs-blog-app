@@ -1,21 +1,29 @@
 import { Formik } from "formik";
-import React from "react"; 
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import profilePP from "../assets/images/default.webp";
 import ProfileForm from "../components/formik/Profile/ProfileForm";
 import { profileSchema } from "../components/formik/Profile/ProfileSchema";
 import { update } from "../features/auth/authSlice";
-
+import { motion } from "framer-motion";
+import { animations } from "../helpers/AnimatedPage";
 const Profile = () => {
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.user);
 
   return (
-    <main className="flex justify-center p-1 h-full pb-16">
+    <motion.main
+      variants={animations}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      transition={{ duration: 1 }}
+      className="flex justify-center p-1 h-full py-16"
+    >
       <div className="bg-slate-100 py-2.5 px-5 rounded-lg m-4 max-w-lg  w-full lg:w-1/2 shadow-xl">
         <section className="flex">
           <img
-            className="rounded-full w-20 h-20  md:h-32  md:w-32 mr-2  md:mr-5 mb-4 object-cover"
+            className="rounded-full w-20 h-20 md:h-32 md:w-32 mr-2 md:mr-5 mb-2 object-cover transition-all"
             src={authUser?.image || profilePP}
             alt="pp"
           />
@@ -50,7 +58,7 @@ const Profile = () => {
           ></Formik>
         </section>
       </div>
-    </main>
+    </motion.main>
   );
 };
 

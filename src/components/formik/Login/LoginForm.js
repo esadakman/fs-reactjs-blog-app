@@ -29,7 +29,7 @@ const LoginForm = ({
               htmlFor="email"
               className="block   mb-1 text-sm font-medium text-gray-900 dark:text-white"
             >
-              User Name
+              Username*
             </label>
             <input
               type="text"
@@ -82,7 +82,7 @@ const LoginForm = ({
               htmlFor="password"
               className="block  ml-1 mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Password
+              Password*
             </label>
             <input
               type="password"

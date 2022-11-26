@@ -28,7 +28,7 @@ const RegisterForm = ({
               htmlFor="username"
               className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Username
+              Username*
             </label>
             <input
               type="text"
@@ -57,7 +57,7 @@ const RegisterForm = ({
                 htmlFor="Name"
                 className="block   mb-1 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Name
+                Name*
               </label>
               <input
                 type="Name"
@@ -86,7 +86,7 @@ const RegisterForm = ({
                 htmlFor="Surname"
                 className="block  mb-1 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Surname
+                Surname*
               </label>
               <input
                 type="Surname"
@@ -116,7 +116,7 @@ const RegisterForm = ({
               htmlFor="email"
               className="block   mb-1 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Your email
+              Your email*
             </label>
             <input
               type="email"
@@ -143,7 +143,7 @@ const RegisterForm = ({
               htmlFor="password"
               className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Password
+              Password*
             </label>
             <input
               type="password"
@@ -172,7 +172,7 @@ const RegisterForm = ({
               htmlFor="confirm-password"
               className="block   mb-1 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Confirm password
+              Confirm password*
             </label>
             <input
               type="password"

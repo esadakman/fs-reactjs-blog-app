@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import logo from "../assets/images/logo.png";
 import profileDefault from "../assets/images/default.webp";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, reset } from "../features/auth/authSlice";
 import { onImageError } from "../helpers/functions";
@@ -23,7 +23,7 @@ const guestLinks = [
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const searchRef = useRef(); 
+  const searchRef = useRef();
   const { authUser } = useSelector((state) => state.user);
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -34,19 +34,19 @@ const Navbar = () => {
     dispatch(reset());
   };
   const handleSearch = (e) => {
-    e.preventDefault(); 
-    let param = searchRef.current.value
+    e.preventDefault();
+    let param = searchRef.current.value;
     navigate(`/search/${param}`, {
       state: param,
     });
-    searchRef.current.value = "";  
+    searchRef.current.value = "";
   };
   return (
     <>
-      <Disclosure as="nav" className="bg-gray-900 ">
+      <Disclosure as="nav" className="bg-gray-900 fixed w-full z-50">
         {({ open }) => (
           <>
-            <div className="mx-auto max-w-10xl px-2 sm:px-6 lg:px-8 ">
+            <div className="mx-auto  max-w-10xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between ">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden ">
                   {/* Mobile menu button*/}
@@ -78,20 +78,25 @@ const Navbar = () => {
                     <div className="flex justify-between items-center">
                       {authUser ? (
                         <>
-                          <div className="centeralizer">
+                          <div className="centeralizer gap-2">
                             {authLinks.map((item) => (
-                              <Link
+                              <NavLink
                                 key={item.name}
                                 to={item.to}
-                                className="text-gray-300  hover:bg-gray-700 hover:text-white transition-all duration-300 px-3 py-2 rounded-md text-sm font-medium "
-                                aria-current={item.current ? "page" : undefined}
+                                end
+                                className={({ isActive }) =>
+                                  isActive
+                                    ? "active-link ring-2 ring-white"
+                                    : "active-link"
+                                }
                               >
                                 {item.name}
-                              </Link>
+                              </NavLink>
                             ))}
                           </div>
-                          <form className="relative centeralizer text-gray-600 dark:text-white sm:block hidden" 
-                          onSubmit={handleSearch}
+                          <form
+                            className="relative centeralizer text-gray-600 dark:text-white sm:block hidden"
+                            onSubmit={handleSearch}
                           >
                             <input
                               className="border-2 w-40 border-gray-400 dark:bg-gray-700 h-8 pl-2 rounded-xl text-sm outline-0 focus:border-blue-500 transition-all  duration-300"
@@ -99,6 +104,7 @@ const Navbar = () => {
                               name="search"
                               ref={searchRef}
                               placeholder="Search"
+                              required
                             />
                             <button
                               type="submit"
@@ -123,14 +129,18 @@ const Navbar = () => {
                       ) : (
                         <div className="centeralizer">
                           {guestLinks.map((item) => (
-                            <Link
+                            <NavLink
                               key={item.name}
                               to={item.to}
-                              className="text-gray-300  hover:bg-gray-700 hover:text-white transition-all px-3 py-2 rounded-md text-sm font-medium "
-                              aria-current={item.current ? "page" : undefined}
+                              end
+                              className={({ isActive }) =>
+                                isActive
+                                  ? "active-link ring-2 ring-white"
+                                  : "active-link"
+                              }
                             >
                               {item.name}
-                            </Link>
+                            </NavLink>
                           ))}
                         </div>
                       )}
@@ -139,54 +149,56 @@ const Navbar = () => {
                 </div>
                 {/* // ! user True  */}
                 {authUser ? (
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-3 sm:pr-0">
-                    <Link
-                      className="p-1 rounded text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300 cursor-pointer"
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-3 sm:pr-0 ">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive
+                          ? "active-user ring-2 ring-white"
+                          : "active-user"
+                      }
                       to="/profile"
                     >
                       {authUser?.user?.username}
-                    </Link>
+                    </NavLink>
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3 flex">
-                      <div>
-                        <Menu.Button className="flex rounded-full bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300">
-                          <span className="sr-only">Open user menu</span>
-                          {(authUser?.image && (
-                            <img
-                              className="h-8 w-8 rounded-full outline-none hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300 select-none"
-                              src={
-                                authUser?.image
-                                  ? authUser?.image
-                                  : profileDefault
-                              }
-                              onError={onImageError}
-                              alt="pic"
-                            />
-                          )) || <AvatarLoader />}
-                        </Menu.Button>
-                      </div>
-                      <Transition
+                      {/* <div> */}
+                      <Menu.Button className="flex rounded-full bg-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 transition-all duration-300">
+                        <span className="sr-only">Open user menu</span>
+                        {(authUser?.image && (
+                          <img
+                            className="h-8 w-8 rounded-full outline-none hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300 select-none"
+                            src={
+                              authUser?.image ? authUser?.image : profileDefault
+                            }
+                            onError={onImageError}
+                            alt="pic"
+                          />
+                        )) || <AvatarLoader />}
+                      </Menu.Button>
+                      {/* </div> */}
+                      <Transition.Child
                         as={Fragment}
-                        enter="transition ease-out duration-100"
+                        enter="transition ease-out duration-300"
                         enterFrom="transform opacity-0 scale-95"
                         enterTo="transform opacity-100 scale-100"
                         leave="transition ease-in duration-75"
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-20 mt-8 w-36 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Items className="absolute right-0 z-50 mt-10 w-36 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-all">
                           <Menu.Item>
                             {({ active }) => (
-                              <Link
-                                // as={Button}
+                              <NavLink
                                 to="/profile"
+                                end
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
+                                  active ? "bg-gray-200 text-red-500" : "",
+                                  "block px-4 py-2 text-sm text-gray-700 transition-all"
                                 )}
                               >
                                 Your Profile
-                              </Link>
+                              </NavLink>
                             )}
                           </Menu.Item>
                           <Menu.Item>
@@ -194,8 +206,8 @@ const Navbar = () => {
                               <Link
                                 onClick={handleLogout}
                                 className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
+                                  active ? "bg-gray-200" : "",
+                                  "block px-4 py-2 text-sm text-gray-700 transition-all"
                                 )}
                               >
                                 Sign out
@@ -203,7 +215,7 @@ const Navbar = () => {
                             )}
                           </Menu.Item>
                         </Menu.Items>
-                      </Transition>
+                      </Transition.Child>
                     </Menu>
                   </div>
                 ) : (
@@ -228,82 +240,81 @@ const Navbar = () => {
                 )}
               </div>
             </div>
-
-            <Disclosure.Panel className="sm:hidden fixed bg-gray-800 w-screen z-10">
-              <div className="space-y-1 px-2 pt-2 pb-3 ">
-                {authUser ? (
-                  <>
-                    {authLinks.map((item) => (
-                      <Disclosure.Button
-                        key={item.name}
-                        as={Link}
-                        to={item.to}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "block px-3 py-2 rounded-md text-base font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </Disclosure.Button>
-                    ))}
-                    <div className="relative  ">
-                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <svg
-                          aria-hidden="true"
-                          className="w-5 h-5 text-gray-500 dark:text-gray-400"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
+            <Transition
+              enter="transition duration-300 ease-out"
+              enterFrom="transform scale-95 opacity-0"
+              enterTo="transform scale-100 opacity-100"
+              leave="transition  duration-100 ease-out"
+              leaveFrom="transform scale-100 opacity-100"
+              leaveTo="transform scale-95 opacity-0"
+            >
+              <Disclosure.Panel className="sm:hidden  bg-gray-800 w-screen z-10">
+                <div className="space-y-1 px-2 pt-2 pb-3 ">
+                  {authUser ? (
+                    <>
+                      {authLinks.map((item) => (
+                        <Disclosure.Button
+                          key={item.name}
+                          as={Link}
+                          to={item.to}
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                          ></path>
-                        </svg>
+                          {item.name}
+                        </Disclosure.Button>
+                      ))}
+                      <div className="relative  ">
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <svg
+                            aria-hidden="true"
+                            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            ></path>
+                          </svg>
+                        </div>
+                        <form onSubmit={handleSearch}>
+                          <input
+                            type="search"
+                            id="default-search"
+                            className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-6 transition-all duration-300 focus:outline-none"
+                            placeholder="Search"
+                            ref={searchRef}
+                            required
+                          />
+                          <button
+                            type="submit"
+                            className="text-white absolute h-6 right-2 bottom-1 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-300"
+                          >
+                            Search
+                          </button>
+                        </form>
                       </div>
-                      <input
-                        type="search"
-                        id="default-search"
-                        className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-6 transition-all duration-300 focus:outline-none"
-                        placeholder="Search"
-                        required
-                      />
-                      <button
-                        type="submit"
-                        className="text-white absolute h-6 right-2 bottom-1 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-300"
-                      >
-                        Search
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {guestLinks.map((item) => (
-                      <Disclosure.Button
-                        key={item.name}
-                        as={Link}
-                        to={item.to}
-                        className={classNames(
-                          item.current
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                          "block px-3 py-2 rounded-md text-base font-medium"
-                        )}
-                        aria-current={item.current ? "page" : undefined}
-                      >
-                        {item.name}
-                      </Disclosure.Button>
-                    ))}
-                  </>
-                )}
-              </div>
-            </Disclosure.Panel>
+                    </>
+                  ) : (
+                    <>
+                      {guestLinks.map((item) => (
+                        <Disclosure.Button
+                          key={item.name}
+                          as={Link}
+                          to={item.to}
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                        >
+                          {item.name}
+                        </Disclosure.Button>
+                      ))}
+                    </>
+                  )}
+                </div>
+              </Disclosure.Panel>
+            </Transition>
           </>
         )}
       </Disclosure>

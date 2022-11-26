@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -6,7 +7,6 @@ import {
   postComment,
   postLike,
 } from "../features/post/postSlice";
-// import loadingGif from "../assets/images/loading.svg";
 import profileDefault from "../assets/images/default.webp";
 import postDefault from "../assets/images/not-found.png";
 import { useRef } from "react";
@@ -15,15 +15,16 @@ import DeleteModal from "./DeleteModal";
 import EditModal from "./EditModal";
 import moment from "moment";
 import { CommentLoader } from "../helpers/loaders";
-
+import AnimatedPage from "../helpers/AnimatedPage";
+import { motion } from "framer-motion";
+import { animations } from "../helpers/AnimatedPage";
 const PostDetails = () => {
   const { state } = useLocation();
-  // console.log(state);
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.user);
   const { blogDetail, isLoadingComment } = useSelector((state) => state.blog);
   const navigate = useNavigate();
-  const commentRef = useRef(); 
+  const commentRef = useRef();
   let myKey = window.atob(localStorage.getItem("token"));
   const formData = {
     user_id: authUser?.user.id,
@@ -55,17 +56,21 @@ const PostDetails = () => {
     // commentRef.current.focus();
     if (!state) {
       navigate("/notfound");
-    } 
-  }, [detailData, dispatch, navigate, state]);
+    }
+  }, [dispatch, navigate, state]);
   return (
     <>
-      <div className="pb-16">
+      <motion.div
+        variants={animations}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{ duration: 1 }}
+        className="py-16"
+      >
         <div className="wrapper pt-5 centeralizer ">
-          {/* {isLoader ? (
-            <img src={loadingGif} alt="Loading Gif" />
-          ) : ( */}
-          <article className="mb-4 break-inside p-6 rounded-xl bg-white dark:bg-main dark:text-white flex flex-col bg-clip-border w-11/12 md:w-200">
-            <h2 className="text-center text-2xl sm:text-5xl">
+          <article className="mb-4 break-inside p-6 pt-2 rounded-xl bg-white dark:bg-main dark:text-white flex flex-col bg-clip-border w-11/12 md:w-200">
+            <h2 className="text-center text-2xl sm:text-5xl mt-0">
               ──── Details ────
             </h2>
             <>
@@ -207,17 +212,16 @@ const PostDetails = () => {
                         : "No Comment Yet . . ."}
                     </p>
                   </div>
-                  {blogDetail?.post_comment?.map(
-                    (data) =>
-                      // <>
-                      isLoadingComment ? (
-                        <div
-                          key={data.id}
-                          className="border-b border-slate-100"
-                        >
-                          <CommentLoader />
-                        </div>
-                      ) : (
+                  {blogDetail?.post_comment?.map((data) =>
+                    isLoadingComment ? (
+                      <AnimatedPage
+                        key={data.id}
+                        className="border-b border-slate-100"
+                      >
+                        <CommentLoader />
+                      </AnimatedPage>
+                    ) : (
+                      <AnimatedPage key={data.id}>
                         <article
                           className="flex pb-2 border-b border-slate-100"
                           key={data.id}
@@ -244,22 +248,21 @@ const PostDetails = () => {
                             </p>
                           </div>
                         </article>
-                      )
-                    // </>
+                      </AnimatedPage>
+                    )
                   )}
                 </div>
                 {/* <!-- End comments row --> */}
               </div>
             </>
           </article>
-          {/* )} */}
         </div>
         <div className="w-full centeralizer pb-3">
           <button className="btn-custom" onClick={() => navigate("/")}>
             Go Back
           </button>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

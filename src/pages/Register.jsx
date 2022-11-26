@@ -1,4 +1,4 @@
-import { Formik } from "formik"; 
+import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import RegisterForm from "../components/formik/Register/RegisterForm";
@@ -10,7 +10,7 @@ const Register = () => {
   const dispatch = useDispatch();
   return (
     <div>
-      <div className="centeralizer flex-col px-6 py-8 mx-auto pb-16 mb-6">
+      <div className="centeralizer flex-col py-20 ">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           {/* //! FORMİK============== */}
           <Formik
@@ -24,8 +24,6 @@ const Register = () => {
             }}
             validationSchema={registerSchema}
             onSubmit={(values, actions) => {
-              // let registerData = { userData: values, navigate: navigate };
-              // dispatch(register(registerData));
               if (
                 values.username &&
                 values.first_name &&

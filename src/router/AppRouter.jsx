@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 import { toastWarn } from "../helpers/customToastify";
 import MyPosts from "../pages/MyPosts";
 import SearchPage from "../pages/SearchPage";
+import ScrollToTop from "../helpers/ScrollToTop";
 
 const AppRouter = () => {
   const { authUser } = useSelector((state) => state.user);
@@ -36,12 +37,13 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Navbar />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} /> 
+        <Route path="/login" element={<Login />} />
         {/* <Route path="/myposts" element={<PrivateRouter />}> */}
-          <Route path="/myposts" element={<MyPosts />} />
+        <Route path="/myposts" element={<MyPosts />} />
         {/* </Route> */}
         <Route path="/newblog" element={<PrivateRouter />}>
           <Route path="/newblog" element={<NewBlog />} />
