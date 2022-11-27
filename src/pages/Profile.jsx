@@ -6,18 +6,18 @@ import ProfileForm from "../components/formik/Profile/ProfileForm";
 import { profileSchema } from "../components/formik/Profile/ProfileSchema";
 import { update } from "../features/auth/authSlice";
 import { motion } from "framer-motion";
-import { animations } from "../helpers/AnimatedPage";
+import { animations } from "../helpers/AnimatedPage"; 
 const Profile = () => {
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.user);
-
+  
   return (
     <motion.main
       variants={animations}
       initial="initial"
       animate="animate"
       exit="exit"
-      transition={{ duration: 1 }}
+      transition={{ duration: 0.5 }}
       className="flex justify-center p-1 h-full py-16"
     >
       <div className="bg-slate-100 py-2.5 px-5 rounded-lg m-4 max-w-lg  w-full lg:w-1/2 shadow-xl">
@@ -49,7 +49,6 @@ const Profile = () => {
             }}
             validationSchema={profileSchema}
             onSubmit={(values, actions) => {
-              // console.log(values);
               let updateData = { values, userId: authUser.user.id };
               dispatch(update(updateData));
               actions.setSubmitting(false);

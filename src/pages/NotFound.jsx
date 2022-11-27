@@ -7,7 +7,7 @@ const NotFound = ({ msg }) => {
   const navigate = useNavigate();
   return (
     <AnimatedPage>
-      <section className="w-full  h-82 flex relative  overflow-hidden">
+      <section className="w-full  h-82 flex relative  overflow-hidden mt-16">
         <div className="w-full sm:w-80 flex  items-center justify-items-start sm:justify-center flex-col text-center">
           <img
             src={vincent}

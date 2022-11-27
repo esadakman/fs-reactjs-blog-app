@@ -24,9 +24,7 @@ const PostLoader = (props) => (
     backgroundColor="#a2a0a0"
     foregroundColor="#ecebeb"
     {...props}
-    className=" w-11/12 max-w-sm sm:max-w-md 2xl:max-w-lg 2xl:w-max h-480px sm:h-544px max-h-548px 
-    2xl:max-h-full 2xl:h-600px"
-  > 
+    className=" w-11/12 max-w-sm sm:max-w-md 2xl:max-w-lg 2xl:w-max h-480px sm:h-544px max-h-548px 2xl:max-h-full 2xl:h-600px" > 
     <rect x="255" y="5" rx="10" ry="10" width="120" height="18" /> 
     <rect x="4" y="5" rx="10" ry="10" width="140" height="18" /> 
     <rect x="5" y="40" rx="10" ry="10" width="374" height="410" /> 

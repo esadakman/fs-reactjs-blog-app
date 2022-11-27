@@ -27,6 +27,7 @@ module.exports = {
         "72vh": "78vh",
         81: "81.7vh",
         "38rem": "38rem",
+        "40px": "40px",
       },
       maxHeight: {
         "548px": "548px",
@@ -44,6 +45,7 @@ module.exports = {
       },
       screens: {
         "2xl": "1920px",
+        'tall': { 'raw': '(min-height: 200px)' },
       },
       animation: {
         handshake: "handshake 2s cubic-bezier(0.4, 0, 0.6, 1) 1  ",

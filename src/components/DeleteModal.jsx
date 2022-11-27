@@ -1,17 +1,17 @@
 import { Fragment, useRef, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react"; 
+import { Dialog, Transition } from "@headlessui/react";
 import { useNavigate } from "react-router-dom";
 import { postAPI } from "../features/post/postService";
 import { toastSuccess } from "../helpers/customToastify";
 
-const DeleteModal = ({ blogDetail }) => { 
+const DeleteModal = ({ blogDetail }) => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const navigate = useNavigate();
   let myKey = window.atob(localStorage.getItem("token"));
-
+  // console.log(blogDetail.id);
   const deletePost = async (str) => {
-    try { 
+    try {
       const config = {
         headers: {
           Authorization: `Token ${myKey}`,
@@ -20,10 +20,10 @@ const DeleteModal = ({ blogDetail }) => {
       await postAPI.delete(`/posts/${blogDetail.slug}`, config);
     } catch (error) {
       console.log(error.message);
-    } finally { 
+    } finally {
       setOpen(false);
-      navigate('/') 
-      toastSuccess('Your post has been succesfully deleted.')
+      navigate("/");
+      toastSuccess("Your post has been succesfully deleted.");
     }
   };
 
@@ -58,7 +58,7 @@ const DeleteModal = ({ blogDetail }) => {
           </Transition.Child>
 
           <div className="fixed inset-0 z-10 overflow-auto">
-          {/* <div className="fixed inset-0 flex items-center justify-center"> */}
+            {/* <div className="fixed inset-0 flex items-center justify-center"> */}
             <div className="flex min-h-full  justify-center p-4 text-center  items-center sm:p-0">
               <Transition.Child
                 as={Fragment}

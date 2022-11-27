@@ -7,6 +7,12 @@ export const onImageError = (e) => {
 export const onImageErrorPost = (e) => {
   e.target.src = postDefault;
 };
+export const smoothScroll = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
 
 let myKey = window.atob(localStorage.getItem("token"));
 

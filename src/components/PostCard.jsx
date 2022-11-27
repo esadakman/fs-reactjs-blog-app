@@ -2,7 +2,7 @@
 // import { useEffect } from "react";
 import profileDefault from "../assets/images/default.webp";
 import postDefault from "../assets/images/not-found.png";
-import { onImageError, onImageErrorPost } from "../helpers/functions";
+import { onImageError, onImageErrorPost, smoothScroll } from "../helpers/functions";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { animations } from "../helpers/AnimatedPage";
@@ -14,7 +14,10 @@ const PostCard = ({ data }) => {
     navigate(`/details/${blog.slug}`, {
       state: blog,
     });
+    // smoothScroll();
+
   };
+  // console.log(data);
   return (
     <>
       <motion.div
@@ -75,7 +78,7 @@ const PostCard = ({ data }) => {
                     />
                   </svg>
                 </span>
-                <span>{data.post_comment.length}</span>
+                <span>{data.comment_count}</span>
               </div>
               <div className="flex space-x-1 items-center">
                 <span>
@@ -114,23 +117,7 @@ const PostCard = ({ data }) => {
             </div>
           </div>
         </div>
-      </motion.div>{" "}
-      {/* {authUser ? (
-        <div className="w-full centeralizer py-2">
-          <div className="w-full centeralizer gap-5 p-2 ">
-            {postData?.previous ? (
-              <button className="btn-custom" onClick={handlePaginationPrevious}>
-                Previous Page
-              </button>
-            ) : null}
-            {postData?.next ? (
-              <button className="btn-custom" onClick={handlePaginationNext}>
-                Next Page
-              </button>
-            ) : null}
-          </div>
-        </div>
-      ) : null} */}
+      </motion.div>{" "} 
     </>
   );
 };

@@ -135,8 +135,7 @@ const post = createSlice({
       // console.log(state.isLoading);
     },
     [getPostDetail.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      
+      state.isLoading = false; 
       state.blogDetail = action.payload;
     },
     [getPostDetail.rejected]: (state, action) => {

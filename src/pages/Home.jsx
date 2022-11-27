@@ -6,9 +6,9 @@ import { getPost } from "../features/post/postSlice";
 import { PostLoader } from "../helpers/loaders";
 import { motion } from "framer-motion";
 import { animations } from "../helpers/AnimatedPage";
+import { smoothScroll } from "../helpers/functions";
 
 const Home = () => {
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.user);
   const { blogs, isLoading } = useSelector((state) => state.blog);
@@ -18,14 +18,34 @@ const Home = () => {
   }, [authUser?.id, dispatch]);
   const handlePaginationNext = () => {
     dispatch(getPost(blogs?.next));
+    smoothScroll();
   };
   const handlePaginationPrevious = () => {
     dispatch(getPost(blogs?.previous));
+    smoothScroll();
   };
+
   return (
     <section className="overflow-x-hidden py-16 ">
       <div className="min-h-74vh 2xl:min-h-81 flex justify-center items-center gap-5 md:gap-10  flex-wrap pt-4 sm:w-full z-10">
-        {blogs?.results?.map((data) =>
+        {isLoading
+          ? [1, 2, 3].map((data, index) => (
+              <motion.div
+                key={index}
+                className="centeralizer flex-wrap"
+                variants={animations}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 1 }}
+              >
+                <PostLoader />
+              </motion.div>
+            ))
+          : blogs?.results?.map((data) => (
+              <PostCard key={data.id} data={data} />
+            ))}
+        {/* {blogs?.results?.map((data) =>
           isLoading ? (
             <motion.div
               key={data.id}
@@ -41,7 +61,7 @@ const Home = () => {
           ) : (
             <PostCard key={data.id} data={data} />
           )
-        )}
+        )} */}
       </div>
       {authUser ? (
         <div className="w-full centeralizer py-2">

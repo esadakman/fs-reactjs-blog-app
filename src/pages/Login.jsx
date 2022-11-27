@@ -5,9 +5,7 @@ import LoginForm from "../components/formik/Login/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../features/auth/authSlice";
-import { toastWarn } from "../helpers/customToastify";
-// import { loginSchema } from "../components/formik/Login/LoginSchema";
-// import LoginForm from "../components/formik/Login/LoginForm";
+import { toastWarn } from "../helpers/customToastify"; 
 
 const Login = () => {
   const navigate = useNavigate();
@@ -18,7 +16,7 @@ const Login = () => {
         <div className="w-11/12 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
           <Formik
             initialValues={{
-              username: "jim",
+              username: "",
               email: "",
               password: "",
             }}

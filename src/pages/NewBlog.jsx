@@ -34,7 +34,7 @@ const NewBlog = () => {
   const getCategories = async (str) => {
     try {
       const { data } = await axios.get(
-        `http://127.0.0.1:8000/blog/category/`,
+        process.env.REACT_APP_API_URL + "/blog/category/",
         {}
       );
       setCategory(data);
@@ -45,42 +45,53 @@ const NewBlog = () => {
   useEffect(() => {
     getCategories();
   }, []);
-  // console.log(formData);
-  // console.log(formData.category);
 
   return (
     <AnimatedPage>
       <div className="centeralizer min-h-81 my-16 md:mb-0">
         <div className="bg-gray-900 bg-opacity-40 w-11/12 max-w-40rem sm:min-w-20rem h-fit flex flex-col items-center justify-start pb-6 text-white rounded-2xl transition-all duration-500 ease-linear centeralizer">
-          <h2 className="text-3xl m-5 "> Create a Post</h2>
+          <h2 className="text-3xl m-5 select-none"> Create a Post</h2>
           <div className="centeralizer w-11/12 max-w-xl text-slate-800">
             <form
               className="flex items-start flex-col w-screen text-base gap-2"
               onSubmit={handleCreatePost}
             >
-              <input
-                type="text"
-                name="title"
-                label="Title"
-                placeholder="Title"
-                required
-                autoFocus
-                maxLength={21}
-                value={title}
-                onChange={onChange}
-                className="post-input h-12"
-              />
-              <input
-                type="text"
-                id="image"
-                label="image"
-                placeholder="Image URL"
-                required
-                name="post_image"
-                className="post-input h-12"
-                value={post_image}
-                onChange={onChange}
-              />
+              <div className="relative w-full">
+                {/* //! floating */}
+                <input
+                  type="text"
+                  name="title"
+                  placeholder=" "
+                  required
+                  // autoFocus
+                  autoComplete="false"
+                  tabIndex="0"
+                  // maxLength={21}
+                  value={title}
+                  onChange={onChange}
+                  className="floating-input peer"
+                />
+                <label htmlFor="title" className="floating-label">
+                  Title
+                </label>
+              </div> 
+              {/* //! floating */}
+              <div className="relative w-full">
+                <input
+                  type="text"
+                  id="image"
+                  label="image"
+                  placeholder=" "
+                  required
+                  name="post_image"
+                  className="floating-input peer"
+                  value={post_image}
+                  onChange={onChange}
+                />
+                <label htmlFor="image" className="floating-label">
+                  Image URL
+                </label>
+              </div>
               <select
                 id="category"
                 name="category"
@@ -103,19 +114,15 @@ const NewBlog = () => {
               <textarea
                 type="text"
                 placeholder="Content"
-                className="post-input h-44 resize-none"
-                // className="transition-all duration-500 ease-linear  w-full h-44 text-base  outline-none p-2 rounded-lg border-2 border-slate-900 bg-white  placeholder:text-slate-900 focus:border-sky-300 "
+                className="post-input h-44 resize-none placeholder:text-gray-400" 
                 required
                 id="content"
                 label="Content"
                 name="content"
                 value={content}
                 onChange={onChange}
-              />
-              <button
-                value="submit"
-                className="btn-custom w-full " 
-              >
+              /> 
+              <button value="submit" className="btn-custom w-full ">
                 Send
               </button>
             </form>

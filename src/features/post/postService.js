@@ -4,6 +4,7 @@ export const postAPI = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  timeout: 8000,
 
   baseURL: process.env.REACT_APP_API_URL + "/blog",
 });
@@ -26,7 +27,7 @@ const getPostDetail = async ({ detailURL, myKey }) => {
     const config = {
       headers: {
         Authorization: `Token ${myKey}`,
-      },
+      }, 
     };
     const response = await postAPI.get(detailURL, config);
     if (response.status === 200) {
