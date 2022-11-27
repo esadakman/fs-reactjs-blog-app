@@ -14,13 +14,14 @@ const userAPI = axios.create({
   baseURL: process.env.REACT_APP_API_URL + "/users",
 });
 // Register user
-const register = async ({ userData, navigate }) => {
+const register = async ({ userData, navigate,actions }) => {
   const response = await userAPI.post("/register/", userData);
   // console.log(response);
   try {
     if (response.status === 201) {
       navigate("/login");
-      toastSuccess("Your Profile has been created succesfully !");
+      actions.resetForm();
+      toastSuccess("Your profile has been created succesfully !");
       return response.data;
     }
   } catch (error) {
@@ -28,7 +29,7 @@ const register = async ({ userData, navigate }) => {
   }
 };
 
-const login = async ({ user, navigate }) => {
+const login = async ({ user, navigate, actions }) => { 
   const res = await userAPI.post(`/auth/login/`, user);
   try {
     if (res.data) {
@@ -46,6 +47,7 @@ const login = async ({ user, navigate }) => {
         var rest = await userAPI(`/profile/${id}/`, config);
         localStorage.setItem("userInfo", JSON.stringify(rest.data));
         toastSuccess("Logged In");
+        actions.resetForm()
         navigate("/");
         return rest.data;
       } else {

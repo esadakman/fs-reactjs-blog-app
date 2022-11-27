@@ -38,7 +38,7 @@ const PostDetails = () => {
   };
   const handleLike = (e) => {
     e.preventDefault();
-    dispatch(postLike(JSON.stringify(formData)));
+    dispatch(postLike(formData));
     dispatch(getPostDetail(detailData));
   };
 
@@ -90,7 +90,7 @@ const PostDetails = () => {
                   />
                 </div>
                 <div className="centeralizer flex-col py-2">
-                  <h2 className="text-3xl font-extrabold text-center">
+                  <h2 className="text-3xl font-extrabold text-center whitespace-pre-line">
                     {blogDetail?.title}
                   </h2>
                   <p className="text-slate-500 dark:text-slate-300 text-center">
@@ -142,11 +142,11 @@ const PostDetails = () => {
                             <path d="M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5C2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z"></path>
                           </svg>
                         </span>
-                        {isLoading ? null : (
-                          <span className="text-lg font-bold">
-                            {blogDetail?.like_count}
-                          </span>
-                        )}
+                        {/* {isLoading ? null : ( */}
+                        <span className="text-lg font-bold">
+                          {blogDetail?.like_count}
+                        </span>
+                        {/* )} */}
                       </div>
                       <div className="flex mr-2">
                         <span className="mr-2">
@@ -187,18 +187,21 @@ const PostDetails = () => {
                   {/* // ? modals _________________________________ */}
                   {authUser?.id === parseInt(blogDetail?.author_id) ? (
                     <div className=" flex gap-4 justify-end min-h-40px">
-                      {!isLoading ? (
+                      {isLoading ? (
                         <>
-                          <DeleteModal
-                            // onClick={() => dispatch(getPostDetail(detailData))}
-                            blogDetail={blogDetail}
-                          />
-                          <EditModal
-                            // onClick={() => dispatch(getPostDetail(detailData))}
-                            blogDetails={{ blogDetail, detailData }}
-                          />
+                          <button className="btn-red">
+                            Delete
+                          </button>
+                          <button className="btn-blue">
+                            Update
+                          </button>
                         </>
-                      ) : null}
+                      ) : (
+                        <>
+                          <DeleteModal blogDetail={blogDetail} />
+                          <EditModal blogDetails={{ blogDetail, detailData }} />
+                        </>
+                      )}
                     </div>
                   ) : null}
                 </article>
@@ -280,7 +283,7 @@ const PostDetails = () => {
             </article>
           </div>
           <div className="w-full centeralizer pb-3">
-            <button className="btn-custom" onClick={() => navigate("/")}>
+            <button className="btn-custom" onClick={() => navigate(-1)}>
               Go Back
             </button>
           </div>

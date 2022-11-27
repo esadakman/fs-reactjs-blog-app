@@ -127,7 +127,7 @@ const Navbar = () => {
                           </form>
                         </>
                       ) : (
-                        <div className="centeralizer">
+                        <div className="centeralizer gap-2">
                           {guestLinks.map((item) => (
                             <NavLink
                               key={item.name}
@@ -135,7 +135,7 @@ const Navbar = () => {
                               end
                               className={({ isActive }) =>
                                 isActive
-                                  ? "active-link ring-2 ring-white"
+                                  ? "active-link ring-2 ring-white "
                                   : "active-link"
                               }
                             >
@@ -287,12 +287,12 @@ const Navbar = () => {
                             ref={searchRef}
                             required
                           />
-                          <button
+                          <Disclosure.Button
                             type="submit"
                             className="text-white absolute h-6 right-2 bottom-1 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-all duration-300"
                           >
                             Search
-                          </button>
+                          </Disclosure.Button>
                         </form>
                       </div>
                     </>
@@ -303,7 +303,7 @@ const Navbar = () => {
                           key={item.name}
                           as={Link}
                           to={item.to}
-                          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium "
                         >
                           {item.name}
                         </Disclosure.Button>

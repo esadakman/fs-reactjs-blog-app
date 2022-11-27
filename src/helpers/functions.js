@@ -11,7 +11,7 @@ export const smoothScroll = () => {
   window.scrollTo({
     top: 0,
     behavior: "smooth",
-  });
+  }); 
 };
 
 let myKey = window.atob(localStorage.getItem("token"));

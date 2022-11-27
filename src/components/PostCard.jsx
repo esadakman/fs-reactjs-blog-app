@@ -2,7 +2,7 @@
 // import { useEffect } from "react";
 import profileDefault from "../assets/images/default.webp";
 import postDefault from "../assets/images/not-found.png";
-import { onImageError, onImageErrorPost, smoothScroll } from "../helpers/functions";
+import { onImageError, onImageErrorPost } from "../helpers/functions";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { animations } from "../helpers/AnimatedPage";
@@ -14,10 +14,7 @@ const PostCard = ({ data }) => {
     navigate(`/details/${blog.slug}`, {
       state: blog,
     });
-    // smoothScroll();
-
   };
-  // console.log(data);
   return (
     <>
       <motion.div
@@ -117,7 +114,7 @@ const PostCard = ({ data }) => {
             </div>
           </div>
         </div>
-      </motion.div>{" "} 
+      </motion.div>{" "}
     </>
   );
 };

@@ -72,7 +72,7 @@ const EditModal = ({ blogDetails }) => {
     <section>
       <button
         type="button"
-        className="text-white bg-blue-400 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-md p-2 inline-flex items-center  dark:bg-blue-600 dark:hover:bg-blue-700  dark:focus:ring-blue-500 transition-all duration-300"
+        className="btn-blue"
         title="Update Post"
         onClick={() => setOpen(true)}
       >

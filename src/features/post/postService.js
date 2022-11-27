@@ -60,14 +60,15 @@ const blogCreate = async ({ postData, navigate }) => {
 };
 
 const postLike = async (postData) => {
-  let myKey = window.atob(localStorage.getItem("token"));
+  let myKey = window.atob(localStorage.getItem("token")); 
+  let data =JSON.stringify(postData)
   try {
     var config = {
       method: "post",
       headers: {
         Authorization: "Token " + myKey,
       },
-      data: postData,
+      data: data,
     };
     const response = await postAPI(`/like/`, config);
     if (response.status === 200) {

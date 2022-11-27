@@ -199,7 +199,7 @@ const RegisterForm = ({
           <button
             type="submit"
             disabled={!(isValid && dirty)}
-            className="w-full text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-primary-800 mt-2 mb-1 disabled:opacity-60 disabled:hover:bg-blue-500 disabled:cursor-not-allowed"
+            className="w-full btn-blue mt-2 mb-1"
           >
             {isLoading ? (
               <>

@@ -31,7 +31,7 @@ const DeleteModal = ({ blogDetail }) => {
     <section>
       <button
         type="button"
-        className="text-white bg-red-400 hover:bg-red-400 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-md p-2 inline-flex items-center  dark:bg-red-500 dark:hover:bg-red-600  dark:focus:ring-red-500 transition-all duration-300"
+        className="btn-red"
         title="Update Post"
         onClick={() => setOpen(true)}
       >
