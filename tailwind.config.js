@@ -23,15 +23,16 @@ module.exports = {
         "544px": "544px",
       },
       minHeight: {
-        '74vh': "74.4vh",
+        "74vh": "74.4vh",
         "72vh": "78vh",
         81: "81.7vh",
         "38rem": "38rem",
         "40px": "40px",
+        "20rem": "20rem",
       },
       maxHeight: {
-        "548px": "548px",
-        "400px": "400px",  
+        "700px": "700px",
+        "400px": "400px",
         "30rem": "30rem",
       },
       minWidth: {
@@ -45,7 +46,7 @@ module.exports = {
       },
       screens: {
         "2xl": "1920px",
-        'tall': { 'raw': '(min-height: 200px)' },
+        tall: { raw: "(min-height: 200px)" },
       },
       animation: {
         handshake: "handshake 2s cubic-bezier(0.4, 0, 0.6, 1) 1  ",

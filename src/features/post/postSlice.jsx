@@ -1,17 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import postService from "./postService"; 
+import postService from "./postService";
 
 // import { toastError, toastWarn } from "../../helpers/customToastify";
 const initialState = {
   isLoading: false,
   isLoadingComment: false,
+  isLoadingLike: false,
   blogs: [],
   blogDetail: [],
   isError: false,
 };
 
-export const getPost = createAsyncThunk("blog/posts", async (url,thunkAPI) => {
-  // let res = await api.get(`blog/blog/`); 
+export const getPost = createAsyncThunk("blog/posts", async (url, thunkAPI) => {
+  // let res = await api.get(`blog/blog/`);
   try {
     return await postService.getPost(url);
   } catch (error) {
@@ -39,7 +40,7 @@ export const getPostDetail = createAsyncThunk(
 
 export const blogCreate = createAsyncThunk(
   "post/create",
-  async (postCreateData, thunkAPI) => { 
+  async (postCreateData, thunkAPI) => {
     try {
       return await postService.blogCreate(postCreateData);
     } catch (error) {
@@ -88,6 +89,76 @@ export const postComment = createAsyncThunk(
     }
   }
 );
+
+const post = createSlice({
+  name: "post",
+  initialState,
+  reducers: {
+    reset: (state) => {
+      state.isLoading = false;
+    },
+  },
+  extraReducers: {
+    [getPost.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [getPost.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.blogs = action.payload;
+      // console.log(action);
+    },
+    [getPost.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      // console.log(action)
+    },
+    [getPostDetail.pending]: (state, action) => {
+      state.isLoading = true;
+      // console.log(state.isLoading);
+    },
+    [getPostDetail.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.blogDetail = action.payload;
+    },
+    [getPostDetail.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+    },
+    [blogCreate.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [blogCreate.fulfilled]: (state) => {
+      state.isLoading = false; 
+    },
+    [blogCreate.rejected]: (state) => {
+      state.isLoading = false;
+    },
+    [postLike.pending]: (state) => {
+      state.isLoadingLike = true;
+    },
+    [postLike.fulfilled]: (state, action) => {
+      state.isLoadingLike = false;
+      state.blogDetail = action.payload;
+    },
+    [postLike.rejected]: (state) => {
+      state.isLoadingLike = false;
+    },
+    [postComment.pending]: (state, action) => {
+      state.isLoadingComment = true;
+    },
+    [postComment.fulfilled]: (state, action) => {
+      state.isLoadingComment = false;
+      state.blogDetail = action.payload;
+    },
+    [postComment.rejected]: (state, action) => {
+      state.isLoadingComment = false;
+    },
+  },
+});
+
+export const { reset } = post.actions;
+export default post.reducer;
+
 // export const postUpdate = createAsyncThunk(
 //   "post/update",
 //   async (postUpdateData, thunkAPI) => {
@@ -106,72 +177,3 @@ export const postComment = createAsyncThunk(
 // }
 // }
 // );
-
-const post = createSlice({
-  name: "post",
-  initialState,
-  reducers: {
-    reset: (state) => {
-      state.isLoading = false;
-    },
-  },
-  extraReducers: {
-    [getPost.pending]: (state, action) => {
-      state.isLoading = true;
-      
-    },
-    [getPost.fulfilled]: (state, action) => {
-      state.isLoading = false; 
-      state.blogs = action.payload;   
-      // console.log(action);
-    },
-    [getPost.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
-      // console.log(action)
-    },
-    [getPostDetail.pending]: (state, action) => {
-      state.isLoading = true;
-      // console.log(state.isLoading);
-    },
-    [getPostDetail.fulfilled]: (state, action) => {
-      state.isLoading = false; 
-      state.blogDetail = action.payload;
-    },
-    [getPostDetail.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
-    },
-    [blogCreate.pending]: (state, action) => {
-      state.isLoading = true;
-    },
-    [blogCreate.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      // console.log(action)
-    },
-    [blogCreate.rejected]: (state, action) => {
-      state.isLoading = false;
-    },
-    [postLike.pending]: (state, action) => {
-      state.isLoading = true;
-    },
-    [postLike.fulfilled]: (state, action) => {
-      state.isLoading = false;
-    },
-    [postLike.rejected]: (state, action) => {
-      state.isLoading = false;
-    },
-    [postComment.pending]: (state, action) => {
-      state.isLoadingComment = true;
-    },
-    [postComment.fulfilled]: (state, action) => {
-      state.isLoadingComment = false;
-    },
-    [postComment.rejected]: (state, action) => {
-      state.isLoadingComment = false;
-    },
-  },
-});
-
-export const { reset } = post.actions;
-export default post.reducer;

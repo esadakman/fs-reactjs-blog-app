@@ -7806,7 +7806,7 @@ redent@^3.0.0:
   integrity sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==
   dependencies:
     indent-string "^4.0.0"
-    strip-indent "^3.0.0"
+    strip-indent "^3.0.0" 
 
 redux-thunk@^2.4.1:
   version "2.4.1"

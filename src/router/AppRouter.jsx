@@ -15,7 +15,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import Profile from "../pages/Profile";
-import PostDetails from "../components/PostDetails";
+import PostDetails from "../pages/PostDetails";
 import { useSelector } from "react-redux";
 import { toastWarn } from "../helpers/customToastify";
 import MyPosts from "../pages/MyPosts";

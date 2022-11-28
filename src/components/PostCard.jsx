@@ -62,7 +62,7 @@ const PostCard = ({ data }) => {
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-7 w-7 transition-all hover:text-slate-300"
+                    className="h-7 w-7"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -81,7 +81,7 @@ const PostCard = ({ data }) => {
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-7 w-7 transition-all hover:text-slate-300"
+                    className="h-7 w-7"
                     viewBox="0 0 20 20"
                     fill="currentColor"
                   >
@@ -106,8 +106,8 @@ const PostCard = ({ data }) => {
               />
 
               <div>
-                <h2 className="font-bold 2xl:text-2xl  cursor-pointer">
-                  @{data.author}
+                <h2 className="font-bold 2xl:text-2xl">
+                  {data.author}
                 </h2>
                 <p className="line-clamp-2 text-justify">{data.content}</p>
               </div>

@@ -21,23 +21,6 @@ const getPost = async (url) => {
     throw Error(error);
   }
 };
-
-const getPostDetail = async ({ detailURL, myKey }) => {
-  try { 
-    const config = {
-      headers: {
-        Authorization: `Token ${myKey}`,
-      }, 
-    };
-    const response = await postAPI.get(detailURL, config);
-    if (response.status === 200) {
-      return response.data;
-    }
-  } catch (error) {
-    throw Error(error);
-  }
-};
-
 const blogCreate = async ({ postData, navigate }) => {
   let myKey = window.atob(localStorage.getItem("token"));
   try {
@@ -59,9 +42,25 @@ const blogCreate = async ({ postData, navigate }) => {
   }
 };
 
-const postLike = async (postData) => {
-  let myKey = window.atob(localStorage.getItem("token")); 
-  let data =JSON.stringify(postData)
+const getPostDetail = async ({ detailURL, myKey }) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Token ${myKey}`,
+      },
+    };
+    const response = await postAPI.get(detailURL, config);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (error) {
+    throw Error(error);
+  }
+};
+
+const postLike = async ({ formData, detailURL }) => {
+  let myKey = window.atob(localStorage.getItem("token"));
+  let data = JSON.stringify(formData);
   try {
     var config = {
       method: "post",
@@ -70,19 +69,26 @@ const postLike = async (postData) => {
       },
       data: data,
     };
-    const response = await postAPI(`/like/`, config);
-    if (response.status === 200) {
-      // navigate('/')
-      // toastSuccess('Your post has been created succesfully !')
-      return response.data;
+    let response = await postAPI(`/like/`, config);
+    // console.log(response)
+    if (response.status === 201) {
+      const config = {
+        headers: {
+          Authorization: `Token ${myKey}`,
+        },
+      };
+      const response = await postAPI.get(detailURL, config);
+      if (response.status === 200) {
+        return response.data;
+      }
     }
   } catch (error) {
     throw Error(error);
   }
 };
 
-const postComment = async ({ dispatch, comment, url }) => {
-  let myKey = window.atob(localStorage.getItem("token"));
+const postComment = async ({  comment, detailURL }) => {
+  let myKey = window.atob(localStorage.getItem("token")); 
   let data = JSON.stringify({
     content: comment,
   });
@@ -94,11 +100,18 @@ const postComment = async ({ dispatch, comment, url }) => {
       },
       data: data,
     };
-    const response = await postAPI(url, config);
+    const response = await postAPI(`${detailURL}/comments/`, config);
     if (response.status === 201) {
-      // navigate('/')
-      toastSuccess("Your comment has been created succesfully !");
-      return response.data;
+      const config = {
+        headers: {
+          Authorization: `Token ${myKey}`,
+        },
+      };
+      const response = await postAPI.get(detailURL, config);
+      if (response.status === 200) { 
+        toastSuccess("Your comment has been created succesfully !");
+        return response.data;
+      }
     }
   } catch (error) {
     throw Error(error);

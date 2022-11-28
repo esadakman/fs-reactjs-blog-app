@@ -1,15 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  toastError, 
-  toastWarn,
-} from "../../helpers/customToastify";
+import { toastError, toastWarn } from "../../helpers/customToastify";
 import authService from "./authService";
 
 // const userStorage = JSON.parse(window.atob(localStorage.getItem("userInfo")));
 const userStorage = JSON.parse(localStorage.getItem("userInfo"));
 // console.log(JSON.parse(localStorage.getItem("userInfo")));
 const initialState = {
-  authUser: userStorage ? userStorage : null, 
+  authUser: userStorage ? userStorage : null,
   isError: false,
   isLoading: false,
   isSuccess: false,
@@ -25,12 +22,18 @@ export const register = createAsyncThunk(
       let datas = error.response.data;
       for (let i in datas) {
         if (datas[i].toString().includes("already exists")) {
-          return toastError(`${i.replace(/^./, i => i.toUpperCase())} must be unique`);
+          return toastError(
+            `${i.replace(/^./, (i) => i.toUpperCase())} must be unique`
+          );
         } else if (datas[i].toString().includes("not be blank.")) {
           return toastError(
             `${i.replace(/^./, (str) =>
               str.toUpperCase()
             )} field may not be blank.`
+          );
+        } else if (datas[i].toString().includes("must be unique.")) {
+          return toastError(
+            `The ${i} is already taken. Please choose another one.`
           );
         } else {
           toastWarn("Please check your information and try again.");
@@ -48,7 +51,7 @@ export const login = createAsyncThunk(
     // console.log(loginData, 'slice');
     try {
       return await authService.login(loginData);
-    } catch (error) { 
+    } catch (error) {
       let datas = error.response.data;
       for (let i in datas) {
         // console.log(datas[i]);
@@ -101,58 +104,6 @@ const userSlice = createSlice({
       state.user = null;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(register.pending, (state) => {
-  //       state.isLoading = true;
-  //       console.log(state);
-  //     })
-  //     .addCase(register.fulfilled, (state, action) => {
-  //       state.isLoading = false;
-  //       state.isSuccess = true;
-  //       state.authUser = action.payload;
-  //     })
-  //     .addCase(register.rejected, (state, action) => {
-  //       state.isLoading = false;
-  //       state.isError = true;
-  //       state.message = action.error;
-  //       state.authUser = null;
-  //     })
-  //     .addCase(login.pending, (state) => {
-  //       state.isLoading = true;
-  //     })
-  //     .addCase(login.fulfilled, (state, action) => {
-  //       state.isLoading = false;
-  //       state.isSuccess = true;
-  //       state.message = false;
-  //       // console.log(action);
-  //       state.authUser = action.payload;
-  //     })
-  //     .addCase(login.rejected, (state, action) => {
-  //       state.isLoading = false;
-  //       state.isError = true;
-  //       state.message = action.error;
-  //       state.authUser = null;
-  //     })
-  //     .addCase(logout.fulfilled, (state) => {
-  //       state.authUser = null;
-  //     })
-  //     .addCase(update.pending, (state) => {
-  //       state.isLoading = true;
-  //     })
-  //     .addCase(update.fulfilled, (state, action) => {
-  //       state.isLoading = false;
-  //       state.isSuccess = true;
-  //       // console.log(action.payload);
-  //       state.authUser = action.payload;
-  //     })
-  //     .addCase(update.rejected, (state, action) => {
-  //       state.isLoading = false;
-  //       state.isError = true;
-  //       state.message = action.error;
-  //       // state.user = null;
-  //     });
-  // },
 
   extraReducers: {
     [register.pending]: (state, action) => {
@@ -161,16 +112,12 @@ const userSlice = createSlice({
     [register.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      // state.authUser = action.payload;
-      // console.log(action.payload);
     },
     [register.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
       state.message = action.error;
       console.log(action);
-
-      // state.authUser = null;
     },
     [login.pending]: (state, action) => {
       state.isLoading = true;
@@ -179,13 +126,12 @@ const userSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
       state.message = false;
-      // console.log(action);
       state.authUser = action.payload;
     },
     [login.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.message = action.error; 
+      state.message = action.error;
       console.log(action);
 
       state.authUser = null;
@@ -225,3 +171,56 @@ const userSlice = createSlice({
 
 export const { reset } = userSlice.actions;
 export default userSlice.reducer;
+
+// extraReducers: (builder) => {
+//   builder
+//     .addCase(register.pending, (state) => {
+//       state.isLoading = true;
+//       console.log(state);
+//     })
+//     .addCase(register.fulfilled, (state, action) => {
+//       state.isLoading = false;
+//       state.isSuccess = true;
+//       state.authUser = action.payload;
+//     })
+//     .addCase(register.rejected, (state, action) => {
+//       state.isLoading = false;
+//       state.isError = true;
+//       state.message = action.error;
+//       state.authUser = null;
+//     })
+//     .addCase(login.pending, (state) => {
+//       state.isLoading = true;
+//     })
+//     .addCase(login.fulfilled, (state, action) => {
+//       state.isLoading = false;
+//       state.isSuccess = true;
+//       state.message = false;
+//       // console.log(action);
+//       state.authUser = action.payload;
+//     })
+//     .addCase(login.rejected, (state, action) => {
+//       state.isLoading = false;
+//       state.isError = true;
+//       state.message = action.error;
+//       state.authUser = null;
+//     })
+//     .addCase(logout.fulfilled, (state) => {
+//       state.authUser = null;
+//     })
+//     .addCase(update.pending, (state) => {
+//       state.isLoading = true;
+//     })
+//     .addCase(update.fulfilled, (state, action) => {
+//       state.isLoading = false;
+//       state.isSuccess = true;
+//       // console.log(action.payload);
+//       state.authUser = action.payload;
+//     })
+//     .addCase(update.rejected, (state, action) => {
+//       state.isLoading = false;
+//       state.isError = true;
+//       state.message = action.error;
+//       // state.user = null;
+//     });
+// },

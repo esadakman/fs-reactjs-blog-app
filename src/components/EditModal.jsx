@@ -5,17 +5,14 @@ import { useEffect } from "react";
 import { postAPI } from "../features/post/postService";
 import { toastError, toastSuccess } from "../helpers/customToastify";
 import { getPostDetail } from "../features/post/postSlice";
-import { useDispatch  } from "react-redux";
-// import { useSelector } from "react-redux";
-
+import { useDispatch  } from "react-redux";  
 const EditModal = ({ blogDetails }) => { 
   const { blogDetail, detailData } = blogDetails;
   const [categoryData, setCategory] = useState();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null); 
-  let myKey = window.atob(localStorage.getItem("token"));
-  // console.log(blogDetail.id);
+  let myKey = window.atob(localStorage.getItem("token")); 
   
   const [formData, setFormData] = useState({
     title: blogDetail.title,
@@ -27,8 +24,7 @@ const EditModal = ({ blogDetails }) => {
     try {
       const { data } = await axios.get(
         process.env.REACT_APP_API_URL + "/blog/category/"
-      );
-      // console.log(data);
+      ); 
       setCategory(data);
     } catch (error) {
       console.log(error.message);
@@ -36,8 +32,7 @@ const EditModal = ({ blogDetails }) => {
   };
   useEffect(() => {
     getCategories();
-  }, [blogDetail]);
-  // console.log(categoryData);
+  }, [blogDetail]); 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }; 
