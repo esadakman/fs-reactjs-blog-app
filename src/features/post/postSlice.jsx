@@ -122,7 +122,7 @@ const post = createSlice({
     },
     [getPost.fulfilled]: (state, action) => {
       state.isLoading = false; 
-      state.blogs = action.payload; 
+      state.blogs = action.payload;   
       // console.log(action);
     },
     [getPost.rejected]: (state, action) => {

@@ -166,7 +166,7 @@ const Navbar = () => {
                         <span className="sr-only">Open user menu</span>
                         {(authUser?.image && (
                           <img
-                            className="h-8 w-8 rounded-full outline-none hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300 select-none "
+                            className="h-8 w-8 rounded-full outline-none hover:outline hover:outline-3 hover:outline-sky-500 transition-all duration-300 select-none object-cover"
                             src={
                               authUser?.image ? authUser?.image : profileDefault
                             }

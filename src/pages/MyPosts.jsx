@@ -20,7 +20,7 @@ const MyPosts = () => {
 
   return (
     <AnimatedPage>
-      <div className="overflow-x-hidden py-20">
+      <div className="overflow-x-hidden pt-16 pb-20">
         <div className="min-h-74vh 2xl:min-h-81 flex justify-center items-center gap-5 md:gap-10  flex-wrap pt-4 sm:w-full">
           {blogs?.results?.length > 0 ? (
             blogs?.results?.map((data) =>

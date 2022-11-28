@@ -31,7 +31,7 @@ const PostCard = ({ data }) => {
           onClick={() => handleDetails(data)}
         >
           <div className="flex justify-between items-center my-3 px-4 ">
-            <h1 className="text-2xl 2xl:text-3xl font-bold hover:text-slate-200 cursor-pointer  transition duration-100 max-h-8 2xl:max-h-full overflow-hidden">
+            <h1 title={data.title} className="text-2xl 2xl:text-3xl font-bold hover:text-slate-200 cursor-pointer  transition duration-100 max-h-8 2xl:max-h-full overflow-hidden line-clamp-1">
               {data.title}
             </h1>
             <span className="text-white text-xs 2xl:text-2xl font-bold rounded-lg bg-green-500 py-1.5 px-3  ">
