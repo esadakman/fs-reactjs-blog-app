@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getPostDetail, postComment } from "../features/post/postSlice";
 import profileDefault from "../assets/images/default.webp";
 import postDefault from "../assets/images/not-found.png";
-import { useRef } from "react"; 
+import { useRef } from "react";
 import { onImageError, onImageErrorPost } from "../helpers/functions";
 import DeleteModal from "../components/DeleteModal";
 import EditModal from "../components/EditModal";
@@ -14,11 +14,14 @@ import { animations } from "../helpers/AnimatedPage";
 import PostCounters from "../components/PostCounters";
 import CommentSection from "../components/CommentSection";
 import loader from "../assets/images/loading.svg";
+import { DetailLoader } from "../helpers/loaders";
 const PostDetails = () => {
   const { state } = useLocation();
   const dispatch = useDispatch();
   const { authUser } = useSelector((state) => state.user);
-  const { blogDetail, isLoading } = useSelector((state) => state.blog);
+  const { blogDetail, isLoading, isLoadingComment } = useSelector(
+    (state) => state.blog
+  );
   const navigate = useNavigate();
   const commentRef = useRef();
   let myKey = window.atob(localStorage.getItem("token"));
@@ -59,8 +62,9 @@ const PostDetails = () => {
       >
         <>
           {isLoading ? (
-            <div className="centeralizer min-h-81" >
-              <img src={loader} alt="loader" />
+            <div className="centeralizer min-h-81 pt-5 ">
+              {/* <img src={loader} alt="loader" /> */}
+              <DetailLoader />
             </div>
           ) : (
             <div className="wrapper pt-5 centeralizer ">
@@ -71,7 +75,7 @@ const PostDetails = () => {
                 <>
                   <div className="my-2   border-2 rounded-md border-slate-500">
                     <img
-                      className="max-w-full rounded-lg w-screen max-h-400px sm:max-h-700px min-h-20rem sm:min-h-20rem object-cover"
+                      className="max-w-full rounded-lg w-screen max-h-400px sm:max-h-700px min-h-20rem object-cover"
                       src={
                         blogDetail?.post_image
                           ? blogDetail?.post_image
@@ -91,12 +95,12 @@ const PostDetails = () => {
                       )}
                     </p>
                   </div>
-                  <p className="text-justify max-h-56 overflow-auto bg-slate-700 p-2 rounded-md ">
+                  <p className="text-justify max-h-60 overflow-auto bg-slate-700 p-2 rounded-md text-sm sm:text-base">
                     {blogDetail?.content}
                   </p>
                   {/* // ! author pp  */}
                   <article className="mb-4">
-                    <div className="flex justify-between mt-4  flex-col md:flex-row">
+                    <div className="flex justify-between mt-4 flex-row">
                       <div className="  items-center justify-between">
                         <div className="flex">
                           <img
@@ -132,12 +136,10 @@ const PostDetails = () => {
                             <button className="btn-blue">Update</button>
                           </>
                         ) : ( */}
-                          <>
-                            <DeleteModal blogDetail={blogDetail} />
-                            <EditModal
-                              blogDetails={{ blogDetail, detailData }}
-                            />
-                          </>
+                        <>
+                          <DeleteModal blogDetail={blogDetail} />
+                          <EditModal blogDetails={{ blogDetail, detailData }} />
+                        </>
                         {/* )} */}
                       </div>
                     ) : null}
@@ -145,15 +147,18 @@ const PostDetails = () => {
                   {/* // ! modals _________________________________ */}
                   <form className="relative" onSubmit={handleComment}>
                     <input
-                      className="py-2 pl-3 w-full h-11 bg-slate-100 dark:bg-slate-600 rounded-lg placeholder:text-slate-600 dark:placeholder:text-slate-300 font-medium pr-20"
+                      className="py-2 pl-3 w-full h-11 bg-slate-100 dark:bg-slate-600 rounded-lg placeholder:text-slate-600 dark:placeholder:text-slate-300 outline-0 font-medium pr-20 transition-all duration-300 border-2 focus:border-blue-500"
                       type="text"
                       ref={commentRef}
                       required
                       placeholder="Write a comment"
                     />
-                    <button className="flex absolute right-3 top-2/4 -mt-3 items-center">
+                    <button
+                      disabled={isLoadingComment}
+                      className="flex absolute right-3 top-2/4 -mt-3 items-center disabled:cursor-wait"
+                    >
                       <svg
-                        className="fill-blue-500 dark:fill-slate-300 w-6 h-6 hover:fill-slate-50  transition-all duration-300"
+                        className="fill-blue-500 dark:fill-slate-300 w-6 h-6 hover:fill-white transition-all duration-300"
                         viewBox="0 0 24 24"
                       >
                         <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"></path>

@@ -8,8 +8,7 @@ const userStorage = JSON.parse(localStorage.getItem("userInfo"));
 const initialState = {
   authUser: userStorage ? userStorage : null,
   isError: false,
-  isLoading: false,
-  isSuccess: false,
+  isLoading: false, 
   message: "",
 };
 
@@ -111,7 +110,6 @@ const userSlice = createSlice({
     },
     [register.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isSuccess = true;
     },
     [register.rejected]: (state, action) => {
       state.isLoading = false;
@@ -124,7 +122,6 @@ const userSlice = createSlice({
     },
     [login.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.isSuccess = true;
       state.message = false;
       state.authUser = action.payload;
     },
@@ -140,10 +137,7 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [logout.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.isSuccess = true;
-      // state.message = action;
-      // console.log(action);
+      state.isLoading = false; 
       state.authUser = false;
     },
     [logout.rejected]: (state, action) => {
@@ -155,9 +149,7 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [update.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.isSuccess = true;
-      // console.log(action.payload);
+      state.isLoading = false; 
       state.authUser = action.payload;
     },
     [update.rejected]: (state, action) => {
