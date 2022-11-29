@@ -4,7 +4,7 @@ import {
   toastSuccess,
   toastWarn,
 } from "../../helpers/customToastify";
-// console.log(process.env.REACT_APP_API_URL+'/users');
+console.log(process.env.REACT_APP_API_URL);
 const userAPI = axios.create({
   headers: {
     "Content-Type": "application/json",
@@ -13,6 +13,7 @@ const userAPI = axios.create({
 
   baseURL: process.env.REACT_APP_API_URL + "/users",
 });
+
 // Register user
 const register = async ({ userData, navigate,actions }) => {
   const response = await userAPI.post("/register/", userData);

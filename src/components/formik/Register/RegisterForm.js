@@ -13,8 +13,8 @@ const RegisterForm = ({
 }) => {
   const { isLoading } = useSelector((state) => state.user); 
   return (
-    <div>
-      <div className="p-6 sm:p-8 space-y-4 md:space-y-6">
+    <>
+      <div className=" p-6 sm:p-8 space-y-4 md:space-y-6">
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
           Create and account
         </h1>
@@ -26,7 +26,7 @@ const RegisterForm = ({
           <div>
             <label
               htmlFor="username"
-              className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+              className="block mb-1  sm:text-sm font-medium text-gray-900 dark:text-white"
             >
               Username*
             </label>
@@ -236,7 +236,7 @@ const RegisterForm = ({
           </p>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 

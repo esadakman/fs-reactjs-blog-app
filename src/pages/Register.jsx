@@ -20,7 +20,7 @@ const Register = () => {
         transition={{ duration: 1 }}
         className="centeralizer flex-col py-20 "
       >
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-11/12 sm:w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           {/* //! FORMİK============== */}
           <Formik
             initialValues={{
