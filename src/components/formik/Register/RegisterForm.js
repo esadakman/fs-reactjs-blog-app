@@ -14,7 +14,7 @@ const RegisterForm = ({
   const { isLoading } = useSelector((state) => state.user); 
   return (
     <>
-      <div className=" p-6 sm:p-8 space-y-4 md:space-y-6">
+      <div className=" p-6 sm:p-8 space-y-4 md:space-y-6 ">
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
           Create and account
         </h1>
@@ -40,7 +40,7 @@ const RegisterForm = ({
                   ? "login-input border-pink-500 animate-handshake"
                   : "login-input dark:focus:border-blue-500 "
               }
-              placeholder="User Name"
+              placeholder="Username"
               value={values.username || ""}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -229,7 +229,7 @@ const RegisterForm = ({
             Already have an account?{" "}
             <Link
               to="/login"
-              className="font-medium text-primary-600 hover:underline dark:text-primary-500 "
+              className="font-medium text-primary-600 hover:underline hover:text-white :text-white dark:text-primary-500  transition-all underline"
             >
               Login here
             </Link>

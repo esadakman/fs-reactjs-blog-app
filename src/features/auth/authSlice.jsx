@@ -46,14 +46,12 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (loginData, thunkAPI) => {
-    // console.log(loginData, 'slice');
+  async (loginData, thunkAPI) => { 
     try {
       return await authService.login(loginData);
     } catch (error) {
       let datas = error.response.data;
-      for (let i in datas) {
-        // console.log(datas[i]);
+      for (let i in datas) { 
         if (datas[i].toString().includes("provided credentials.")) {
           return toastError(
             `Your email or password is incorrect. Please Try Again`
@@ -61,8 +59,7 @@ export const login = createAsyncThunk(
         } else {
           return toastWarn("Please check your information and try again.");
         }
-      }
-      // console.log(error.response);
+      } 
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -84,8 +81,7 @@ export const update = createAsyncThunk(
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString();
-      // console.log("asdsadsa");
+        error.toString(); 
       return thunkAPI.rejectWithValue(message);
     }
   }

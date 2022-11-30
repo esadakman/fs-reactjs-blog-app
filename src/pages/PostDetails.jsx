@@ -12,8 +12,7 @@ import moment from "moment";
 import { motion } from "framer-motion";
 import { animations } from "../helpers/AnimatedPage";
 import PostCounters from "../components/PostCounters";
-import CommentSection from "../components/CommentSection";
-import loader from "../assets/images/loading.svg";
+import CommentSection from "../components/CommentSection"; 
 import { DetailLoader } from "../helpers/loaders";
 const PostDetails = () => {
   const { state } = useLocation();
@@ -62,8 +61,7 @@ const PostDetails = () => {
       >
         <>
           {isLoading ? (
-            <div className="centeralizer min-h-81 pt-5 ">
-              {/* <img src={loader} alt="loader" /> */}
+            <div className="centeralizer min-h-81 pt-5 "> 
               <DetailLoader />
             </div>
           ) : (

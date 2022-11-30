@@ -20,38 +20,38 @@ const LoginForm = ({
           Login
         </h1>
         <form
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-3"
           action="#"
           onSubmit={handleSubmit}
         >
           <div>
             <label
               htmlFor="email"
-              className="block   mb-1 text-sm font-medium text-gray-900 dark:text-white"
+              className="block ml-1 mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Username*
+              Username or Email*
             </label>
             <input
               type="text"
-              name="username"
-              id="username" 
+              name="usernameEmail"
+              id="usernameEmail" 
               className={
-                errors.username && touched.username
+                errors.usernameEmail && touched.usernameEmail
                   ? "login-input border-pink-500 animate-handshake"
                   : "login-input dark:focus:border-blue-500 "
               }
-              placeholder="User Name"
-              value={values.username || ""}
+              placeholder="Username or Email"
+              value={values.usernameEmail || ""}
               onChange={handleChange}
               onBlur={handleBlur} 
             />
-            {errors.username && touched.username ? (
+            {errors.usernameEmail && touched.usernameEmail ? (
               <p className="ml-2 mt-2 text-pink-600 text-sm">
-                {errors.username}
+                {errors.usernameEmail}
               </p>
             ) : null}
           </div>
-          <div>
+          {/* <div>
             <label
               htmlFor="email"
               className="block  ml-1 mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -76,7 +76,7 @@ const LoginForm = ({
             {errors.email && touched.email ? (
               <p className="ml-2 mt-2 text-pink-600 text-sm">{errors.email}</p>
             ) : null}
-          </div>
+          </div> */}
           <div className="m-0 p-0">
             <label
               htmlFor="password"
@@ -139,9 +139,9 @@ const LoginForm = ({
             Don't have an account?{" "}
             <Link
               to="/register"
-              className="font-medium text-primary-600 hover:underline hover:text-white :text-white dark:text-primary-500  transition-all"
+              className="font-medium text-primary-600 hover:underline hover:text-white :text-white dark:text-primary-500  transition-all underline"
             >
-              Sign Up
+              Sign Up Now
             </Link>
           </p>
         </form>
