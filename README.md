@@ -2,6 +2,7 @@
 
 ## Objective
 
+- Project aims to create a Full Stack blog app project .
 - This is the frontend side of my blog app project.
 - I used django for backend.
   ##### You can see the backend side of this project from [here](https://github.com/esadakman/fs-blog-app-django-drf) 👈
@@ -22,7 +23,7 @@ on the detail page of the relevant post.
 
 ## Project Link
 
-#### You can reach my project from [here]() 👈
+#### You can reach my project from [here](https://fs-reactjs-blog-app.vercel.app/) 👈
 
 ## Project Skeleton
 

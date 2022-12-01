@@ -8,12 +8,12 @@ export const registerSchema = Yup.object().shape({
 
   first_name: Yup.string()
     .min(3, "Name should be at least 3 characters")
-    .max(20, "Must be at most 20 characters")
+    .max(20, "Name must be at most 20 characters")
     .required("Please enter a first name"),
 
   last_name: Yup.string()
     .min(3, "Surname should be at least 3 characters")
-    .max(20, "Must be at most 20 characters")
+    .max(20, "Surname must be at most 20 characters")
     .required("Please enter a last name"),
 
   email: Yup.string()

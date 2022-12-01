@@ -19,7 +19,7 @@ const Profile = () => {
       animate="animate"
       exit="exit"
       transition={{ duration: 0.5 }}
-      className="flex justify-center p-1 h-full py-16"
+      className="h-screen md:min-h-800px py-16 border-2 centeralizer "
     >
       {isLoading ? (
         <div className="min-h-81 centeralizer">
@@ -27,7 +27,7 @@ const Profile = () => {
         </div>
       ) : (
         <>
-          <div className="bg-slate-100 py-2.5 px-5 rounded-lg m-4 max-w-lg  w-full lg:w-1/2 shadow-xl">
+          <div className="bg-slate-100 py-2.5 px-5 rounded-lg m-4 max-w-lg  w-full lg:w-1/2 shadow-xl h-fit ">
             <section className="flex">
               <img
                 className="rounded-full w-20 h-20 md:h-32 md:w-32 mr-2 md:mr-5 mb-2 object-cover transition-all"

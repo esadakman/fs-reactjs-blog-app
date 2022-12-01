@@ -13,7 +13,7 @@ const CommentSection = () => {
     <>
       <div className="media flex pb-2 flex-col gap-2">
         <div className="flex justify-between">
-          <p className="text-2xl font-bold tracking-wide">
+          <p className="sm:text-2xl font-bold tracking-wide">
             {blogDetail?.post_comment?.length > 0
               ? "Comments"
               : "No Comment Yet . . ."}

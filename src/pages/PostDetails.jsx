@@ -13,7 +13,9 @@ import { motion } from "framer-motion";
 import { animations } from "../helpers/AnimatedPage";
 import PostCounters from "../components/PostCounters";
 import CommentSection from "../components/CommentSection";
-import { DetailLoader } from "../helpers/loaders";
+// import { DetailLoader } from "../helpers/loaders";
+import loader from "../assets/images/loading.svg";
+
 const PostDetails = () => {
   const { state } = useLocation();
   const dispatch = useDispatch();
@@ -61,8 +63,9 @@ const PostDetails = () => {
       >
         <>
           {isLoading ? (
-            <div className="centeralizer min-h-81 w-full">
-              <DetailLoader />
+            <div className="centeralizer min-h-screen w-full">
+              {/* <DetailLoader /> */}
+              <img src={loader} alt="" />
             </div>
           ) : (
             <div className="wrapper pt-5 centeralizer ">
@@ -98,7 +101,7 @@ const PostDetails = () => {
                   </p>
                   {/* // ! author pp  */}
                   <article className="mb-4">
-                    <div className="flex justify-between mt-4 flex-row">
+                    <div className="flex justify-between mt-4 flex-col sm:flex-row">
                       <div className="  items-center justify-between">
                         <div className="flex">
                           <img
@@ -127,11 +130,11 @@ const PostDetails = () => {
 
                     {/* // ? modals _________________________________ */}
                     {authUser?.id === parseInt(blogDetail?.author_id) ? (
-                      <div className=" flex gap-4 justify-end min-h-40px"> 
+                      <div className=" flex gap-4 justify-end min-h-40px">
                         <>
                           <DeleteModal blogDetail={blogDetail} />
                           <EditModal blogDetails={{ blogDetail, detailData }} />
-                        </> 
+                        </>
                       </div>
                     ) : null}
                   </article>

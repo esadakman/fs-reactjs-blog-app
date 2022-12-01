@@ -26,7 +26,7 @@ const Home = () => {
   };
   return (
     <>
-      <section className="overflow-x-hidden py-20">
+      <section className="overflow-x-hidden py-20 md:mb-5">
         <div className="min-h-74vh 2xl:min-h-81 flex justify-center items-center gap-5 md:gap-10  flex-wrap pt-4 sm:w-full z-10 ">
           {/* {isLoading
             ? blogs?.results?.map((data) => <PostLoader key={data.id} />)

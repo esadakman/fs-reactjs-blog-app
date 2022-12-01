@@ -15,6 +15,7 @@ const Footer = () => {
           target="_blank"
           rel="noreferrer"
           className="footer-icons"
+          title="Portfolio page"
         >
           <i className="fa-sharp fa-solid fa-globe"></i>
         </a>
@@ -23,6 +24,8 @@ const Footer = () => {
           target="_blank"
           rel="noreferrer"
           className="footer-icons "
+          title="Github Profile"
+
         >
           <i className="fa-brands fa-github "></i>
         </a>
@@ -31,6 +34,8 @@ const Footer = () => {
           target="_blank"
           rel="noreferrer"
           className="footer-icons"
+          title="Linkedin"
+
         >
           <i className="fa-brands fa-linkedin"></i>
         </a>

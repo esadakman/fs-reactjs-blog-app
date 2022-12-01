@@ -30,10 +30,12 @@ module.exports = {
         "40px": "40px",
         "20rem": "20rem",
         "72px": "72px",
+        "800px": "800px",
       },
       maxHeight: {
         "700px": "700px",
         "400px": "400px",
+        "600px": "600px",
         "30rem": "30rem",
       },
       minWidth: {

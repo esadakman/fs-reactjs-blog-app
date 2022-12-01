@@ -92,7 +92,7 @@ const update = async ({ values, userId }) => {
     const res = await userAPI(`/profile/${userId}/`, config);
 
     if (res.status === 200) {
-      toastSuccess("Blog has been successfully updated");
+      toastSuccess("Profile has been successfully updated");
       localStorage.setItem("userInfo", JSON.stringify(res.data));
       return res.data;
     }

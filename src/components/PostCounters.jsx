@@ -18,7 +18,7 @@ const PostCounters = ({ data }) => {
 
   return (
     <>
-      <div className=" flex  items-center  justify-end my-2 md:my-0 select-none">
+      <div className=" flex  items-center justify-end mb-4 sm:mb-0 my-2 md:my-0 select-none ">
         <div className="flex  mr-2 w-12">
           <button
             onClick={handleLike}

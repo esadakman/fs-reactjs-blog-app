@@ -48,9 +48,9 @@ const NewBlog = () => {
 
   return (
     <AnimatedPage>
-      <div className="centeralizer min-h-81 my-16 md:mb-0">
+      <div className="centeralizer min-h-81 my-16  ">
         <div className="bg-gray-900 bg-opacity-40 w-11/12 max-w-40rem sm:min-w-20rem h-fit flex flex-col items-center justify-start pb-6 text-white rounded-2xl transition-all duration-500 ease-linear centeralizer">
-          <h2 className="text-3xl m-5 select-none"> Create a Post</h2>
+          <h2 className="text-2xl sm:text-3xl m-5 select-none"> Create a Post</h2>
           <div className="centeralizer w-11/12 max-w-xl text-slate-800">
             <form
               className="flex items-start flex-col w-screen text-base gap-2"

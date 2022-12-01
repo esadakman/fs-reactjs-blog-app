@@ -34,9 +34,8 @@ const PostCard = ({ data }) => {
           </div>
         ) : (
           <div
-            className="w-11/12 max-w-sm sm:max-w-md 2xl:max-w-lg container rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-main  transition-all duration-300 max-h-548px 2xl:max-h-max 2xl:min-h-38  min-w-448px overflow-hidden"
-            key={data.id}
-            
+            className="w-11/12 max-w-sm sm:max-w-md 2xl:max-w-lg container rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-main  transition-all duration-300 max-h-548px 2xl:max-h-max 2xl:min-h-38  md:min-w-448px overflow-hidden"
+            key={data.id} 
           >
             <div className="flex justify-between items-center my-3 px-4 " >
               <h1

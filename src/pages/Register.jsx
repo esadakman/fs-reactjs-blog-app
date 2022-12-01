@@ -20,16 +20,16 @@ const Register = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <>
+    <section className="centeralizer h-screen md:min-h-800px  py-20 ">
       <motion.div
         variants={animations}
         initial="initial"
         animate="animate"
         exit="exit"
         transition={{ duration: 1 }}
-        className="centeralizer flex-col py-20 h-screen sm:h-auto"
+        className="centeralizer flex-col  h-fit "
       >
-        <div className="w-11/12 sm:w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
+        <div className="w-11/12 sm:w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 h-full">
           {/* //! FORMİK============== */}
           <Formik
             initialValues={{
@@ -62,7 +62,7 @@ const Register = () => {
           {/* //! FORMİK============== */}
         </div>
       </motion.div>
-    </>
+    </section>
   );
 };
 
