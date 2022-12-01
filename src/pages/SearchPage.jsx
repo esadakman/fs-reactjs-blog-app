@@ -7,6 +7,7 @@ import { animations } from "../helpers/AnimatedPage";
 import { PostLoader } from "../helpers/loaders";
 import NotFound from "./NotFound";
 import { motion } from "framer-motion";
+import loader from "../assets/images/loading.svg";
 
 const SearchPage = () => {
   const { state } = useLocation();
@@ -19,7 +20,11 @@ const SearchPage = () => {
 
   return (
     <>
-      {state ? (
+      {isLoading ? (
+        <div className="min-h-screen centeralizer">
+        <img src={loader} alt="" />
+      </div>
+      ) : state ? (
         <>
           {blogs?.results?.length > 0 ? (
             <motion.div

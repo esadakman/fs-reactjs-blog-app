@@ -29,6 +29,7 @@ module.exports = {
         "38rem": "38rem",
         "40px": "40px",
         "20rem": "20rem",
+        "72px": "72px",
       },
       maxHeight: {
         "700px": "700px",
@@ -37,6 +38,7 @@ module.exports = {
       },
       minWidth: {
         "20rem": "20rem",
+        "448px": "448px",
       },
       maxWidth: {
         "40rem": "40rem",
@@ -45,8 +47,7 @@ module.exports = {
         10: "10rem",
       },
       screens: {
-        "2xl": "1920px",
-        tall: { raw: "(min-height: 200px)" },
+        "2xl": "1920px", 
       },
       animation: {
         handshake: "handshake 2s cubic-bezier(0.4, 0, 0.6, 1) 1  ",

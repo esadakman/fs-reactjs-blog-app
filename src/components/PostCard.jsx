@@ -34,13 +34,14 @@ const PostCard = ({ data }) => {
           </div>
         ) : (
           <div
-            className="w-11/12 max-w-sm sm:max-w-md 2xl:max-w-lg container rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-main  transition-all duration-300 max-h-548px 2xl:max-h-max 2xl:min-h-38 "
+            className="w-11/12 max-w-sm sm:max-w-md 2xl:max-w-lg container rounded-xl shadow-lg transform hover:scale-105 hover:shadow-2xl dark:bg-main  transition-all duration-300 max-h-548px 2xl:max-h-max 2xl:min-h-38  min-w-448px overflow-hidden"
             key={data.id}
-            onClick={() => handleDetails(data)}
+            
           >
-            <div className="flex justify-between items-center my-3 px-4 " onClick={() => handleDetails(data)}>
+            <div className="flex justify-between items-center my-3 px-4 " >
               <h1
                 title={data.title}
+                onClick={() => handleDetails(data)}
                 className="text-2xl 2xl:text-3xl font-bold hover:text-slate-200 cursor-pointer  transition duration-100 max-h-8 2xl:max-h-full overflow-hidden line-clamp-1"
               >
                 {data.title}
@@ -55,9 +56,10 @@ const PostCard = ({ data }) => {
                 src={data.post_image ? data.post_image : postDefault}
                 onError={onImageErrorPost}
                 alt=""
+                onClick={() => handleDetails(data)}
               />
               {/* // ! counters */}
-              <div className="flex space-x-2 justify-end absolute bottom-0 px-2 py-1 bg-black bg-opacity-40 w-full">
+              <div className="flex space-x-2 justify-end absolute bottom-0 px-2 py-1 bg-black bg-opacity-40 w-full select-none">
                 <div className="flex space-x-1 items-center">
                   <span>
                     <svg
@@ -108,7 +110,7 @@ const PostCard = ({ data }) => {
               </div>
             </div>
             <div className="flex p-4 justify-between">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 min-h-72px">
                 <img
                   className="w-10 h-10 rounded-full border-2 border-sky-200 object-cover"
                   src={data.author_pp ? data.author_pp : profileDefault}

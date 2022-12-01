@@ -94,7 +94,7 @@ const EditModal = ({ blogDetails }) => {
           </Transition.Child>
 
           <div className="fixed inset-0 z-10 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-2 text-center  sm:p-0">
+            <div className="flex min-h-full items-center justify-center p-2 text-center sm:p-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -104,10 +104,10 @@ const EditModal = ({ blogDetails }) => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-gray-500  text- shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-gray-500 shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg md:max-w-2xl">
                   <div className="bg-white bg-opacity-50 w-full  h-fit flex flex-col items-center  pb-6 text-main  transition-all duration-500 ease-linear">
                     <h2 className="text-3xl m-5 "> Update Post</h2>
-                    <div className="centeralizer w-11/12 max-w-xl text-slate-800">
+                    <div className="centeralizer w-11/12 max-w-2xl text-slate-800">
                       <form
                         className="flex items-start flex-col w-screen text-base gap-2"
                         onSubmit={handleUpdate}
@@ -147,7 +147,7 @@ const EditModal = ({ blogDetails }) => {
                         <select
                           id="category"
                           name="category"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-main dark:border-gray-600 opacity-90 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
+                          className="bg-gray-50 border-2 border-gray text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-main dark:border-sky-500 opacity-90 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear"
                           onChange={onChange}
                           value={formData.category}
                         >

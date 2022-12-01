@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { blogCreate } from "../features/post/postSlice";
+import { postCreate } from "../features/post/postSlice";
 import axios from "axios";
 import { useEffect } from "react";
 import AnimatedPage from "../helpers/AnimatedPage";
@@ -14,21 +14,21 @@ const NewBlog = () => {
     title: "",
     content: "",
     post_image: "",
-    category: 1,
+    category: "",
   });
+  const { title, content, post_image, category } = formData;
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const { title, content, post_image, category } = formData;
+  
   const dispatch = useDispatch();
-
   const handleCreatePost = (e) => {
     e.preventDefault();
     let postCreateData = {
       postData: JSON.stringify(formData),
       navigate: navigate,
     };
-    dispatch(blogCreate(postCreateData));
+    dispatch(postCreate(postCreateData));
   };
 
   const getCategories = async (str) => {
@@ -37,9 +37,9 @@ const NewBlog = () => {
         process.env.REACT_APP_API_URL + "/blog/category/",
         {}
       );
-      setCategory(data);
+      setCategory(data);     
     } catch (error) {
-      console.log(error.message);
+      throw Error(error.message);
     }
   };
   useEffect(() => {
@@ -98,11 +98,12 @@ const NewBlog = () => {
                 className="bg-gray-50 border-2 border-gray text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-main dark:border-sky-500 opacity-90 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-600 hover:opacity-100 transition-all duration-500 ease-linear "
                 onChange={onChange}
                 value={category}
+                required
               >
                 {/* <option defaultValue value="1" name="category">
                   Select a Category
                 </option> */}
-                <option value="1" name="category">
+                <option  disabled value="" defaultValue>
                   Select a Category
                 </option>
                 {categoryData?.map((data) => (
@@ -123,7 +124,7 @@ const NewBlog = () => {
                 onChange={onChange}
               /> 
               <button value="submit" className="btn-custom w-full ">
-                Send
+                Create
               </button>
             </form>
           </div>

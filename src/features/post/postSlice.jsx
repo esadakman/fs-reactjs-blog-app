@@ -38,11 +38,11 @@ export const getPostDetail = createAsyncThunk(
   }
 );
 
-export const blogCreate = createAsyncThunk(
+export const postCreate = createAsyncThunk(
   "post/create",
   async (postCreateData, thunkAPI) => {
     try {
-      return await postService.blogCreate(postCreateData);
+      return await postService.postCreate(postCreateData);
     } catch (error) {
       const message =
         (error.response &&
@@ -124,13 +124,13 @@ const post = createSlice({
       state.isLoading = false;
       state.isError = true;
     },
-    [blogCreate.pending]: (state) => {
+    [postCreate.pending]: (state) => {
       state.isLoading = true;
     },
-    [blogCreate.fulfilled]: (state) => {
+    [postCreate.fulfilled]: (state) => {
       state.isLoading = false; 
     },
-    [blogCreate.rejected]: (state) => {
+    [postCreate.rejected]: (state) => {
       state.isLoading = false;
     },
     [postLike.pending]: (state) => {

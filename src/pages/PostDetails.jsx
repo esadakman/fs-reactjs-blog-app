@@ -12,7 +12,7 @@ import moment from "moment";
 import { motion } from "framer-motion";
 import { animations } from "../helpers/AnimatedPage";
 import PostCounters from "../components/PostCounters";
-import CommentSection from "../components/CommentSection"; 
+import CommentSection from "../components/CommentSection";
 import { DetailLoader } from "../helpers/loaders";
 const PostDetails = () => {
   const { state } = useLocation();
@@ -61,7 +61,7 @@ const PostDetails = () => {
       >
         <>
           {isLoading ? (
-            <div className="centeralizer min-h-81 pt-5 "> 
+            <div className="centeralizer min-h-81 w-full">
               <DetailLoader />
             </div>
           ) : (
@@ -93,7 +93,7 @@ const PostDetails = () => {
                       )}
                     </p>
                   </div>
-                  <p className="text-justify max-h-60 overflow-auto bg-slate-700 p-2 rounded-md text-sm sm:text-base">
+                  <p className="text-justify max-h-60 overflow-auto bg-slate-700 p-2 rounded-md text-sm sm:text-base whitespace-pre-wrap">
                     {blogDetail?.content}
                   </p>
                   {/* // ! author pp  */}
@@ -127,22 +127,15 @@ const PostDetails = () => {
 
                     {/* // ? modals _________________________________ */}
                     {authUser?.id === parseInt(blogDetail?.author_id) ? (
-                      <div className=" flex gap-4 justify-end min-h-40px">
-                        {/* {isLoading ? (
-                          <>
-                            <button className="btn-red">Delete</button>
-                            <button className="btn-blue">Update</button>
-                          </>
-                        ) : ( */}
+                      <div className=" flex gap-4 justify-end min-h-40px"> 
                         <>
                           <DeleteModal blogDetail={blogDetail} />
                           <EditModal blogDetails={{ blogDetail, detailData }} />
-                        </>
-                        {/* )} */}
+                        </> 
                       </div>
                     ) : null}
                   </article>
-                  {/* // ! modals _________________________________ */}
+                  {/* // ! modals end _________________________________ */}
                   <form className="relative" onSubmit={handleComment}>
                     <input
                       className="py-2 pl-3 w-full h-11 bg-slate-100 dark:bg-slate-600 rounded-lg placeholder:text-slate-600 dark:placeholder:text-slate-300 outline-0 font-medium pr-20 transition-all duration-300 border-2 focus:border-blue-500"

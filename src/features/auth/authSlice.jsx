@@ -8,7 +8,7 @@ const userStorage = JSON.parse(localStorage.getItem("userInfo"));
 const initialState = {
   authUser: userStorage ? userStorage : null,
   isError: false,
-  isLoading: false, 
+  isLoading: false,
   message: "",
 };
 
@@ -34,6 +34,10 @@ export const register = createAsyncThunk(
           return toastError(
             `The ${i} is already taken. Please choose another one.`
           );
+        } else if (datas[i].toString().includes("is too common.")) {
+          return toastWarn(
+            `This ${i} is too common.. Please choose another one.`
+          );
         } else {
           toastWarn("Please check your information and try again.");
         }
@@ -46,12 +50,12 @@ export const register = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (loginData, thunkAPI) => { 
+  async (loginData, thunkAPI) => {
     try {
       return await authService.login(loginData);
     } catch (error) {
       let datas = error.response.data;
-      for (let i in datas) { 
+      for (let i in datas) {
         if (datas[i].toString().includes("provided credentials.")) {
           return toastError(
             `Your email or password is incorrect. Please Try Again`
@@ -59,7 +63,7 @@ export const login = createAsyncThunk(
         } else {
           return toastWarn("Please check your information and try again.");
         }
-      } 
+      }
       return thunkAPI.rejectWithValue(error.response.data);
     }
   }
@@ -81,7 +85,7 @@ export const update = createAsyncThunk(
           error.response.data &&
           error.response.data.message) ||
         error.message ||
-        error.toString(); 
+        error.toString();
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -133,7 +137,7 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [logout.fulfilled]: (state, action) => {
-      state.isLoading = false; 
+      state.isLoading = false;
       state.authUser = false;
     },
     [logout.rejected]: (state, action) => {
@@ -145,7 +149,7 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [update.fulfilled]: (state, action) => {
-      state.isLoading = false; 
+      state.isLoading = false;
       state.authUser = action.payload;
     },
     [update.rejected]: (state, action) => {

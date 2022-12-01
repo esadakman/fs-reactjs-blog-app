@@ -21,7 +21,7 @@ const getPost = async (url) => {
     throw Error(error);
   }
 };
-const blogCreate = async ({ postData, navigate }) => {
+const postCreate = async ({ postData, navigate }) => {
   let myKey = window.atob(localStorage.getItem("token"));
   try {
     var config = {
@@ -121,7 +121,7 @@ const postComment = async ({  comment, detailURL }) => {
 const postService = {
   getPost,
   getPostDetail,
-  blogCreate,
+  postCreate,
   postLike,
   postComment,
 };

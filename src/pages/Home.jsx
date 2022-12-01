@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PostCard from "../components/PostCard";
-import { getPost } from "../features/post/postSlice"; 
+import { getPost } from "../features/post/postSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ const Home = () => {
   }, [authUser?.id, dispatch, limit]);
   const handlePaginationNext = () => {
     setLimit(Math.ceil(limit / 6.0) * 6 + 6);
-    // setTimeout(scrollToBottom, 50); 
+    // setTimeout(scrollToBottom, 50);
   };
   const handlePaginationPrevious = () => {
     setLimit(Math.ceil(limit / 6.0) * 6 - 6);
@@ -56,7 +56,7 @@ const Home = () => {
             </div>
           </div>
         ) : null}
-      </section> 
+      </section>
     </>
   );
 };
@@ -78,5 +78,5 @@ export default Home;
 //             </motion.div>
 //           ) : (
 //             <PostCard key={data.id} data={data} />
-//           )
-//         )} */}
+//   )
+// )} */}
