@@ -116,3 +116,5 @@ $ npm start / yarn start
 
 ### Preview of the Project
  
+<img src="./blog-720.gif" alt="gif"   />
+ 
