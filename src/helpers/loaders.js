@@ -18,13 +18,13 @@ const AvatarLoader = (props) => (
 const PostLoader = (props) => (
   <ContentLoader
     speed={2}
-    width={384}
+    width={404}
     height={544}
     viewBox="0 0 384 544"
     backgroundColor="#a2a0a0"
     foregroundColor="#ecebeb"
     {...props}
-    className="h-480px sm:h-544px max-h-548px 2xl:max-h-full 2xl:h-600px w-11/12 md:w-full bg-main rounded-xl p-1"
+    className="h-480px sm:h-544px max-h-548px 2xl:max-h-full 2xl:h-600px w-11/12 md:w-full rounded-xl p-1 max-w-sm 2xl:max-w-lg md:mx-10 xl:mx-5"
   >
     <rect x="255" y="5" rx="10" ry="10" width="120" height="18" />
     <rect x="4" y="5" rx="10" ry="10" width="140" height="18" />

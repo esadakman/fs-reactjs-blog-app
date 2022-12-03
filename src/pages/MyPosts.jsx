@@ -14,24 +14,23 @@ const MyPosts = () => {
   useEffect(() => {
     let url = `/posts/?author=${authUser?.id}`;
     dispatch(getPost(url));
-  }, [authUser?.id, dispatch]);
-  //   console.log(blogs, isLoading);
+  }, [authUser?.id, dispatch]); 
   const navigate = useNavigate();
 
   return (
     <AnimatedPage>
       <div className="overflow-x-hidden pt-16 pb-20">
         <div className="min-h-74vh 2xl:min-h-81 flex justify-center items-center gap-5 md:gap-10  flex-wrap pt-4 sm:w-full">
-          {blogs?.results?.length > 0 ? (
-            blogs?.results?.map((data) =>
-              isLoading ? (
-                <div key={data.id} className="centeralizer">
-                  <PostLoader />
-                </div>
-              ) : (
-                <PostCard key={data.id} data={data} />
-              )
-            )
+          {isLoading ? (
+            <div className="centeralizer max-w-11/12 2xl:min-h-81 gap-5 md:gap-10 sm:w-full flex-wrap">
+              {[0, 1, 2].map((data, index) => (
+                <PostLoader key={index} />
+              ))}
+            </div>
+          ) : blogs?.results?.length > 0 ? (
+            blogs?.results?.map((data) => (
+              <PostCard key={data.id} data={data} />
+            ))
           ) : (
             <div className="centeralizer flex-col">
               <h1 className="text-3xl leading-tight font-extralight tracking-wide">
