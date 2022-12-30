@@ -20,7 +20,7 @@ const Register = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <section className="centeralizer h-screen md:min-h-800px  py-20 ">
+    <section className="centeralizer min-h-screen md:min-h-800px  py-20 ">
       <motion.div
         variants={animations}
         initial="initial"
